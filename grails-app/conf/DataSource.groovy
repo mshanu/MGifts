@@ -13,20 +13,26 @@ hibernate {
 environments {
     development {
         dataSource {
-            dbCreate = "create-drop" // one of 'create', 'create-drop','update'
-            url = "jdbc:hsqldb:mem:devDB"
+            dbCreate = "update"
+            url = "jdbc:postgresql://localhost:5432/GIFTDB"
+            username = "app_user"
+            password = "password"
         }
     }
     test {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:hsqldb:mem:testDb"
+            url = "jdbc:postgresql://localhost:5432/GIFTDB"
+            username = "app_user"
+            password = "password"
         }
     }
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:hsqldb:file:prodDb;shutdown=true"
+            url = "jdbc:postgresql://localhost:5432/GIFTDB"
+            username = "app_user"
+            password = "password"
         }
     }
 }
