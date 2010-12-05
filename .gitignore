@@ -12,6 +12,7 @@ bin/
 target/
 coverage/
 test/
+htmls/
 /application.properties
 src/groovy/Sledgehammer-config.properties
 /coverage.*
