@@ -14,11 +14,11 @@
   }
 
   #login {
-    width: 760px;
+    width: 800px;
     height: 237px;
     border: thick double OliveDrab;
     margin-top: 10%;
-    margin-left: 12%;
+    margin-left: 20%;
   }
 
   #login_picture {
@@ -37,6 +37,13 @@
     border: 5px;
   }
 
+  #error_msg{
+    color:red;
+    font-size:12px;
+    font-weight:normal;
+    width:313px;    
+  }
+
   .submit_button {
     color: OliveDrab;
     border: 1px solid OliveDrab;
@@ -48,64 +55,37 @@
 
 <body>
 <div id="login">
-<div id="login_picture"> <img style="width: 350px; height: 231px;"
- alt="" src="images/malabar_login.jpg"> </div>
+<div id="login_picture"> <img style="width: 351px; height: 231px;"
+ alt="" src="${resource(dir: 'images', file: 'malabar_login.jpg')}"> </div>
 <div id="login_form">
-<g:if test='${flash.message}'>
-  <div>${flash.message}</div>
-</g:if>
-<form action='${postUrl}' method='POST' id='loginForm' autocomplete='off'>
-  <table>
-    <tbody>
-    <tr>
-      <td>Username</td>
-      <td><input id="username" type="text" name="j_username"></td>
-    </tr>
-    <tr>
-      <td>Password</td>
-      <td><input  type="password" name="j_password" id="password"></td>
-    </tr>     
-    <tr>
-      <td><br>
-      </td>
-      <td align="left"><input value="Login" class="submit_button"
-              type="submit"></td>
-    </tr>
-    </tbody>
-  </table>
-</form>
+  <form action='${postUrl}' method='POST' id='loginForm' autocomplete='off'>
+    <table>
+      <tbody>
+      <tr>
+        <td>Username</td>
+        <td><input id="username" type="text" name="j_username"></td>
+      </tr>
+      <tr>
+        <td>Password</td>
+        <td><input type="password" name="j_password" id="password"></td>
+      </tr>
+      <tr>
+        <td><br>
+        </td>
+        <td align="left"><input value="Login" class="submit_button"
+                type="submit"></td>
+      </tr>
+      </tbody>
+    </table>
+  </form>
+  <div id="error_msg">
+    <g:if test='${flash.message}'>
+      ${flash.message}
+    </g:if>
+  </div>
 </div>
 </div>
 </body>
-
-
-
-%{--<div id='login'>
-  <div>
-    <g:if test='${flash.message}'>
-      <div>${flash.message}</div>
-    </g:if>
-    <div>Please Login..</div>
-    <form action='${postUrl}' method='POST' id='loginForm' autocomplete='off'>
-      <p>
-        <label for='username'>Login ID</label>
-        <input type='text' name='j_username' id='username'/>
-      </p>
-      <p>
-        <label for='password'>Password</label>
-        <input type='password' name='j_password' id='password'/>
-      </p>
-      <p>
-        <label for='remember_me'>Remember me</label>
-        <input type='checkbox' name='${rememberMeParameter}' id='remember_me'
-          <g:if test='${hasCookie}'>checked='checked'</g:if>/>
-      </p>
-      <p>
-        <input type='submit' value='Login'/>
-      </p>
-    </form>
-  </div>
-</div>--}%
 <script type='text/javascript'>
   <!--
   (function() {
