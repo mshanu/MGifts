@@ -1,0 +1,48 @@
+<project name="mgift" default="setupdb">
+    <property name="db.driver" value="org.postgresql.Driver"/>
+    <property name="db.url" value="jdbc:postgresql://localhost:5432/GIFTDB"/>
+    <property name="db.username" value="app_user"/>
+    <property name="db.password" value="password"/>
+
+    <path id="project.classpath">
+        <fileset dir="lib">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="buildlib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <macrodef name="exec_sql">
+        <attribute name="src"/>
+        <attribute name="onerror"/>
+        <sequential>
+            <sql
+                    classpathref="project.classpath"
+                    driver="${db.driver}"
+                    url="${db.url}"
+                    userid="${db.username}"
+                    password="${db.password}"
+                    src="@{src}"
+                    onerror="@{onerror}"
+                    delimiter=";"
+                    />
+        </sequential>
+    </macrodef>
+
+
+    <taskdef name="dbdeploy" classname="com.dbdeploy.AntTarget" classpathref="project.classpath"/>
+
+    <target name="drop.create.schema"
+            description="drop the current schema and builds the baseline database">
+        <exec_sql src="sql/schema.sql" onerror="abort"/>
+    </target>
+
+    <target name="setupdb" depends="drop.create.schema">
+        <dbdeploy driver="${db.driver}" url="${db.url}"
+                  userid="app_user"
+                  password="password"
+                  dir="sql"
+                />
+    </target>
+</project>

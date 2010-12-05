@@ -1,4 +1,4 @@
-package com.malabar.gift
+package com.breigns.gift
 
 import org.apache.commons.lang.builder.HashCodeBuilder
 
