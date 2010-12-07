@@ -1,13 +1,13 @@
 create table app_user (id int8 not null, version int8 not null, account_expired bool not null, account_locked bool not null, date_created timestamp not null, enabled bool not null, first_name varchar(255) not null, last_name varchar(255) not null, last_updated timestamp not null, "password" varchar(255) not null, password_expired bool not null, username varchar(255) not null unique, primary key (id));
 create table app_user_role (role_id int8 not null, app_user_id int8 not null, primary key (role_id, app_user_id));
-create table company (id int8 not null, version int8 not null, address varchar(255) not null, date_created timestamp not null, name varchar(255) not null, primary key (id));
-create table company_voucher (company_vouchers_id int8, voucher_id int8);
+create table client (id int8 not null, version int8 not null, address varchar(255), city varchar(255), date_created timestamp not null, initials varchar(255) not null, name varchar(255) not null, primary key (id));
+create table client_voucher_sequence (id int8 not null, version int8 not null, client_id int8 not null, last_voucher_sequence_number int4 not null, primary key (id));
 create table role (id int8 not null, version int8 not null, authority varchar(255) not null unique, primary key (id));
-create table voucher (id int8 not null, version int8 not null, barcode_alpha varchar(10) not null, date_created timestamp not null, last_updated timestamp not null, sequence_number int4 not null, value float8 not null, primary key (id));
+create table voucher (id int8 not null, version int8 not null, barcode_alpha varchar(10) not null, client_id int8 not null, date_created timestamp not null, last_updated timestamp not null, sequence_number int4 not null, value float8 not null, primary key (id));
 alter table app_user_role add constraint FK9CE8F3CC1BE77175 foreign key (role_id) references role;
 alter table app_user_role add constraint FK9CE8F3CCF927EE22 foreign key (app_user_id) references app_user;
-alter table company_voucher add constraint FKC3CDA4ECDE2BF275 foreign key (company_vouchers_id) references company;
-alter table company_voucher add constraint FKC3CDA4EC2BD3799F foreign key (voucher_id) references voucher;
+alter table client_voucher_sequence add constraint FKC2E0DC26208C4295 foreign key (client_id) references client;
+alter table voucher add constraint FK26288EAE208C4295 foreign key (client_id) references client;
 create sequence hibernate_sequence;
 
 --Data
