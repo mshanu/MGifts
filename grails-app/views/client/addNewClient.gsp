@@ -5,6 +5,7 @@
     <meta name="layout" content="adminMain"/>
   </head>
   <body>
+  <div style="margin-top:10%; margin-left:35%;">
   <g:form action="insert" controller="client">
     <table>
       <tr>
@@ -28,6 +29,6 @@
       </tr>
     </table>
   </g:form>
-
+    </div>
   </body>
 </html>

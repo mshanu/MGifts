@@ -9,7 +9,9 @@
     $(function() {
       //Set Up The Menu
       $('#adminTabList').children().addClass('ui-state-default ui-corner-top ui-tabs-selected');
-
+      $('ul.subnav li a').removeClass('ui-tabs-nav');
+      $('ul.subnav li a').css('cursor','pointer');
+      $('#logout a').css('cursor','pointer');
       $('ul.subnav').parent().append('<span></span>');
 
       $('ul.ui-tabs-nav li span').click(function() {
@@ -17,7 +19,7 @@
 
         $(this).parent().hover(function() {
         }, function() {
-          $(this).parent().find("ul.subnav").slideUp('slow'); //When the mouse hovers out of the subnav, move it back up
+                    $(this).parent().find("ul.subnav").slideUp('slow'); //When the mouse hovers out of the subnav, move it back up
         });
 
       }).hover(function() {
@@ -25,15 +27,8 @@
       }, function() {
         $(this).removeClass("subhover");
       });
-
-     /* //Setup the link
-      $('ul.subnav li a').click(function () {
-        $('#tabContent').load($(this).attr('href'))
-        return false
-      });*/
-
     })
-    
+
   </script>
 
   <style type="text/css">
@@ -41,34 +36,46 @@
     display: none;
   }
 
+  ul.ui-tabs-nav li {
+    width: 220px;
+  }
+
   ul.ui-tabs-nav li span.subhover {
-    background-color: orange;
-    background-position: center bottom bottom;
+    margin-top: 5px;
+    height: 30px;
+    background-image: url('/MGifts/images/arrow_rover.gif');
     cursor: pointer;
   }
 
   ul.ui-tabs-nav li ul.subnav {
     position: absolute;
-    lef: 0;
-    top: 35px;
-    background: #333;
-    float: left;
+    top: 40px;
+    background: #F6F6F6;
+    float: right;
+    margin-left: 50px;
+    list-style: none;
   }
 
   ul.ui-tabs-nav li span {
-    width: 17px;
+    width: 20px;
     height: 35px;
-    float: left;
-    background: url(/MGifts/images/downarrow.gif) no-repeat center top;
+    float: right;
+    background: url(/MGifts/images/arrow.gif) no-repeat bottom;
   }
 
   ul.ui-tabs-nav li ul.subnav li {
     margin: 0;
     padding: 0;
-    border-top: 1px solid #252525; /*--Create bevel effect--*/
-    border-bottom: 1px solid #444; /*--Create bevel effect--*/
+    border-top: 1px dashed orange; /*--Create bevel effect--*/
     clear: both;
     width: 170px;
+    margin-left: -40px;
+  }
+
+  .subNavLinks {
+    float:right;
+    cursor:pointer;
+
   }
   </style>
 </head>
@@ -78,28 +85,28 @@
     <li>
       <a href="#">Voucher</a>
       <ul class="subnav">
-        <li><g:link controller="voucher">Create Voucher</g:link></li>
-        <li><a href="#">Sub Nav1</a></li>
+        <li><g:link controller="voucher" class="subNavLinks">Create Voucher</g:link></li>
+        <li><a href="#" class="subNavLinks">Voucher History</a></li>
       </ul>
     </li>
     <li>
       <a href="#">Client Management</a>
       <ul class="subnav">
-        <li><g:link controller="client">Add a Client</g:link> </li>
-        <li><a href="#">Sub Nav1</a></li>
+        <li><g:link controller="client">Add a Client</g:link></li>
+        <li><a href="#">Client List</a></li>
       </ul>
     </li>
     <li>
-      <g:link controller="admin" action="client" title="tabContent">Nav2</g:link>
+      <a href="#">User Management</a>
       <ul class="subnav">
-        <li><a href="#">Sub Nav1</a></li>
-        <li><a href="#">Sub Nav1</a></li>
+        <li><g:link controller="user">Add User</g:link></li>
       </ul>
     </li>
-    <li id="logout"><g:link controller="logout">Logout</g:link></li>
+    </li>
+    <li id="logout" style="float:right;width:100px"><g:link style="float:right;" controller="logout">Logout</g:link></li>
   </ul>
-  <div id="tabContent">
-       <g:layoutBody />
+  <div id="tabContent" style="height:400px;">
+    <g:layoutBody/>
   </div>
 </div>
 

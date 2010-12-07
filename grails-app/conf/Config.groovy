@@ -1,3 +1,5 @@
+import grails.plugins.springsecurity.SecurityConfigType
+
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
@@ -87,3 +89,13 @@ log4j = {
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.breigns.gift.AppUser'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.breigns.gift.AppUserRole'
 grails.plugins.springsecurity.authority.className = 'com.breigns.gift.Role'
+grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/admin'
+
+grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
+grails.plugins.springsecurity.interceptUrlMap = [
+    '/login/auth':['IS_AUTHENTICATED_ANONYMOUSLY'],
+    '/login/authfail':['IS_AUTHENTICATED_ANONYMOUSLY'],
+    '/images/**':['IS_AUTHENTICATED_ANONYMOUSLY'],
+    '/admin/**':['ROLE_ADMIN','IS_AUTHENTICATED_FULLY'],
+    '/**':['IS_AUTHENTICATED_FULLY']
+        ]

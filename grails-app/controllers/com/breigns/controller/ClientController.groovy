@@ -7,7 +7,7 @@ class ClientController {
   }
 
   def insert = {
-    adminService.addNewClient(params['companyName'],params['initials'].toUpper(),params['address'],params['city'])
+    adminService.addNewClient(params['name'],params['initials'].toUpperCase(),params['address'],params['city'])
     flash['message'] = 'New Client Added Successfully'
     render view:'addNewClient'
   }

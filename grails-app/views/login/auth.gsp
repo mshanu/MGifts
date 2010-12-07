@@ -2,8 +2,9 @@
 <html>
 <head>
   <meta http-equiv="content-type"
-          content="text/html; charset=ISO-8859-1">
-  <title>My first styled page</title>
+          content="text/html; charset=ISO-8859-1"/>
+           <link rel="icon" href="http://localhost:8080/MGifts/images/favicon.ico"/>
+  <title>breigns</title>
   <style type="text/css">
   body {
     color: black;
@@ -58,7 +59,7 @@
 <div id="login_picture"> <img style="width: 351px; height: 231px;"
  alt="" src="${resource(dir: 'images', file: 'malabar_login.jpg')}"> </div>
 <div id="login_form">
-  <form action='${postUrl}' method='POST' id='loginForm' autocomplete='off'>
+  <form action='${postUrl}' method='POST' id='loginForm' autocomplete='off' onsubmit="return validateLoginForm()">
     <table>
       <tbody>
       <tr>
@@ -87,6 +88,16 @@
 </div>
 </body>
 <script type='text/javascript'>
+  function validateLoginForm(){
+    var userName = document.getElementById('username');
+    var password = document.getElementById('password');
+    if(userName.value==""||password.value==""){
+      document.getElementById("error_msg").innerHTML="User/Password field cannot be empty"
+      return false
+    }
+    return true
+  }
+
   <!--
   (function() {
     document.forms['loginForm'].elements['j_username'].focus();

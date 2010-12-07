@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder as SCH
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.core.context.SecurityContextHolder
+import com.breigns.gift.AppUser
 
 class LoginController {
 
@@ -45,9 +46,14 @@ class LoginController {
 		def config = SpringSecurityUtils.securityConfig
 
 		if (springSecurityService.isLoggedIn()) {
+            def principal = springSecurityService.getPrincipal();
+            if(AppUser.findByUsername(principal.username).getAuthorities().contains('ROLE_ADMIN')){
+              redirect controllerName:'admin'
+            }else{
 			redirect uri: config.successHandler.defaultTargetUrl
-			return
-		}
+            }
+          return
+        }
 
 		String view = 'auth'
 		String postUrl = "${request.contextPath}${config.apf.filterProcessesUrl}"

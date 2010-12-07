@@ -6,6 +6,7 @@ class Voucher {
   Integer sequenceNumber
   String barcodeAlpha
   Double value
+  AppUser createdBy;
   Date dateCreated
   Date lastUpdated
 
