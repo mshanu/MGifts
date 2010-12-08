@@ -1,4 +1,4 @@
-package com.breigns.controller
+package com.breigns.vms.controller
 
 class AdminController {
   def index = {

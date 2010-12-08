@@ -1,4 +1,4 @@
-package com.breigns.controller
+package com.breigns.vms.controller
 
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 

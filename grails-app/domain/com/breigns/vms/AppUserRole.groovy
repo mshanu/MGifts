@@ -1,4 +1,4 @@
-package com.breigns.gift
+package com.breigns.vms
 
 import org.apache.commons.lang.builder.HashCodeBuilder
 

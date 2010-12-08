@@ -86,9 +86,9 @@ log4j = {
 
 
 // Added by the Spring Security Core plugin:
-grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.breigns.gift.AppUser'
-grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.breigns.gift.AppUserRole'
-grails.plugins.springsecurity.authority.className = 'com.breigns.gift.Role'
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.breigns.vms.AppUser'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.breigns.vms.AppUserRole'
+grails.plugins.springsecurity.authority.className = 'com.breigns.vms.Role'
 grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/admin'
 
 grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap

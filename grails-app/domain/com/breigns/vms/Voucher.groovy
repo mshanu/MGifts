@@ -1,4 +1,4 @@
-package com.breigns.gift
+package com.breigns.vms
 
 import java.text.DecimalFormat
 
@@ -9,14 +9,15 @@ class Voucher {
   AppUser createdBy;
   Date dateCreated
   Date lastUpdated
+  VoucherStatus status;
 
-  static belongsTo = [client:Client]
+  static belongsTo = [client: Client]
 
   static constraints = {
-    barcodeAlpha(maxSize:10,minSize:10)
+    barcodeAlpha(maxSize: 10, minSize: 10)
   }
 
-  def getGeneratedSequence(){
+  def getGeneratedSequence() {
     client.initials + new DecimalFormat("00000000").format(sequenceNumber)
   }
 

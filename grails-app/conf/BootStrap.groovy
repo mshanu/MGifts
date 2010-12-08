@@ -1,6 +1,6 @@
-import com.breigns.gift.AppUser
-import com.breigns.gift.AppUserRole
-import com.breigns.gift.Role
+import com.breigns.vms.AppUser
+import com.breigns.vms.AppUserRole
+import com.breigns.vms.Role
 
 class BootStrap {
   def springSecurityService

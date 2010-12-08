@@ -1,10 +1,11 @@
-package com.breigns.service
+package com.breigns.vms.service
 
-import com.breigns.gift.Client
-import com.breigns.gift.Voucher
-import com.breigns.gift.ClientVoucherSequence
+import com.breigns.vms.Client
+import com.breigns.vms.Voucher
+import com.breigns.vms.ClientVoucherSequence
 import org.apache.commons.lang.RandomStringUtils
-import com.breigns.gift.AppUser
+import com.breigns.vms.AppUser
+import com.breigns.vms.VoucherStatus
 
 class AdminService {
   def springSecurityService
@@ -22,7 +23,8 @@ class AdminService {
           barCodeAlpha = getRandomAlpha();
         }
         def loggedInUser = AppUser.findByUsername(springSecurityService.getPrincipal().username)
-        client.addToVouchers(new Voucher(sequenceNumber: nextSequence, barcodeAlpha: getRandomAlpha(), value: voucherValue,createdBy:loggedInUser))
+        client.addToVouchers(new Voucher(sequenceNumber: nextSequence,
+                barcodeAlpha: getRandomAlpha(), value: voucherValue,createdBy:loggedInUser,status:VoucherStatus.CREATED))
       }
     }
   }

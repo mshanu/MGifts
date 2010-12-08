@@ -1,4 +1,4 @@
-package com.breigns.gift
+package com.breigns.vms
 
 class AppUser {
   String firstName

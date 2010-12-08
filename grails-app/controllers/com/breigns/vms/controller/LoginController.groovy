@@ -1,4 +1,4 @@
-package com.breigns.controller
+package com.breigns.vms.controller
 
 import grails.converters.JSON
 
@@ -8,11 +8,11 @@ import org.springframework.security.authentication.AccountExpiredException
 import org.springframework.security.authentication.CredentialsExpiredException
 import org.springframework.security.authentication.DisabledException
 import org.springframework.security.authentication.LockedException
-import org.springframework.security.core.context.SecurityContextHolder as SCH
+
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.core.context.SecurityContextHolder
-import com.breigns.gift.AppUser
+import com.breigns.vms.AppUser
 
 class LoginController {
 

@@ -5,13 +5,17 @@
   <link type="text/css" href="${resource(dir: 'css/ui-lightness', file: "jquery-ui-1.8.6.custom.css")}" rel=" Stylesheet"/>
   <script type="text/javascript" src="${resource(dir: 'js', file: "jquery-1.4.2.min.js")}"></script>
   <script type="text/javascript" src="${resource(dir: 'js', file: "jquery-ui-1.8.6.custom.min.js")}"></script>
+
+  <!-- Loads for Date-->
+  <link rel="stylesheet" media="screen" type="text/css" href="/MGifts/css/datepicker.css" />
+<script type="text/javascript" src="/MGifts/js/datepicker.js"></script>
   <script>
     $(function() {
       //Set Up The Menu
       $('#adminTabList').children().addClass('ui-state-default ui-corner-top ui-tabs-selected');
       $('ul.subnav li a').removeClass('ui-tabs-nav');
-      $('ul.subnav li a').css('cursor','pointer');
-      $('#logout a').css('cursor','pointer');
+      $('ul.subnav li a').css('cursor', 'pointer');
+      $('#logout a').css('cursor', 'pointer');
       $('ul.subnav').parent().append('<span></span>');
 
       $('ul.ui-tabs-nav li span').click(function() {
@@ -19,7 +23,7 @@
 
         $(this).parent().hover(function() {
         }, function() {
-                    $(this).parent().find("ul.subnav").slideUp('slow'); //When the mouse hovers out of the subnav, move it back up
+          $(this).parent().find("ul.subnav").slideUp('slow'); //When the mouse hovers out of the subnav, move it back up
         });
 
       }).hover(function() {
@@ -28,6 +32,21 @@
         $(this).removeClass("subhover");
       });
     })
+
+
+    function validateMandatoryFields() {
+      var isAllFieldsFilled = true;
+      $("span.mandotry").each(function() {
+        var mandotoryTextBox = $(this).parent().parent().find("input:text");
+        if (mandotoryTextBox.val() == "") {
+          isAllFieldsFilled = false;
+        }
+      });
+      if (!isAllFieldsFilled) {
+        $("#message_box").html('Mandatory fields are not filled!!')
+      }
+      return isAllFieldsFilled;
+    }
 
   </script>
 
@@ -73,9 +92,44 @@
   }
 
   .subNavLinks {
-    float:right;
-    cursor:pointer;
+    float: right;
+    cursor: pointer;
 
+  }
+
+  #message_box {
+    color: red;
+    font-family: verdana, arial, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    width: 313px;
+    height: 30px;
+    display: block;
+    text-align: center;
+  }
+
+  .mandotry {
+    color: red;
+    float: right;
+    margin-left: 5px;
+  }
+
+  #normal_left_nav {
+    float: left;
+    width: 200px;
+    height: 500px;
+    border-right: #ff4500 dotted thin;
+    display: block;
+    font-family: verdana, arial, sans-serif;
+    font-size: 12px;
+  }
+
+  #normal_right_content {
+    float: right;
+  }
+
+  #adminTab {
+    height: 600px;
   }
   </style>
 </head>
@@ -86,7 +140,7 @@
       <a href="#">Voucher</a>
       <ul class="subnav">
         <li><g:link controller="voucher" class="subNavLinks">Create Voucher</g:link></li>
-        <li><a href="#" class="subNavLinks">Voucher History</a></li>
+        <li><g:link controller="voucher" action="historyPage" class="subNavLinks">Voucher History</g:link></li>
       </ul>
     </li>
     <li>
@@ -102,16 +156,13 @@
         <li><g:link controller="user">Add User</g:link></li>
       </ul>
     </li>
-    </li>
+  </li>
     <li id="logout" style="float:right;width:100px"><g:link style="float:right;" controller="logout">Logout</g:link></li>
   </ul>
-  <div id="tabContent" style="height:400px;">
+  <div id="tabContent">
     <g:layoutBody/>
   </div>
 </div>
 
 </body>
-<script>
-  loadThePage()
-</script>
 </html>
