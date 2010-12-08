@@ -7,7 +7,7 @@ class Voucher {
   String barcodeAlpha
   Double value
   AppUser createdBy;
-  Date dateCreated
+  java.sql.Date dateCreated
   Date lastUpdated
   VoucherStatus status;
 

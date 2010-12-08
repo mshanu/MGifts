@@ -7,8 +7,8 @@
   <script type="text/javascript" src="${resource(dir: 'js', file: "jquery-ui-1.8.6.custom.min.js")}"></script>
 
   <!-- Loads for Date-->
-  <link rel="stylesheet" media="screen" type="text/css" href="/MGifts/css/datepicker.css" />
-<script type="text/javascript" src="/MGifts/js/datepicker.js"></script>
+  <link rel="stylesheet" media="screen" type="text/css" href="/MGifts/css/datepicker.css"/>
+  <script type="text/javascript" src="/MGifts/js/datepicker.js"></script>
   <script>
     $(function() {
       //Set Up The Menu
@@ -125,12 +125,48 @@
   }
 
   #normal_right_content {
-    float: right;
+    float:left;
+    margin-left: 100px;
   }
 
   #adminTab {
     height: 600px;
+
   }
+
+  #voucherHistoryTable {
+    text-align: left;
+    float: left;
+    width:100%;
+  }
+
+  #voucherHistoryTable th {
+    font-size: 18px;
+    color: gray;
+    width:140px;
+    text-align:left;
+  }
+
+  #voucherTableLinks a {
+    color:blue;
+    font-family: verdana, arial, sans-serif;
+    font-size:12;
+  }
+
+   #voucherHistoryTable thead tr{
+     position:relative;
+     display:block;
+   }
+  #voucherHistoryTable td{
+    width:140px;
+    text-align:left;
+  }
+  #voucherHistoryTable tbody{
+     height:400px;
+     display:block;
+     overflow:auto;
+     background-color:#f5f5f5;
+   }
   </style>
 </head>
 <body>

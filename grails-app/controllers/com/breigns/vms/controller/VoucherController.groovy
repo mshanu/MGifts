@@ -20,7 +20,7 @@ class VoucherController {
   }
 
   def getHistory = {
-     
-     render view:'voucherHistory',model:[clientList:Client.listOrderByName()]
+     def voucherList=adminService.getVouchersFor(Long.parseLong(params['clientId']),params['dateToSearch'])
+     render view:'voucherHistory',model:[clientList:Client.listOrderByName(),voucherList:voucherList]
   }
 }
