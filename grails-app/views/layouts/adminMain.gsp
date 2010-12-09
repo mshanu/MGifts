@@ -176,6 +176,7 @@
       <a href="#">Voucher</a>
       <ul class="subnav">
         <li><g:link controller="voucher" class="subNavLinks">Create Voucher</g:link></li>
+        <li><g:link controller="voucher" action="barcodePage" class="subNavLinks">Barcode</g:link></li>
         <li><g:link controller="voucher" action="historyPage" class="subNavLinks">Voucher History</g:link></li>
       </ul>
     </li>
