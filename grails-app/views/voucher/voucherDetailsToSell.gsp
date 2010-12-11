@@ -13,9 +13,8 @@
     //TODO: have to have more validation on date..
 
     var voucheId = $("#voucherId").val()
-    var sellButton = $("#sellButton").val()
+    var sellButton = $("#sellButton")
     var url = $("#sellUrl").attr("href");
-    alert(url)
     $.post(url, {voucherId:voucheId,invoiceNumber:invoiceNumber,invoiceDate:invoiceDate},
             function(data) {
               sellButton.removeAttr('disabled')

@@ -2,7 +2,8 @@
 <head></head>
 <body>
 <script type="text/javascript">
-  function validateVoucher() {
+  function validateVoucherSearch() {
+    $("#message_box").html("")
     var sequenceNumber = $("#sequenceNumber").val();
     var clientInitials = $("#clientInitials").val();
     var barCode = $("#barcode").val();
@@ -12,6 +13,14 @@
     }
     if ((sequenceNumber == "" && clientInitials != "") || (sequenceNumber != "" && clientInitials == "")) {
       $("#message_box").html("Invalid Sequence Number")
+      return false;
+    }
+    if(clientInitials!=="" && clientInitials.length<3){
+      $("#message_box").html("Sequence Number starts with 3 alpha characters")
+      return false;
+    }
+    if(!sequenceNumber.match(/^\d*$/)){
+      $("#message_box").html("Sequence Number Should Be Numeric")
       return false;
     }
     var searchButton = $("#searchButton")
@@ -43,11 +52,11 @@
     <li style="padding-top:15px;">
       <g:if test="${link == 'validate'}">
         <g:link controller="voucher" action="validate" style="display:hidden" elementId="link"/>
-        <input type="button" id="searchButton" value="Validate Voucher" onclick="validateVoucher()"/>
+        <input type="button" id="searchButton" value="Validate Voucher" onclick="validateVoucherSearch()"/>
       </g:if>
       <g:else>
         <g:link controller="voucher" action="searchToSell" style="display:hidden" elementId="link"/>
-        <input type="button" id="searchButton" value="Search the voucher" onclick="validateVoucher()"/>
+        <input type="button" id="searchButton" value="Search the voucher" onclick="validateVoucherSearch()"/>
       </g:else>
 
     </li>

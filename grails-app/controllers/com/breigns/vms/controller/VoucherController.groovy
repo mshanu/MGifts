@@ -86,6 +86,7 @@ class VoucherController {
     }
   }
   def searchToSell = {
+    flash.clear()
     def sequenceNumber = params['sequenceNumber'] ? Long.parseLong(params['sequenceNumber']) : null
     def voucher = voucherService.getVoucherToValidate(params['clientInitials'], sequenceNumber, params['barcode'])
     if (voucher) {
@@ -94,12 +95,12 @@ class VoucherController {
       flash.message = "System cannot find a voucher for your search"
       render view: 'voucherDetailsToSell', model: [voucherFound: false]
     }
-
-    def sell = {
-      def invoiceDateAsString = params['invoiceDate']
-      def dateFormate = new SimpleDateFormat("dd/MM/yyyy")
-      voucherService.sell(Long.parseLong(params['voucherId']), params['invoiceNumber'], dateFormate.parse(invoiceDateAsString))
-      render "Voucher Sold Successfully"
-    }
+  }
+  def sell = {
+    def invoiceDateAsString = params['invoiceDate']
+    def dateFormate = new SimpleDateFormat("dd/MM/yyyy")
+    voucherService.sell(Long.parseLong(params['voucherId']), params['invoiceNumber'], dateFormate.parse(invoiceDateAsString))
+    render view: 'voucherSold'
   }
 }
+

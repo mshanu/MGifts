@@ -11,8 +11,15 @@
   <script type="text/javascript" src="/MGifts/js/datepicker.js"></script>
   <script>
     $(function() {
+      var logoutLink = $("#logoutLink").attr('href')
       $("#userTab").tabs();
+
+      $("#logoutLink").unbind('click')
+      $("#logoutLink").click(function() {
+        window.location = logoutLink
+      })
     });
+
   </script>
 
   <style type="text/css">
@@ -73,7 +80,7 @@
     <li>
       <g:link controller="voucher" title="tabContent" action="voucherSellingPage">Voucher Selling</g:link>
     </li>
-    <li id="logout" style="float:right;width:100px"><g:link style="float:right;" controller="logout">Logout</g:link></li>
+    <li id="logout" style="float:right;width:100px"><g:link style="float:right;" elementId="logoutLink" controller="logout">Logout</g:link></li>
   </ul>
   <div id="tabContent" style="height:500px;">
 
