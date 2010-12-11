@@ -45,7 +45,7 @@
 
 <div id="voucherHistoryMainContent" style="height:500px;margin-top:40px;margin-left:30px;">
 <div id="normal_left_nav">
-  <g:form action="getHistory" name="historyForm" onsubmit="return validateSubmitForm()">
+  <g:form action="trackVoucher" name="historyForm" onsubmit="return validateSubmitForm()">
     <ul style="list-style:none;margin-left:-40px;margin-top:50px;">
    <li>
      <li style="text-align:center;">Select the date</li>

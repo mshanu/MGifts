@@ -31,6 +31,13 @@
       }, function() {
         $(this).removeClass("subhover");
       });
+
+     /* $(".subNavLinks").hover(function(){
+          $(this).css('background-color','orange')
+        },
+              function(){
+                $(this).css('background-color','white')
+              });*/
     })
 
 
@@ -53,6 +60,7 @@
   }
 
   ul.ui-tabs-nav li ul.subnav {
+    z-index:2;
     position: absolute;
     top: 40px;
     background: #F6F6F6;
@@ -175,9 +183,9 @@
     <li>
       <a href="#">Voucher</a>
       <ul class="subnav">
-        <li><g:link controller="voucher" class="subNavLinks">Create Voucher</g:link></li>
-        <li><g:link controller="voucher" action="barcodePage" class="subNavLinks">Barcode</g:link></li>
-        <li><g:link controller="voucher" action="historyPage" class="subNavLinks">Voucher History</g:link></li>
+        <li><g:link controller="admin" action="createNewVoucherPage" class="subNavLinks">Create Voucher</g:link></li>
+        <li><g:link controller="admin" action="barcodePage" class="subNavLinks">Barcode</g:link></li>
+        <li><g:link controller="admin" action="trackVoucherPage" class="subNavLinks">Track Voucher</g:link></li>
       </ul>
     </li>
     <li>

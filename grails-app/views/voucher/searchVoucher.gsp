@@ -5,8 +5,12 @@
   function validateVoucherSearch() {
     $("#message_box").html("")
     var sequenceNumber = $("#sequenceNumber").val();
-    var clientInitials = $("#clientInitials").val();
-    var barCode = $("#barcode").val();
+
+    var clientInitials = $("#clientInitials").val().toUpperCase();
+     $("#clientInitials").val(clientInitials)
+
+    var barCode = $("#barcode").val().toUpperCase();
+    $("#barcode").val(barCode)
     if ((sequenceNumber + clientInitials) == "" && barCode == "") {
       $("#message_box").html("Enter either sequence number or barcode")
       return false;

@@ -18,6 +18,7 @@ class ClientController {
     } else {
       adminService.addNewClient(clientName, initials, params['address'], params['city'])
       flash['message'] = 'New Client Added Successfully'
+      params.clear()
     }
     render view:'addNewClient'
   }
