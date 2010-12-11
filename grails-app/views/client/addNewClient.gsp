@@ -5,6 +5,21 @@
   <meta name="layout" content="adminMain"/>
 </head>
 <body>
+<script type="text/javascript">
+  function validateMandatoryFields() {
+    var isAllFieldsFilled = true;
+    $("span.mandotry").each(function() {
+      var mandotoryTextBox = $(this).parent().parent().find("input:text");
+      if (mandotoryTextBox.val() == "") {
+        isAllFieldsFilled = false;
+      }
+    });
+    if (!isAllFieldsFilled) {
+      $("#message_box").html('Mandatory fields are not filled!!')
+    }
+    return isAllFieldsFilled;
+  }
+</script>
 <div style="margin-top:10%; margin-left:35%;">
   <span id="message_box">
     <g:if test="flash.message">

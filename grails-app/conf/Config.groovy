@@ -89,7 +89,7 @@ log4j = {
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.breigns.vms.AppUser'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.breigns.vms.AppUserRole'
 grails.plugins.springsecurity.authority.className = 'com.breigns.vms.Role'
-grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/admin'
+//grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/admin'
 
 grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
 grails.plugins.springsecurity.interceptUrlMap = [
@@ -97,5 +97,6 @@ grails.plugins.springsecurity.interceptUrlMap = [
     '/login/authfail':['IS_AUTHENTICATED_ANONYMOUSLY'],
     '/images/**':['IS_AUTHENTICATED_ANONYMOUSLY'],
     '/admin/**':['ROLE_ADMIN','IS_AUTHENTICATED_FULLY'],
+    '/user/**':['ROLE_USER','IS_AUTHENTICATED_FULLY'],
     '/**':['IS_AUTHENTICATED_FULLY']
         ]

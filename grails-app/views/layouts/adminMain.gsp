@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
-<head><title>Admin DashBoard</title>
+<head><title>breigns - VMS</title>
 
   <link type="text/css" href="${resource(dir: 'css/ui-lightness', file: "jquery-ui-1.8.6.custom.css")}" rel=" Stylesheet"/>
   <script type="text/javascript" src="${resource(dir: 'js', file: "jquery-1.4.2.min.js")}"></script>
@@ -33,20 +33,6 @@
       });
     })
 
-
-    function validateMandatoryFields() {
-      var isAllFieldsFilled = true;
-      $("span.mandotry").each(function() {
-        var mandotoryTextBox = $(this).parent().parent().find("input:text");
-        if (mandotoryTextBox.val() == "") {
-          isAllFieldsFilled = false;
-        }
-      });
-      if (!isAllFieldsFilled) {
-        $("#message_box").html('Mandatory fields are not filled!!')
-      }
-      return isAllFieldsFilled;
-    }
 
   </script>
 
@@ -125,7 +111,7 @@
   }
 
   #normal_right_content {
-    float:left;
+    float: left;
     margin-left: 100px;
   }
 
@@ -137,36 +123,50 @@
   #voucherHistoryTable {
     text-align: left;
     float: left;
-    width:100%;
+    width: 100%;
   }
 
   #voucherHistoryTable th {
     font-size: 18px;
     color: gray;
-    width:140px;
-    text-align:left;
+    width: 140px;
+    text-align: left;
   }
 
   #voucherTableLinks a {
-    color:blue;
+    color: blue;
     font-family: verdana, arial, sans-serif;
-    font-size:12;
+    font-size: 12;
   }
 
-   #voucherHistoryTable thead tr{
-     position:relative;
-     display:block;
-   }
-  #voucherHistoryTable td{
-    width:140px;
-    text-align:left;
+  #voucherHistoryTable thead tr {
+    position: relative;
+    display: block;
   }
-  #voucherHistoryTable tbody{
-     height:400px;
-     display:block;
-     overflow:auto;
-     background-color:#f5f5f5;
-   }
+
+  #voucherHistoryTable td {
+    width: 140px;
+    text-align: left;
+  }
+
+  #voucherHistoryTable tbody {
+    height: 400px;
+    display: block;
+    overflow: auto;
+    background-color: #f5f5f5;
+  }
+
+  #voucherToSell_msg {
+    color: red;
+    font-family: verdana, arial, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    width: 313px;
+    height: 30px;
+    display: block;
+    text-align: center;
+
+  }
   </style>
 </head>
 <body>
@@ -190,7 +190,7 @@
     <li>
       <a href="#">User Management</a>
       <ul class="subnav">
-        <li><g:link controller="user">Add User</g:link></li>
+        <li><g:link controller="admin" action="addNewUserPage">Add User</g:link></li>
       </ul>
     </li>
   </li>

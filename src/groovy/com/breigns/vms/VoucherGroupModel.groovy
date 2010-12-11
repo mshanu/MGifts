@@ -5,15 +5,14 @@ class VoucherGroupModel {
   Integer sequenceEnd;
   Integer count;
   Double value;
-  String clientInitials;
-  Long clientId;
-  String clientName;
+  Client client;
   VoucherStatus status;
+  AppUser createdBy;
 
   def getSequenceRange() {
     if (sequenceStart != sequenceEnd)
-      clientInitials + sequenceStart + "-" + clientInitials + sequenceEnd
+      client.initials + sequenceStart + "-" + client.initials + sequenceEnd
     else
-      clientInitials + sequenceStart
+      client.initials + sequenceStart
   }
 }

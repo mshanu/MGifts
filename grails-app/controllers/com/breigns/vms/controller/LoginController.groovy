@@ -47,10 +47,10 @@ class LoginController {
 
 		if (springSecurityService.isLoggedIn()) {
             def principal = springSecurityService.getPrincipal();
-            if(AppUser.findByUsername(principal.username).getAuthorities().contains('ROLE_ADMIN')){
-              redirect controllerName:'admin'
+            if(AppUser.findByUsername(principal.username).getAuthorities()*.authority.contains('ROLE_ADMIN')){
+              forward controllerName:'admin'
             }else{
-			redirect uri: config.successHandler.defaultTargetUrl
+			render view:'/user/userHome'
             }
           return
         }

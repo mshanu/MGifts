@@ -24,4 +24,12 @@ class AppUser {
   Set<Role> getAuthorities() {
     AppUserRole.findAllByAppUser(this).collect { it.role } as Set
   }
+
+  static def createNewUser(firstName,lastName,userName,encodedPassword,role){
+     def user=new AppUser(firstName:firstName,lastName:lastName,
+             username:userName,password:encodedPassword,
+             enabled:true,accountExpired:false,accountLocked:false,passwordExpired:false).save()
+
+    AppUserRole.create(user,Role.findByAuthority(role),true)
+  }
 }

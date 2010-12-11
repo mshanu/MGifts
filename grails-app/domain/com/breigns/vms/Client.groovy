@@ -11,5 +11,6 @@ class Client {
   static constraints = {
     address(nullable:true)
     city(nullable:true)
+    initials(unique: true)
   }
 }

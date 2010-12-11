@@ -8,9 +8,12 @@ import com.breigns.vms.AppUser
 import com.breigns.vms.VoucherStatus
 import java.text.SimpleDateFormat
 import com.breigns.vms.VoucherGroupModel
+import org.hibernate.SessionFactory
+import com.breigns.vms.Role
 
 class AdminService {
   def springSecurityService
+  SessionFactory sessionFactory
 
   def addNewClient(clientName, initials, address, city) {
     new Client(name: clientName, initials: initials, address: address, city: city).save()
@@ -18,6 +21,7 @@ class AdminService {
 
   def createVouchersForTheClient(clientId, numberOfVouchers, voucherValue) {
     def client = Client.load(clientId)
+    def loggedInUser = AppUser.findByUsername(springSecurityService.getPrincipal().username)
     if (client) {
       for (int i = 0; i < numberOfVouchers; i++) {
         def nextSequence = ClientVoucherSequence.nextSequence(client)
@@ -25,9 +29,10 @@ class AdminService {
         while (Voucher.findByBarcodeAlpha(barCodeAlpha)) {
           barCodeAlpha = getRandomAlpha();
         }
-        def loggedInUser = AppUser.findByUsername(springSecurityService.getPrincipal().username)
         client.addToVouchers(new Voucher(sequenceNumber: nextSequence,
                 barcodeAlpha: getRandomAlpha(), value: voucherValue, createdBy: loggedInUser, status: VoucherStatus.CREATED))
+        if(i%50==0)
+          sessionFactory.getCurrentSession().flush();
       }
     }
   }
@@ -47,13 +52,15 @@ class AdminService {
       order('sequenceNumber', 'asc')
     }
   }
-  def getVouchersForSequence(client,sequenceStart,sequenceEnd){
-    Voucher.findAllByClientAndSequenceNumberBetween(client,sequenceStart,sequenceEnd)
+
+  def getVouchersForSequence(clientId, sequenceStart, sequenceEnd) {
+    Voucher.findAllByClientAndSequenceNumberBetween(Client.load(clientId), sequenceStart,
+            sequenceEnd, [sort: 'sequenceNumber', order: 'asc'])
   }
 
 
   def getVouchersCreatedGroupedByValue(clientId) {
-    def client=Client.get(clientId)
+    def client = Client.get(clientId)
     def criteria = Voucher.createCriteria()
     def voucherGroupList = criteria.list {
       projections {
@@ -61,6 +68,7 @@ class AdminService {
         max('sequenceNumber', 'sequenceNumberEnd')
         count('id', 'count')
         groupProperty("value", "value")
+        groupProperty("createdBy", "createdBy")
       }
       and {
         eq('client', client)
@@ -73,12 +81,26 @@ class AdminService {
               count: it.getAt(2),
               value: it.getAt(3),
               status: VoucherStatus.CREATED,
-              clientName: client.name,
-              clientInitials: client.initials
+              client: client,
+              createdBy: it.getAt(4)
       )
     }
   }
 
+  def updateStatusForRangeOfSequence(clientId, sequenceStart, sequenceEnd, voucherStatus) {
+    /*Voucher.findAllByClientAndSequenceNumberBetween(Client.load(clientId),sequenceStart,sequenceEnd).each{
+      it.status = VoucherStatus.BARCODE_GENERATED
+    }*/
+    Voucher.executeUpdate("update Voucher set status = :status where client = :client and sequenceNumber between :sequenceStart and :sequenceEnd",
+            [status: voucherStatus, client: Client.load(clientId), sequenceStart: sequenceStart, sequenceEnd: sequenceEnd])
+//    sessionFactory.getCurrentSession().flush();
+  }
+
+  def createNewUser(firstName,lastName,userName,password,userRole){
+     def role = Role.findByAuthority(userRole)
+     def encodedPassword = springSecurityService.encodePassword(password)
+     AppUser.createNewUser(firstName,lastName,userName,encodedPassword,userRole)
+  }
 
   def getRandomAlpha() {
     RandomStringUtils.randomAlphabetic(10).toUpperCase()
