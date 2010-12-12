@@ -50,7 +50,9 @@ class AdminController {
   }
 
   def trackVoucher= {
-    def voucherList = adminService.getVouchersFor(Long.parseLong(params['clientId']), params['dateToSearch'])
+    /*def voucherStatus = VoucherStatus.valueOf(params['status'])*/
+    def clientId = Long.parseLong(params['clientId'])
+    def voucherList = adminService.getVouchersFor(clientId, VoucherStatus.SOLD)
     render view: 'trackVoucher', model: [clientList: Client.listOrderByName(), voucherList: voucherList]
   }
 
@@ -70,5 +72,9 @@ class AdminController {
       params.clear()
       render view: 'addNewUser', model: [roles: Role.list()]
     }
+  }
+
+  def clientListPage = {
+    render view:'clientList',model:[clientList:Client.list()]
   }
 }

@@ -37,12 +37,9 @@ class AdminService {
     }
   }
 
-  def getVouchersFor(Long clientId, String dateAsString) {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    def dateToSearch = dateFormat.parse(dateAsString)
-
+  def getVouchersFor(Long clientId, VoucherStatus voucherStatus) {
     def client = Client.load(clientId)
-    Voucher.findAllByClientAndDateCreated(client, new java.sql.Date(dateToSearch.getTime()), [sort: 'sequenceNumber', order: 'asc'])
+    Voucher.findAllByClientAndStatus(client, voucherStatus, [sort: 'sequenceNumber', order: 'asc'])
   }
 
   def getVouchersForIdsSortedBySequence(voucherIds) {

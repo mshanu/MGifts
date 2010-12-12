@@ -12,13 +12,13 @@ class Voucher {
   VoucherStatus status;
 
   static belongsTo = [client: Client]
-
+  static hasOne = [invoice:Invoice]
   static constraints = {
     barcodeAlpha(maxSize: 10, minSize: 10)
   }
 
   def getGeneratedSequence() {
-    client.initials + new DecimalFormat("00000000").format(sequenceNumber)
+    client.initials +sequenceNumber
   }
 
 }

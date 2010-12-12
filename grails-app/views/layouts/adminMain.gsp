@@ -32,12 +32,12 @@
         $(this).removeClass("subhover");
       });
 
-     /* $(".subNavLinks").hover(function(){
-          $(this).css('background-color','orange')
-        },
-              function(){
-                $(this).css('background-color','white')
-              });*/
+      /* $(".subNavLinks").hover(function(){
+       $(this).css('background-color','orange')
+       },
+       function(){
+       $(this).css('background-color','white')
+       });*/
     })
 
 
@@ -60,7 +60,7 @@
   }
 
   ul.ui-tabs-nav li ul.subnav {
-    z-index:2;
+    z-index: 2;
     position: absolute;
     top: 40px;
     background: #F6F6F6;
@@ -120,7 +120,7 @@
 
   #normal_right_content {
     float: left;
-    margin-left: 100px;
+    margin-left: 20px;
   }
 
   #adminTab {
@@ -128,16 +128,16 @@
 
   }
 
-  #voucherHistoryTable {
+  #voucherTrackingTable {
     text-align: left;
     float: left;
     width: 100%;
   }
 
-  #voucherHistoryTable th {
+  #voucherTrackingTable th {
     font-size: 18px;
     color: gray;
-    width: 140px;
+    width: 120px;
     text-align: left;
   }
 
@@ -147,17 +147,17 @@
     font-size: 12;
   }
 
-  #voucherHistoryTable thead tr {
+  #voucherTrackingTable thead tr {
     position: relative;
     display: block;
   }
 
-  #voucherHistoryTable td {
-    width: 140px;
+  #voucherTrackingTable td {
+    width: 120px;
     text-align: left;
   }
 
-  #voucherHistoryTable tbody {
+  #voucherTrackingTable tbody {
     height: 400px;
     display: block;
     overflow: auto;
@@ -174,6 +174,23 @@
     display: block;
     text-align: center;
 
+  }
+
+  .numeric {
+
+  }
+
+  .mandatoryText {
+
+  }
+
+  #clientListTable th {
+    width: 200px
+  }
+
+  #clientListTable td {
+    width: 200px;
+    text-align:center;
   }
   </style>
 </head>
@@ -192,7 +209,7 @@
       <a href="#">Client Management</a>
       <ul class="subnav">
         <li><g:link controller="client">Add a Client</g:link></li>
-        <li><a href="#">Client List</a></li>
+        <li><g:link controller="admin" action="clientListPage">Client List</g:link></li>
       </ul>
     </li>
     <li>

@@ -1,5 +1,17 @@
 package com.breigns.vms;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum VoucherStatus {
-    CREATED,BARCODE_GENERATED,DELIVERED,SOLD
+
+    CREATED("Created") ,BARCODE_GENERATED("Barcode Generated"),SOLD("SOLD");
+    String description;
+    VoucherStatus(String description) {
+        this.description = description;
+    }
+
+    static List<VoucherStatus> getStatusesToTrack() {
+        return Arrays.asList(BARCODE_GENERATED, SOLD);
+    }
 }

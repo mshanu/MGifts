@@ -42,7 +42,7 @@
     </div>
 <div id="normal_right_content">
 <div>
-  <table id="voucherHistoryTable">
+  <table id="voucherTrackingTable">
     <thead>
     <tr>
       <th>Client Name</th>
