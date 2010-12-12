@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type"
           content="text/html; charset=ISO-8859-1"/>
-           <link rel="icon" href="http://localhost:8080/MGifts/images/favicon.ico"/>
+           
   <title>breigns</title>
   <style type="text/css">
   body {

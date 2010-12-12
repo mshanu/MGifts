@@ -7,8 +7,8 @@
   <script type="text/javascript" src="${resource(dir: 'js', file: "jquery-ui-1.8.6.custom.min.js")}"></script>
 
   <!-- Loads for Date-->
-  <link rel="stylesheet" media="screen" type="text/css" href="/MGifts/css/datepicker.css"/>
-  <script type="text/javascript" src="/MGifts/js/datepicker.js"></script>
+  <link rel="stylesheet" media="screen" type="text/css" href="${resource(dir: 'css', file: "datepicker.css")}"/>
+  <script type="text/javascript" src="/${resource(dir: 'js', file: "datepicker.js")}"></script>
   <script>
     $(function() {
       var logoutLink = $("#logoutLink").attr('href')

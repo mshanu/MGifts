@@ -1,4 +1,4 @@
-<project name="mgift" default="setupdb">
+<project name="vms" default="setupdb">
     <property name="db.driver" value="org.postgresql.Driver"/>
     <property name="db.url" value="jdbc:postgresql://localhost:5432/GIFTDB"/>
     <property name="db.username" value="app_user"/>
