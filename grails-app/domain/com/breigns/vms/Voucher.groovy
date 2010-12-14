@@ -1,7 +1,5 @@
 package com.breigns.vms
 
-import java.text.DecimalFormat
-
 class Voucher {
   Integer sequenceNumber
   String barcodeAlpha
@@ -10,15 +8,15 @@ class Voucher {
   java.sql.Date dateCreated
   Date lastUpdated
   VoucherStatus status;
-
+  VoucherInvoice voucherInvoice
   static belongsTo = [client: Client]
-  static hasOne = [invoice:Invoice]
+  static fetchMode = [client:'eager']
   static constraints = {
     barcodeAlpha(maxSize: 10, minSize: 10)
   }
 
   def getGeneratedSequence() {
-    client.initials +sequenceNumber
+    client.initials + sequenceNumber
   }
 
 }

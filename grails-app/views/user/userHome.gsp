@@ -67,6 +67,7 @@
   }
 
   </style>
+  <script type="text/javascript" src="${resource(dir: 'js', file: "common.js")}"></script>
 </head>
 <body>
 <div id="userTab">
@@ -78,7 +79,7 @@
       <g:link controller="voucher" title="tabContent" action="validateVoucherPage">Validate Voucher</g:link>
     </li>
     <li>
-      <g:link controller="voucher" title="tabContent" action="voucherSellingPage">Voucher Selling</g:link>
+      <g:link controller="voucher" title="tabContent" action="invoice">Invoice Entry</g:link>
     </li>
     <li id="logout" style="float:right;width:100px"><g:link style="float:right;" elementId="logoutLink" controller="logout">Logout</g:link></li>
   </ul>

@@ -5,6 +5,7 @@
   <link type="text/css" href="${resource(dir: 'css/ui-lightness', file: "jquery-ui-1.8.6.custom.css")}" rel=" Stylesheet"/>
   <script type="text/javascript" src="${resource(dir: 'js', file: "jquery-1.4.2.min.js")}"></script>
   <script type="text/javascript" src="${resource(dir: 'js', file: "jquery-ui-1.8.6.custom.min.js")}"></script>
+  <script type="text/javascript" src="${resource(dir: 'js', file: "common.js")}"></script>
 
   <!-- Loads for Date-->
   <link rel="stylesheet" media="screen" type="text/css" href="${resource(dir: 'css', file: "datepicker.css")}"/>
@@ -96,7 +97,6 @@
     font-family: verdana, arial, sans-serif;
     font-size: 12px;
     font-weight: normal;
-    width: 313px;
     height: 30px;
     display: block;
     text-align: center;
@@ -190,7 +190,7 @@
 
   #clientListTable td {
     width: 200px;
-    text-align:center;
+    text-align: center;
   }
   </style>
 </head>
@@ -200,9 +200,10 @@
     <li>
       <a href="#">Voucher</a>
       <ul class="subnav">
-        <li><g:link controller="admin" action="createNewVoucherPage" class="subNavLinks">Create Voucher</g:link></li>
+        <li><g:link controller="admin" action="createNewVoucherPage" class="subNavLinks">Create Vouchers</g:link></li>
+        <li><g:link controller="admin" action="trackVoucherPage" class="subNavLinks">Edit Vouchers</g:link></li>
         <li><g:link controller="admin" action="barcodePage" class="subNavLinks">Barcode</g:link></li>
-        <li><g:link controller="admin" action="trackVoucherPage" class="subNavLinks">Track Voucher</g:link></li>
+        <li><g:link controller="admin" action="searchToDeletePage" class="subNavLinks">Delete Vouchers</g:link></li>
       </ul>
     </li>
     <li>
@@ -218,7 +219,6 @@
         <li><g:link controller="admin" action="addNewUserPage">Add User</g:link></li>
       </ul>
     </li>
-  </li>
     <li id="logout" style="float:right;width:100px"><g:link style="float:right;" controller="logout">Logout</g:link></li>
   </ul>
   <div id="tabContent">

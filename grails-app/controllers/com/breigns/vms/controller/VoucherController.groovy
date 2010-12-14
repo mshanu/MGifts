@@ -1,45 +1,27 @@
 package com.breigns.vms.controller
 
-import com.breigns.vms.Client
 import com.breigns.vms.utility.BarCodeXmlGenerator
-import com.breigns.vms.VoucherStatus
-import java.text.SimpleDateFormat
+
 import com.breigns.vms.Item
-import com.breigns.vms.InvoiceModel
+import com.breigns.vms.PurchaseModel
+import grails.converters.JSON
 
 class VoucherController {
   def adminService;
   def voucherService
 
-  def print = {
-    def idsLisToQuery = []
-    def voucherListFromParam = params['voucherSelected']
-    if (voucherListFromParam instanceof String) {
-      idsLisToQuery.add(Long.valueOf(voucherListFromParam))
-    } else {
-      voucherListFromParam.each {
-        idsLisToQuery.add(Long.valueOf(it))
-      }
-    }
-    def voucherList = adminService.getVouchersForIdsSortedBySequence(idsLisToQuery)
-    response.setHeader("Content-Disposition", "attachment; filename=barcode.xml")
-    render new BarCodeXmlGenerator().generateXmlForBarCode(voucherList)
-  }
-
- 
   def validateVoucherPage = {
-    render view: 'searchVoucher', model: [link: 'validate']
+    render view: 'searchVoucher'
   }
 
-  def voucherSellingPage = {
-
-    render view: 'searchVoucher', model: [link: 'sell']
+  def invoice = {
+    render view: 'invoiceEntry', model: [items: Item.list()]
   }
 
   def validate = {
     flash.clear()
     def sequenceNumber = params['sequenceNumber'] ? Long.parseLong(params['sequenceNumber']) : null
-    def voucher = voucherService.getVoucherToValidate(params['clientInitials']?.toUpperCase(), sequenceNumber, params['barcode'])
+    def voucher = voucherService.getVoucherToValidateAndUpdateStatus(params['clientInitials']?.toUpperCase(), sequenceNumber, params['barcode'])
     if (voucher) {
       render view: 'voucherDetails', model: [voucher: voucher, voucherFound: true]
     } else {
@@ -47,15 +29,14 @@ class VoucherController {
       render view: 'voucherDetails', model: [voucherFound: false]
     }
   }
-  def searchToSell = {
-    flash.clear()
+  def validateAndGetVoucher = {
     def sequenceNumber = params['sequenceNumber'] ? Long.parseLong(params['sequenceNumber']) : null
-    def voucher = voucherService.getVoucherToValidate(params['clientInitials'], sequenceNumber, params['barcode'])
+    def voucher = voucherService.getVoucherToValidateAndUpdateStatus(params['clientInitials'], sequenceNumber, params['barcode'])
     if (voucher) {
-      render view: 'voucherDetailsToSell', model: [voucher: voucher, voucherFound: true,items:Item.list()]
+      def converter = voucher as JSON
+      converter.render(response)
     } else {
-      flash.message = "System cannot find a voucher for your search"
-      render view: 'voucherDetailsToSell', model: [voucherFound: false]
+      render 'FAILURE'
     }
   }
   def sell = {
@@ -67,9 +48,9 @@ class VoucherController {
     def discount = params['discount']
     def netTotal = params['netTotal']
     def itemId = Long.parseLong(params['itemId'])
-    def invoiceModel = new InvoiceModel(voucherId:voucherId,
-            invoiceNumber:invoiceNumber,dateAsString:invoiceDateAsString,
-            totalAmount:Double.parseDouble(totalAmount),discount:Double.parseDouble(discount),netTotal:Double.parseDouble(netTotal),itemId:itemId)
+    def invoiceModel = new PurchaseModel(voucherId: voucherId,
+            invoiceNumber: invoiceNumber, dateAsString: invoiceDateAsString,
+            totalAmount: Double.parseDouble(totalAmount), discount: Double.parseDouble(discount), netTotal: Double.parseDouble(netTotal), itemId: itemId)
     voucherService.sell(invoiceModel)
     render view: 'voucherSold'
   }

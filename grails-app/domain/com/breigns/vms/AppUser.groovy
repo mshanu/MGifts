@@ -17,6 +17,8 @@ class AppUser {
     password blank: false
   }
 
+  static belongsTo = [shop:Shop]
+
   static mapping = {
     password column: '`password`'
   }
@@ -25,10 +27,10 @@ class AppUser {
     AppUserRole.findAllByAppUser(this).collect { it.role } as Set
   }
 
-  static def createNewUser(firstName,lastName,userName,encodedPassword,role){
+  static def createNewUser(firstName,lastName,userName,encodedPassword,role,shop ){
      def user=new AppUser(firstName:firstName,lastName:lastName,
              username:userName,password:encodedPassword,
-             enabled:true,accountExpired:false,accountLocked:false,passwordExpired:false).save()
+             enabled:true,accountExpired:false,accountLocked:false,passwordExpired:false,shop:shop).save()
 
     AppUserRole.create(user,Role.findByAuthority(role),true)
   }

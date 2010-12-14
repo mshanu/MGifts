@@ -5,35 +5,17 @@
 </head>
 <body>
 <script type="text/javascript">
-  $(function() {
-    var currentDate = new Date()
-    var dateAsString = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-    $('#datePickerSpan').DatePicker({
-      flat: true,
-      date: dateAsString,
-      current: dateAsString,
-      calendars: 1,
-      starts: 1
-    });
-  })
-  function validateSubmitForm() {
-    if ($("#clientId").attr('selectedIndex') == 0) {
-      $("#clientSelectLi").css('color', 'red');
-      return false
-    }
-    $('#dateToSearch').val($('#datePickerSpan').DatePickerGetDate(true))
-    return true;
-  }
+
   function selectAll() {
     $('input:checkbox').attr('checked', true)
   }
   function unSelectAll() {
     $('input:checkbox').attr('checked', false)
   }
-  function printBarCode() {
+  function deleteVoucher() {
     if ($('input:checkbox').is(':checked')) {
       $('form').attr('action', function() {
-        return $('#printLink').attr('href')
+        return $('#deleteLink').attr('href')
       })
       $('form').submit()
     } else {
@@ -41,30 +23,47 @@
     }
     return false;
   }
+
+  function validateAndSubmit(){
+    if($("#invoiceNumber").val()=="" || !$("#invoiceNumber").val().match(/^\d*$/)){
+      $("#message_box").html("invoice Number Cannot Be Blank And Should Be Numeric")
+      return false;
+    }
+    return true;
+  }
+
 </script>
 
 <div id="voucherHistoryMainContent" style="height:500px;margin-top:40px;margin-left:30px;">
 <div id="normal_left_nav">
-  <g:form action="trackVoucher" name="historyForm" onsubmit="return validateSubmitForm()">
+  <g:form action="searchVoucherToDelete" name="historyForm" onsubmit="return validateAndSubmit()">
     <ul style="list-style:none;margin-left:-40px;margin-top:50px;">
-   <li>
-     <li style="text-align:center;">Select the date</li>
-     <li><span id="datePickerSpan"></span></li>
-   </li>
-   <li style="text-align:center;margin-top:40px;" id="clientSelectLi">Select the client</li>
-   <li style="text-align:center">
-    <g:select name="clientId" value="{clientId}" style="width:150px" from="${clientList}"
-            noSelection="['-1':'---------Select---------']" optionKey="id" optionValue="name"/>
-    </li>
-    <li style="text-align:center;margin-top:30px;">
-      <g:submitButton name="sumit" style="width:150px;" value="Search Vouchers"/>
-    </li>
+      <li style="text-align:center;margin-top:40px;" id="clientSelectLi">Select the client</li>
+      <li style="text-align:center">
+        <g:select name="clientId" value="${params.clientId}" style="width:150px" from="${clients}" optionKey="id" optionValue="name"/>
+      </li>
+      <li style="text-align:center;margin-top:40px;">Invoiced AT</li>
+      <li style="text-align:center">
+        <g:select name="shopId" value="${params.shopId}" style="width:150px" from="${shops}" optionKey="id" optionValue="name"/>
+      </li>
+      <li style="text-align:center;margin-top:40px;">Invoice Number</li>
+      <li style="text-align:center">
+        <g:textField name="invoiceNumber" value="${params.invoiceNumber}"/> 
+      </li>
+      <li style="text-align:center;margin-top:30px;">
+        <g:submitButton name="sumit" style="width:150px;" value="Search Vouchers"/>
+      </li>
     </ul>
-    <g:hiddenField name="dateToSearch"/>
-
     </div>
 <div id="normal_right_content">
-<span id="message_box" style="text-align:center"></span>
+<span id="message_box" style="text-align:center">
+  <g:if test="${voucherList!=null}">
+    ${voucherList.size()} Record Found
+  </g:if>
+  <g:if test="${flash.message}">
+    ${flash.message}
+  </g:if>
+</span>
 <div>
   <table id="voucherTrackingTable">
     <thead>
@@ -96,9 +95,9 @@
     <div id="voucherTableLinks" style="padding:10px;">
       <span><a href="#" onclick="selectAll()">Select All</a></span>
       <span><a href="#" onclick="unSelectAll()">UnSelect All</a></span>
-
-      <span style="float:right"><g:link controller="voucher" action="print" elementId="printLink" onclick="return printBarCode()">Print Barcode</g:link></span>
-
+      <span style="float:right">
+        <g:link controller="admin" action="deleteVouchers" elementId="deleteLink" onclick="return deleteVoucher()">Delete Voucher</g:link>
+      </span>
     </div>
   </g:form>
 </div>

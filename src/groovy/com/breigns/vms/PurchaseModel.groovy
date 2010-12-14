@@ -1,6 +1,6 @@
 package com.breigns.vms
 
-class InvoiceModel {  
+class PurchaseModel {  
   Long voucherId
   String invoiceNumber
   String dateAsString

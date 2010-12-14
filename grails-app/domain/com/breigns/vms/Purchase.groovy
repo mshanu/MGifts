@@ -1,14 +1,14 @@
 package com.breigns.vms
 
-class Invoice {
-  String invoiceNumber;
-  Date invoiceDate;
-  AppUser createdBy;
-  Date dateCreated;
-  Voucher voucher;
+class Purchase {
+  Integer invoiceNumber
+  Date invoiceDate
+  AppUser createdBy
+  Date dateCreated
+  List<Voucher> vouchers
   Item item;
   Double totalAmount
-  Double discount;
+  Double discount
   Double netTotal
 
   static constraints = {

@@ -5,6 +5,10 @@ import com.breigns.vms.AppUser
 import com.breigns.vms.Client
 import com.breigns.vms.utility.BarCodeXmlGenerator
 import com.breigns.vms.VoucherStatus
+import com.breigns.vms.Shop
+import com.breigns.vms.VoucherSetModel
+
+import com.breigns.vms.VoucherCreationRequestModel
 
 class AdminController {
   def adminService;
@@ -13,13 +17,22 @@ class AdminController {
   }
 
   def createNewVoucherPage = {
-    render view: 'createNewVoucher', model: [clientList: Client.listOrderByName()]
+    flash.clear()
+    render view: 'createNewVoucher', model: [clientList: Client.listOrderByName(), shops: Shop.list()]
   }
 
   def createNewVoucher = {
-    adminService.createVouchersForTheClient(params['clientId'], Integer.parseInt(params['numberOfVouchers']), Double.parseDouble(params['voucherValue']))
-    flash.message = 'Voucher(s) Created Successfully'
-    render view: 'createNewVoucher', model:[clientList:Client.list()]
+    def voucherSet = new ArrayList<VoucherSetModel>()
+    params.voucherSet.numberOfVouchers.eachWithIndex {obj, index ->
+      voucherSet.add(new VoucherSetModel(numberOfVouchers: Integer.parseInt(obj),
+              denomination: Integer.parseInt(params.voucherSet.denomination[index])))
+    }
+    def invoiceNumber = adminService.createVouchersForTheClient(new VoucherCreationRequestModel(shopId: Long.parseLong(params['invoicedAt']),
+            clientId: Long.parseLong(params['clientId']), voucherList: voucherSet))
+    /*adminService.createVouchersForTheClient(params['clientId'], Integer.parseInt(params['numberOfVouchers']),
+            Double.parseDouble(params['voucherValue']),invoicedAt,params['invoiceNumber'])*/
+    flash.message = 'Voucher(s) Created Successfully with the invoice number: ' + invoiceNumber
+    render view: 'createNewVoucher', model: [clientList: Client.list(), shops: Shop.list()]
   }
 
   def barcodePage = {
@@ -49,7 +62,7 @@ class AdminController {
     render view: 'trackVoucher', model: [clientList: Client.listOrderByName()]
   }
 
-  def trackVoucher= {
+  def trackVoucher = {
     /*def voucherStatus = VoucherStatus.valueOf(params['status'])*/
     def clientId = Long.parseLong(params['clientId'])
     def voucherList = adminService.getVouchersFor(clientId, VoucherStatus.SOLD)
@@ -58,7 +71,7 @@ class AdminController {
 
   def addNewUserPage = {
     flash.clear()
-    render view: 'addNewUser', model: [roles: Role.list()]
+    render view: 'addNewUser', model: [roles: Role.list(), shops: Shop.list()]
   }
 
   def insertUser = {
@@ -67,14 +80,43 @@ class AdminController {
       render view: 'addNewUser', params: params, model: [roles: Role.list()]
     }
     else {
-      adminService.createNewUser(params['firstName'], params['lastName'], params['username'], params['password'], params['userRole'])
+      def shop = Shop.load(Long.parseLong(params['shop']))
+      adminService.createNewUser(params['firstName'], params['lastName'], params['username'], params['password'], params['userRole'], shop)
       flash.message = 'User Created Successfully'
       params.clear()
-      render view: 'addNewUser', model: [roles: Role.list()]
+      render view: 'addNewUser', model: [roles: Role.list(), shops: Shop.list()]
     }
   }
 
+  def searchToDeletePage = {
+    render view: 'searchToDeletePage', model: [shops: Shop.list(), clients: Client.list()]
+  }
+
+  def searchVoucherToDelete = {
+    flash.clear()
+    def clientId = Long.parseLong(params['clientId'])
+    def shopId = Long.parseLong(params['shopId'])
+    def voucherInvoiceNumber = Integer.parseInt(params['invoiceNumber'])
+    render view: 'searchToDeletePage', model: [voucherList: adminService.getVouchersToDelete(clientId, shopId, voucherInvoiceNumber), shops: Shop.list(), clients: Client.list()]
+
+  }
+
+  def deleteVouchers = {
+    def voucherIdsToDelete = []
+    def voucherListFromParam = params['voucherSelected']
+    if (voucherListFromParam instanceof String) {
+      voucherIdsToDelete.add(Long.valueOf(voucherListFromParam))
+    } else {
+      voucherListFromParam.each {
+        voucherIdsToDelete.add(Long.valueOf(it))
+      }
+    }
+    adminService.deleteVouchers(voucherIdsToDelete)
+    flash.message = "Vouchers Deleted Successfully"
+    searchToDeletePage()
+  }
+
   def clientListPage = {
-    render view:'clientList',model:[clientList:Client.list()]
+    render view: 'clientList', model: [clientList: Client.list()]
   }
 }

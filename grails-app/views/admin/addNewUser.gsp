@@ -60,6 +60,10 @@
         <td><g:select name="userRole" from="${roles}" value="${params.userRole}" optionKey="authority" optionValue="description"></g:select></td>
       </tr>
       <tr>
+        <td><label>Shop</label></td>
+        <td><g:select name="shop" from="${shops}" value="${params.shop}" optionKey="id" optionValue="name"></g:select></td>
+      </tr>
+      <tr>
         <td colspan="2"><g:submitButton name="Create" value="Save"/></td>
       </tr>
     </table>
