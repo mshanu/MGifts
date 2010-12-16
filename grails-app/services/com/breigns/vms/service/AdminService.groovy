@@ -49,7 +49,7 @@ class AdminService {
           def newVoucher = new Voucher(sequenceNumber: nextSequence,
                   barcodeAlpha: getRandomAlpha(), value: voucher.denomination, createdBy: loggedInUser,
                   status: VoucherStatus.CREATED, voucherInvoice: voucherInvoice, client: client)
-          client.addToVouchers(newVoucher.save())          
+          client.addToVouchers(newVoucher.save())
           j++;
           if (j % 50 == 0) {
             sessionFactory.getCurrentSession().flush();
@@ -177,20 +177,35 @@ voucherInvoice.invoiceNumber = :invoiceNumber and  status not in (:status)""",
     def vaoucherSalesByGroup = []
     List soldSet = getListOfShopsAndSoldValues()
     List validatedSet = getListOfShopsAndValidValues()
+
+    def soldMap = [:]
+    def validatedMap = [:]
     soldSet.each {
-      def shop = it.getAt(2);
+      soldMap.put(it.getAt(2).id, it)
+    }
+    validatedSet.each {
+      validatedMap.put(it.getAt(2).id, it)
+    }
+    soldSet.each {
       def validatedValue;
       def validatedCount;
-      validatedSet.each {
-        if (it.getAt(2).id == shop.id) {
-          validatedValue = it.getAt(0)
-          validatedCount = it.getAt(1)
-        }
-      }
-      vaoucherSalesByGroup.add(new VoucherSaleByShop(totalSoldValue: it.getAt(0),
-              sold: it.getAt(1), shop: shop, totalValidatedValue: validatedValue, validated: validatedCount))
-    }
 
+      def shop = it.getAt(2);
+      if (validatedMap.containsKey(shop.id)) {
+        validatedValue = validatedMap.get(shop.id).getAt(0)
+        validatedCount = validatedMap.get(shop.id).getAt(1)
+        vaoucherSalesByGroup.add(new VoucherSaleByShop(totalSoldValue: it.getAt(0),
+                sold: it.getAt(1), shop: shop, totalValidatedValue: validatedValue, validated: validatedCount))
+        validatedMap.remove(shop.id)
+      } else {
+        vaoucherSalesByGroup.add(new VoucherSaleByShop(totalSoldValue: it.getAt(0),
+                sold: it.getAt(1), shop: shop))
+      }
+    }
+    validatedMap.values().each {
+      vaoucherSalesByGroup.add(new VoucherSaleByShop(totalValidatedValue: it.getAt(0),
+              validated: it.getAt(1), shop: it.getAt(2)))
+    }
     return new AggregatedReportModel(vocuherStatusReport: aggregatedModel, voucherSaleByShop: vaoucherSalesByGroup)
   }
 

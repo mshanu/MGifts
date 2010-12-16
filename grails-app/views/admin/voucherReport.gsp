@@ -30,6 +30,7 @@
   <div id="aggregatedByShop">
     <h4 style="text-align:center;margin-top:10px;margin-bottom:5px;">Sales Snapshot Per Shop</h4>
     <table id="salePerShop">
+      <thead>
       <tr>
         <th>Shop Name</th>
         <th>Sold (Rs)</th>
@@ -37,7 +38,9 @@
         <th>Validated (Rs)</th>
         <th>Validated #</th>
       </tr>
+      </thead>
       <g:if test="${reportModel}">
+        <tbody>
         <g:each in="${reportModel.voucherSaleByShop}">
           <tr>
             <td>${it.shop.name}</td>
@@ -47,6 +50,7 @@
             <td>${it.validated}</td>
           </tr>
         </g:each>
+        </tbody>
       </g:if>
     </table>
   </div>

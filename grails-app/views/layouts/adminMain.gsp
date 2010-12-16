@@ -85,11 +85,16 @@
 
   }
 
+  #tabContent {
+    font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  }
+
+  #tabContent select {
+    width: 150px;
+  }
+
   #message_box {
     color: red;
-    font-family: verdana, arial, sans-serif;
-    font-size: 12px;
-    font-weight: normal;
     height: 30px;
     display: block;
     text-align: center;
@@ -107,8 +112,6 @@
     height: 500px;
     border-right: #ff4500 dotted thin;
     display: block;
-    font-family: verdana, arial, sans-serif;
-    font-size: 12px;
   }
 
   #normal_right_content {
@@ -128,7 +131,6 @@
   }
 
   #voucherTrackingTable th {
-    font-size: 18px;
     color: gray;
     width: 120px;
     text-align: left;
@@ -136,8 +138,6 @@
 
   #voucherTableLinks a {
     color: blue;
-    font-family: verdana, arial, sans-serif;
-    font-size: 12;
   }
 
   #voucherTrackingTable thead tr {
@@ -159,9 +159,6 @@
 
   #voucherToSell_msg {
     color: red;
-    font-family: verdana, arial, sans-serif;
-    font-size: 12px;
-    font-weight: normal;
     width: 313px;
     height: 30px;
     display: block;
@@ -197,7 +194,7 @@
 
   #aggregatedVoucherStatus {
     float: left;
-    width: 450px;
+    width: 32%;
     height: 300px;
     margin-left: 1%;
     border: orange dotted thin;
@@ -206,17 +203,24 @@
   #aggregatedByShop {
     float: left;
     height: 300px;
-    margin-left: 1%;
-    width: 700px;
+    margin-left: 4%;
+    width: 58%;
+    overflow: auto;
     border: orange dotted thin;
   }
 
   #salesSnapshot {
-    margin-left: 20px;
+    margin-left: 10px;
   }
 
   #salesSnapshot tr td {
-    padding: 10px;
+    padding: 5px;
+  }
+
+  #salePerShop tbody {
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   #salePerShop tr th {
@@ -226,7 +230,6 @@
   }
 
   #salePerShop tr td {
-    width: 200px;
     text-align: center;
   }
   </style>

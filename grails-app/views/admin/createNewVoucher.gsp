@@ -44,9 +44,7 @@
   </script>
   <style type="text/css">
   #createNewVoucher ul {
-    list-style-type: none;
-    font-family: 'Trebuchet MS', Tahoma;
-    font-size: 16px;
+    list-style-type: none;    
     color: black;
     margin-left: -35px;
   }

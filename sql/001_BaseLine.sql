@@ -25,8 +25,41 @@ alter table voucher_invoice add constraint FK3BA3EA9CF300A56A foreign key (invoi
 alter table voucher_invoice_sequence add constraint FK7FB9EE045CDFF32F foreign key (shop_id) references shop;
 create sequence hibernate_sequence;
 --Data
-insert into shop(id,version,name) values(1,1,'Breigns Calicut');
-insert into shop(id,version,name) values(2,1,'MG Calicut');
+
+
+insert into shop(id,version,name) values(1,1,'MG Trivandrum');
+insert into shop(id,version,name) values(2,1,'MG Pathanamthitta');
+insert into shop(id,version,name) values(3,1,'MG Kollam';
+insert into shop(id,version,name) values(4,1,'MG Allappey');
+insert into shop(id,version,name) values(5,1,'MG Kottayam');
+insert into shop(id,version,name) values(6,1,'MG Thodupuzha');
+insert into shop(id,version,name) values(7,1,'MG Cochin');
+insert into shop(id,version,name) values(8,1,'MG Kodungaloor');
+insert into shop(id,version,name) values(9,1,'MG Trichur');
+insert into shop(id,version,name) values(10,1,'MG Palakkad');
+insert into shop(id,version,name) values(11,1,'MG Edappal');
+insert into shop(id,version,name) values(12,1,'MG Manjeri');
+insert into shop(id,version,name) values(13,1,'MG Perinthalmanna');
+insert into shop(id,version,name) values(14,1,'MG Tirur');
+insert into shop(id,version,name) values(15,1,'MG Calicut');
+insert into shop(id,version,name) values(16,1,'MG Vadakara');
+insert into shop(id,version,name) values(17,1,'MG Sulthan Bathery');
+insert into shop(id,version,name) values(18,1,'MG Thalesery');
+insert into shop(id,version,name) values(19,1,'MG Kannur');
+insert into shop(id,version,name) values(20,1,'MG Payyannur');
+insert into shop(id,version,name) values(21,1,'MG Kanghangad');
+insert into shop(id,version,name) values(22,1,'MG Kasargod');
+insert into shop(id,version,name) values(23,1,'MG Coimbatore');
+insert into shop(id,version,name) values(24,1,'MG Salem');
+insert into shop(id,version,name) values(25,1,'MG Erode');
+insert into shop(id,version,name) values(26,1,'MG Banglore(JayaNagar)');
+insert into shop(id,version,name) values(27,1,'MG Banglore(Dickenson Road)');
+insert into shop(id,version,name) values(28,1,'MG Mysore');
+insert into shop(id,version,name) values(29,1,'MG Mangalore');
+insert into shop(id,version,name) values(30,1,'MG Hassan');
+insert into shop(id,version,name) values(31,1,'MG Hyderabad');
+
+
 
 insert into role(id,version,authority,description) values (1,1,'ROLE_ADMIN','Admin User');
 insert into role(id,version,authority,description) values (2,1,'ROLE_USER','Shop User');

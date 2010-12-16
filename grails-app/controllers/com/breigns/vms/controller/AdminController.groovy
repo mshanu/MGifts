@@ -3,7 +3,7 @@ package com.breigns.vms.controller
 import com.breigns.vms.Role
 import com.breigns.vms.AppUser
 import com.breigns.vms.Client
-import com.breigns.vms.utility.BarCodeXmlGenerator
+import com.breigns.vms.utility.BarCodeGenerator
 import com.breigns.vms.VoucherStatus
 import com.breigns.vms.Shop
 import com.breigns.vms.VoucherSetModel
@@ -53,14 +53,15 @@ class AdminController {
   }
 
   def printBarCodeForClient = {
+    def file = grailsApplication.getMainContext().getResource("/template/barcode.template").getFile()
     def clientId = Long.parseLong(params['clientIdForBarcode'])
     def sequenceStart = Integer.parseInt(params['sequenceStart'])
     def sequenceEnd = Integer.parseInt(params['sequenceEnd'])
     def voucherList = adminService.getVouchersForSequence(clientId,
             sequenceStart, sequenceEnd)
     adminService.updateStatusForRangeOfSequence(clientId, sequenceStart, sequenceEnd, VoucherStatus.BARCODE_GENERATED)
-    response.setHeader("Content-Disposition", "attachment; filename=barcode.xml")
-    render new BarCodeXmlGenerator().generateXmlForBarCode(voucherList)
+    response.setHeader("Content-Disposition", "attachment; barcode.zpl")
+    render new BarCodeGenerator().generateZlpForBarcode(voucherList,file)
   }
 
   def editVoucherPage = {

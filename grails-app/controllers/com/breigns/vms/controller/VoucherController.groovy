@@ -1,7 +1,5 @@
 package com.breigns.vms.controller
 
-import com.breigns.vms.utility.BarCodeXmlGenerator
-
 import com.breigns.vms.Item
 import com.breigns.vms.PurchaseModel
 import grails.converters.JSON
