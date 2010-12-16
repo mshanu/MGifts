@@ -25,13 +25,42 @@ function validateVoucherSearchWith(clientInitialsId, sequenceNumberId, barcodeId
     return true
 }
 
-function getValueOf(elementId){
-    return $('#'+elementId).val()
+function getValueOf(elementId) {
+    return $('#' + elementId).val()
+}
+
+function isNumeric(elementId) {
+    return getValueOf(elementId).match(/^\d*$/)
 }
 
 function bindRemoveClickHandlerForTableRow(tableId) {
-      $("#"+tableId).find("input:button").unbind('click');
-      $("#"+tableId).find("input:button").click(function() {
+    $("#" + tableId).find("input:button").unbind('click');
+    $("#" + tableId).find("input:button").click(function() {
         $(this).parent().parent().remove()
-      });
-    }
+    });
+}
+
+function validateMandatoryFields(fieldArray) {
+    var isAllFieldsFilled = true;
+    $.each(fieldArray, function(index, value) {
+        if ($("#" + value).val() == "") {
+            isAllFieldsFilled = false;
+        }
+    });
+    return isAllFieldsFilled;
+}
+
+function validateDate(fieldName) {
+    return $("#" + fieldName).val().match(/^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/)
+}
+
+function areFieldsHoldingPriceValue(fieldArray) {
+    var isDouble = true;
+    $.each(fieldArray, function(index, value) {
+        if (!$("#" + value).val().match(/^\d*.?\d?\d?$/)) {
+            isDouble = false;
+            return false;
+        }
+    })
+    return isDouble
+}

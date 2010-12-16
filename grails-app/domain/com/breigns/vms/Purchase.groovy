@@ -1,9 +1,10 @@
 package com.breigns.vms
 
 class Purchase {
-  Integer invoiceNumber
+  Long invoiceNumber
   Date invoiceDate
   AppUser createdBy
+  Shop shoppedAt
   Date dateCreated
   List<Voucher> vouchers
   Item item;

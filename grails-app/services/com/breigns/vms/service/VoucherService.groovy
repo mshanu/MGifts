@@ -30,23 +30,31 @@ class VoucherService {
     }
     if (!voucherList.isEmpty()) {
       voucher = voucherList.get(0)
+      voucher.validatedAt = getLoggedInuser().shop 
       voucher.status = VoucherStatus.VALIDATED
       voucher.save()
     }
     voucher
   }
 
-  def sell(PurchaseModel invoiceModel) {
-    def dateFormat = new SimpleDateFormat("MM/dd/yyyy")
-    def loggedInUser = AppUser.findByUsername(springSecurityService.getPrincipal().username)
-    def voucher = Voucher.load(invoiceModel.voucherId)
+  def submitInvoice(PurchaseModel invoiceModel) {
+    def vouchers = invoiceModel.voucherIds.collect {Voucher.load(it)}
+    def inuser = getLoggedInuser()
     def invoice = new Purchase(invoiceNumber: invoiceModel.invoiceNumber,
-            invoiceDate: dateFormat.parse(invoiceModel.dateAsString),
-            voucher: Voucher.load(invoiceModel.voucherId), totalAmount: invoiceModel.totalAmount,
-            discount: invoiceModel.discount, netTotal: invoiceModel.netTotal, createdBy: loggedInUser, item: Item.load(invoiceModel.itemId))
-
+            invoiceDate: invoiceModel.invoiceDate,
+            vouchers: vouchers, totalAmount: invoiceModel.totalAmount,
+            discount: invoiceModel.discount, netTotal: invoiceModel.netTotal,
+            createdBy: inuser, shoppedAt: inuser.shop, item: Item.load(invoiceModel.itemId))
+    invoice.validate()
     invoice.save()
-    voucher.status = VoucherStatus.SOLD
+    vouchers.each {
+      it.soldAt = inuser.shop
+      it.status = VoucherStatus.SOLD;
+      it.save()
+    }
+  }
 
+  def getLoggedInuser() {
+    AppUser.findByUsername(springSecurityService.getPrincipal().username)
   }
 }

@@ -32,13 +32,6 @@
       }, function() {
         $(this).removeClass("subhover");
       });
-
-      /* $(".subNavLinks").hover(function(){
-       $(this).css('background-color','orange')
-       },
-       function(){
-       $(this).css('background-color','white')
-       });*/
     })
 
 
@@ -192,6 +185,50 @@
     width: 200px;
     text-align: center;
   }
+
+  #editVoucherTable tr th {
+    text-align: left;
+    width: 150px;
+  }
+
+  #editVoucherTable tr td {
+    width: 150px;
+  }
+
+  #aggregatedVoucherStatus {
+    float: left;
+    width: 450px;
+    height: 300px;
+    margin-left: 1%;
+    border: orange dotted thin;
+  }
+
+  #aggregatedByShop {
+    float: left;
+    height: 300px;
+    margin-left: 1%;
+    width: 700px;
+    border: orange dotted thin;
+  }
+
+  #salesSnapshot {
+    margin-left: 20px;
+  }
+
+  #salesSnapshot tr td {
+    padding: 10px;
+  }
+
+  #salePerShop tr th {
+    width: 200px;
+    color: #00008b;
+
+  }
+
+  #salePerShop tr td {
+    width: 200px;
+    text-align: center;
+  }
   </style>
 </head>
 <body>
@@ -200,10 +237,11 @@
     <li>
       <a href="#">Voucher</a>
       <ul class="subnav">
+        <li><g:link controller="admin" action="voucherReportPage" class="subNavLinks">Voucher Report</g:link></li>
         <li><g:link controller="admin" action="createNewVoucherPage" class="subNavLinks">Create Vouchers</g:link></li>
-        <li><g:link controller="admin" action="trackVoucherPage" class="subNavLinks">Edit Vouchers</g:link></li>
-        <li><g:link controller="admin" action="barcodePage" class="subNavLinks">Barcode</g:link></li>
+        <li><g:link controller="admin" action="editVoucherPage" class="subNavLinks">Edit Vouchers</g:link></li>
         <li><g:link controller="admin" action="searchToDeletePage" class="subNavLinks">Delete Vouchers</g:link></li>
+        <li><g:link controller="admin" action="barcodePage" class="subNavLinks">Barcode</g:link></li>
       </ul>
     </li>
     <li>

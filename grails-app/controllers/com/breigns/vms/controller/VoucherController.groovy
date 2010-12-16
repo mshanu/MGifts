@@ -5,6 +5,7 @@ import com.breigns.vms.utility.BarCodeXmlGenerator
 import com.breigns.vms.Item
 import com.breigns.vms.PurchaseModel
 import grails.converters.JSON
+import java.text.SimpleDateFormat
 
 class VoucherController {
   def adminService;
@@ -39,20 +40,16 @@ class VoucherController {
       render 'FAILURE'
     }
   }
-  def sell = {
-    def voucherId = Long.parseLong(params['voucherId'])
-    def invoiceNumber = params['invoiceNumber']
-    def invoiceDateAsString = params['invoiceDate']
 
-    def totalAmount = params['totalAmount']
-    def discount = params['discount']
-    def netTotal = params['netTotal']
-    def itemId = Long.parseLong(params['itemId'])
-    def invoiceModel = new PurchaseModel(voucherId: voucherId,
-            invoiceNumber: invoiceNumber, dateAsString: invoiceDateAsString,
-            totalAmount: Double.parseDouble(totalAmount), discount: Double.parseDouble(discount), netTotal: Double.parseDouble(netTotal), itemId: itemId)
-    voucherService.sell(invoiceModel)
-    render view: 'voucherSold'
+  def submitInvoice = {
+    def dateFormat = new SimpleDateFormat("dd/MM/yyyy")
+    def voucherIds = params['voucherId']
+    def purchaseModel = new PurchaseModel(invoiceNumber: Long.parseLong(params['invoiceNumber']), invoiceDate: dateFormat.parse(params['invoiceDate']),
+            totalAmount: Double.parseDouble(params['totalAmount']), discount: Double.parseDouble(params['discount']),
+            netTotal: Double.parseDouble(params['netTotal']), itemId: Long.parseLong(params['item']),
+            voucherIds: voucherIds.class == String.class ? [voucherIds] : voucherIds.collect {Long.parseLong(it)})
+    voucherService.submitInvoice(purchaseModel)
+    render 'SUCCESS'
   }
 }
 

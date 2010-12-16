@@ -23,9 +23,14 @@ class AdminController {
 
   def createNewVoucher = {
     def voucherSet = new ArrayList<VoucherSetModel>()
-    params.voucherSet.numberOfVouchers.eachWithIndex {obj, index ->
-      voucherSet.add(new VoucherSetModel(numberOfVouchers: Integer.parseInt(obj),
-              denomination: Integer.parseInt(params.voucherSet.denomination[index])))
+    if (params.voucherSet.numberOfVouchers.class == String.class) {
+      voucherSet.add(new VoucherSetModel(numberOfVouchers: Integer.parseInt(params.voucherSet.numberOfVouchers),
+              denomination: Integer.parseInt(params.voucherSet.denomination)))
+    } else {
+      params.voucherSet.numberOfVouchers.eachWithIndex {obj, index ->
+        voucherSet.add(new VoucherSetModel(numberOfVouchers: Integer.parseInt(obj),
+                denomination: Integer.parseInt(params.voucherSet.denomination[index])))
+      }
     }
     def invoiceNumber = adminService.createVouchersForTheClient(new VoucherCreationRequestModel(shopId: Long.parseLong(params['invoicedAt']),
             clientId: Long.parseLong(params['clientId']), voucherList: voucherSet))
@@ -58,15 +63,31 @@ class AdminController {
     render new BarCodeXmlGenerator().generateXmlForBarCode(voucherList)
   }
 
-  def trackVoucherPage = {
-    render view: 'trackVoucher', model: [clientList: Client.listOrderByName()]
+  def editVoucherPage = {
+    flash.clear()
+    render view: 'editVoucher', model: [clients: Client.listOrderByName(), shops: Shop.list()]
   }
 
-  def trackVoucher = {
-    /*def voucherStatus = VoucherStatus.valueOf(params['status'])*/
+  def editVoucherSearch = {
     def clientId = Long.parseLong(params['clientId'])
-    def voucherList = adminService.getVouchersFor(clientId, VoucherStatus.SOLD)
-    render view: 'trackVoucher', model: [clientList: Client.listOrderByName(), voucherList: voucherList]
+    def shopId = Long.parseLong(params['shopId'])
+    def invoiceNumber = Long.parseLong(params['invoiceNumber'])
+    def voucherInvoice = adminService.getVoucherInvoiceThatCanBeUpdated(clientId, shopId, invoiceNumber)
+    if (!voucherInvoice) {
+      render view: 'editVoucher', model: [clients: Client.listOrderByName(), shops: Shop.list()]
+      flash.message = "No Invoice Voucher Found To Edit"
+    } else {
+      render view: 'editVoucher', model: [clients: Client.listOrderByName(), shops: Shop.list(), voucherInvoice: voucherInvoice]
+    }
+
+  }
+
+  def editVouchersByInvoice = {
+    def voucherInvoiceId = Long.parseLong(params['voucherInvoiceId'])
+    def shopId = Long.parseLong(params['newShopId'])
+    adminService.updateVoucherInvoice(voucherInvoiceId, shopId)
+    flash.message = "Voucher Invoice Updated Successfully"
+    render view: 'editVoucher', model: [clients: Client.listOrderByName(), shops: Shop.list()]
   }
 
   def addNewUserPage = {
@@ -97,7 +118,7 @@ class AdminController {
     def clientId = Long.parseLong(params['clientId'])
     def shopId = Long.parseLong(params['shopId'])
     def voucherInvoiceNumber = Integer.parseInt(params['invoiceNumber'])
-    render view: 'searchToDeletePage', model: [voucherList: adminService.getVouchersToDelete(clientId, shopId, voucherInvoiceNumber), shops: Shop.list(), clients: Client.list()]
+    render view: 'searchToDeletePage', model: [voucherList: adminService.getVouchersNotValidatedOrSold(clientId, shopId, voucherInvoiceNumber), shops: Shop.list(), clients: Client.list()]
 
   }
 
@@ -118,5 +139,10 @@ class AdminController {
 
   def clientListPage = {
     render view: 'clientList', model: [clientList: Client.list()]
+  }
+
+  def voucherReportPage = {
+    def reportModel = adminService.getAggregatedReport()
+    render view: 'voucherReport', model: [reportModel: reportModel]
   }
 }

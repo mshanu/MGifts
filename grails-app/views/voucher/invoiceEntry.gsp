@@ -32,7 +32,7 @@
 h3 {
   text-align: left;
   border-bottom: orange dashed thin;
-  
+
 }
 
 .invoiceTable td {
@@ -63,75 +63,108 @@ h3 {
             })
   }
 
-  function isVoucherAlreadyPresent(voucherId, value) {
+  function isVoucherAlreadyPresent(voucherId, valueToBeCompared) {
     var isPresent = false;
-    $("#voucherId").each(function() {
-      if ($(this).val() == value) {
+    $.each($.find('#voucherId'), function() {
+      if ($(this).val() == valueToBeCompared) {
         isPresent = true;
-        return;
+        return false;
       }
-    });
+    })
     return isPresent;
   }
+
+  function validateAndSubmitInvoice() {
+    if (!validateMandatoryFields(['invoiceNumber','invoiceDate','totalAmount','discount','netTotal'])) {
+      $("#message_box").html("All Mandotory Fields Need To Be Filled To Submit Invoice")
+      return false;
+    }
+    if (!validateDate("invoiceDate")) {
+      $("#message_box").html("Invalid Date - Date Should Be Entered in dd/mm/yyyy")
+      return false;
+    }
+    if (!areFieldsHoldingPriceValue(['totalAmount','netTotal','discount'])) {
+      $("#message_box").html("Total,Discount,NetTotal should have proper values")
+      return false;
+    }
+    if (!isNumeric("invoiceNumber")) {
+      $("#message_box").html("Invoice Number Should Be Numeric")
+      return false
+    }
+    if ($("#voucherId").length == 0) {
+      $("#message_box").html("Atleast One Voucher Should Be Added To Invoice")
+      return false
+
+    }
+    $.post($("#submitInvoiceLink").attr('href'), $('form').serialize(), function() {
+      $("#message_box").html("Invoice Submitted Successfully")
+        $("input:text").val("")
+        $("#voucherTable").find('tr:gt(0)').remove()
+
+    });
+
+  }
 </script>
+<form>
+  <div id="invoiceMainContent">
+    <span id="message_box" style="margin-left:30%; width:500px;position:absolute;text-align:center">
 
-<div id="invoiceMainContent">
-  <span id="message_box" style="margin-left:35%;position:absolute">
-
-  </span>
-  <h3>Invoice</h3>
-  <table class="invoiceTable" style="margin-left:25%">
-    <tr>
-      <td>Invoice Number<span class="mandotry">*</span></td>
-      <td><g:textField name="invoiceNumber"></g:textField></td>
-      <td style="text-align:right">Date(mm/dd/yyy)<span class="mandotry">*</span></td>
-      <td><g:textField name="invoiceDate"></g:textField></td>
-    </tr>
-    <tr>
-      <td>Total<span class="mandotry">*</span></td>
-      <td><g:textField name="totalAmount" class="numeric"></g:textField></td>
-      <td style="text-align:right">Discount<span class="mandotry">*</span></td>
-      <td><g:textField name="discount" class="numeric"></g:textField></td>
-    </tr>
-    <tr>
-      <td>Net Total<span class="mandotry">*</span></td>
-      <td><g:textField name="netTotal" class="numeric"></g:textField></td>
-      <td style="text-align:right">Item<span class="mandotry">*</span></td>
-      <td><g:select from="${items}" name="item" optionKey="id" optionValue="description"></g:select></td>
-    </tr>
-  </table>
-  <div style="border-top:orange dashed thin;margin-top:5px;"></div>
-  <div style="margin-top:5px;">
-    <table class="invoiceTable" style="margin-left:25%;">
+    </span>
+    <h3>Invoice</h3>
+    <table class="invoiceTable" style="margin-left:25%">
       <tr>
-        <td>BarCode</td>
-        <td><g:textField name="barcode"></g:textField></td>
-        <td style="text-align:right">Voucher Seq #</td>
-        <td style="width:250px;">
-          <span>
-            <g:textField name="clientInitials" maxlength="3" style="width:40px;"></g:textField>
-          </span>
-          <span>
-            <g:textField name="voucherSequenceNumber"></g:textField>
-          </span>
-        </td>
-        <td><input type="button" value="Add Voucher" onclick="validateAndAddVoucher()"/></td>
+        <td>Invoice Number<span class="mandotry">*</span></td>
+        <td><g:textField name="invoiceNumber"></g:textField></td>
+        <td style="text-align:right">Date(dd/mm/yyy)<span class="mandotry">*</span></td>
+        <td><g:textField name="invoiceDate"></g:textField></td>
+      </tr>
+      <tr>
+        <td>Total<span class="mandotry">*</span></td>
+        <td><g:textField name="totalAmount" class="numeric"></g:textField></td>
+        <td style="text-align:right">Discount<span class="mandotry">*</span></td>
+        <td><g:textField name="discount" class="numeric"></g:textField></td>
+      </tr>
+      <tr>
+        <td>Net Total<span class="mandotry">*</span></td>
+        <td><g:textField name="netTotal" class="numeric"></g:textField></td>
+        <td style="text-align:right">Item<span class="mandotry">*</span></td>
+        <td><g:select from="${items}" name="item" optionKey="id" optionValue="description"></g:select></td>
       </tr>
     </table>
-    <div id="voucherTableDiv">
-      <table id="voucherTable">
+    <div style="border-top:orange dashed thin;margin-top:5px;"></div>
+    <div style="margin-top:5px;">
+      <table class="invoiceTable" style="margin-left:25%;">
         <tr>
-          <th>Voucher Seq #</th>
-          <th>BarCode</th>
-          <th>Company Name</th>
-          <th>Value</th>
-          <th>Delete</th>
+          <td>BarCode</td>
+          <td><g:textField name="barcode"></g:textField></td>
+          <td style="text-align:right">Voucher Seq #</td>
+          <td style="width:250px;">
+            <span>
+              <g:textField name="clientInitials" maxlength="3" style="width:40px;"></g:textField>
+            </span>
+            <span>
+              <g:textField name="voucherSequenceNumber"></g:textField>
+            </span>
+          </td>
+          <td><input type="button" value="Add Voucher" onclick="validateAndAddVoucher()"/></td>
         </tr>
       </table>
+      <div id="voucherTableDiv">
+        <table id="voucherTable">
+          <tr>
+            <th>Voucher Seq #</th>
+            <th>BarCode</th>
+            <th>Company Name</th>
+            <th>Value</th>
+            <th>Delete</th>
+          </tr>
+        </table>
+      </div>
+      <div style="margin-left:45%;padding-top:5px;"><input type="button" value="Submit Invoice" onclick="validateAndSubmitInvoice()"></div>
     </div>
-    <div  style="margin-left:45%;padding-top:5px;"><input type="button" value="Save The Invoice"></div>
   </div>
-</div>
+</form>
 <g:link controller="voucher" action="validateAndGetVoucher" elementId="validateAndAddVoucherLink"></g:link>
+<g:link controller="voucher" action="submitInvoice" elementId="submitInvoiceLink"></g:link>
 </body>
 </html>
