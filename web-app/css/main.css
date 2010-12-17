@@ -1,0 +1,66 @@
+#tabContent {
+    font-family: Verdana, Arial, sans-serif;
+    background-color: #d3d3d3;
+    height: 550px;
+    border-radius: 4px 4px 4px 4px;
+    margin: 0px;
+}
+
+#tabContent table th {
+    color: #00008b;
+    width: 200px;
+    text-align: center
+}
+
+#tabContent table td {
+    width: 200px;
+    text-align: center
+}
+
+#tabContent select {
+    width: 200px;
+}
+
+#tabContent h3 {
+    text-align: center;
+    margin: 1px;
+}
+
+#message_box {
+    margin-top: 20px;
+    height: 25px;
+    color: red;
+    display: block;
+    text-align: center;
+}
+
+.readOnly {
+    background-color: #f5f5dc;
+}
+
+.leftNav {
+    float: left;
+    width: 20%;
+    height: 500px;
+    border-right: orange dotted thin;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.rightContent {
+    float: left;
+    margin-left: 10px;;
+    margin-right: auto;
+    height: 500px;
+    width: 70%;
+}
+
+.leftNavUL {
+    list-style-type: none;
+    color: black;
+    margin-left: -35px;
+}
+
+.leftNavUL li {
+    padding: 5px;
+}

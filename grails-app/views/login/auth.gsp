@@ -8,16 +8,15 @@
   <style type="text/css">
   body {
     color: black;
-    font-family: verdana, arial, sans-serif;
-    font-size: 17px;
-    font-weight: bold;
-    background-color: #e4c52d;
+    font-family: Verdana, Arial, sans-serif;
+    background-color: #bdb76b;
   }
 
   #login {
     width: 800px;
     height: 237px;
     border: thick double OliveDrab;
+    border-radius: 4px 4px 4px 4px;
     margin-top: 10%;
     margin-left: 20%;
   }
@@ -57,7 +56,7 @@
 <body>
 <div id="login">
 <div id="login_picture"> <img style="width: 351px; height: 231px;"
- alt="" src="${resource(dir: 'images', file: 'malabar_login.jpg')}"> </div>
+ alt="" src="${resource(dir: 'images', file: 'malabar_logo.jpg')}"> </div>
 <div id="login_form">
   <form action='${postUrl}' method='POST' id='loginForm' autocomplete='off' onsubmit="return validateLoginForm()">
     <table>
@@ -88,11 +87,11 @@
 </div>
 </body>
 <script type='text/javascript'>
-  function validateLoginForm(){
+  function validateLoginForm() {
     var userName = document.getElementById('username');
     var password = document.getElementById('password');
-    if(userName.value==""||password.value==""){
-      document.getElementById("error_msg").innerHTML="User/Password field cannot be empty"
+    if (userName.value == "" || password.value == "") {
+      document.getElementById("error_msg").innerHTML = "User/Password field cannot be empty"
       return false
     }
     return true

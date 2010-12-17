@@ -27,33 +27,33 @@
     return true
   }
 </script>
-<div style="margin-top:10%; margin-left:35%;">
-  <span id="message_box">
+<div>
+  <div id="message_box" style="text-align:center">
     <g:if test="flash.message">
       ${flash.message}
     </g:if>
-  </span>
+  </div>
   <g:form action="insertUser" onsubmit="return validateMandatoryFields()">
-    <table>
+    <table id="addUserTable">
       <tr>
         <td><label>First Name</label><span class="mandotry">*</span></td>
-        <td><g:textField name="firstName" value="${params.firstName}" style="width:200px;"/></td>
+        <td><g:textField name="firstName" value="${params.firstName}" /></td>
       </tr>
       <tr>
         <td><label>Last Name</label><span class="mandotry">*</span></td>
-        <td><g:textField name="lastName" value="${params.lastName}" style="width:200px"/></td>
+        <td><g:textField name="lastName" value="${params.lastName}" /></td>
       </tr>
       <tr>
         <td><label>User Name</label><span class="mandotry">*</span></td>
-        <td><g:textField name="username" value="${params.username}" style="width:200px"/></td>
+        <td><g:textField name="username" value="${params.username}" /></td>
       </tr>
       <tr>
         <td><label>Password</label><span class="mandotry">*</span></td>
-        <td><g:passwordField name="password" style="width:200px"/></td>
+        <td><g:passwordField name="password"/></td>
       </tr>
       <tr>
         <td><label>Confirm Password</label><span class="mandotry">*</span></td>
-        <td><g:passwordField name="confirmPassword" style="width:200px"/></td>
+        <td><g:passwordField name="confirmPassword"/></td>
       </tr>
       <tr>
         <td><label>Role</label></td>

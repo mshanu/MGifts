@@ -39,7 +39,6 @@ class AdminService {
       def voucherList = voucherCreateRequest.voucherList
       int j = 0;
       for (def voucher: voucherList) {
-        println voucher.numberOfVouchers
         for (int i = 0; i < voucher.numberOfVouchers; i++) {
           def nextSequence = ClientVoucherSequence.nextSequence(client)
           def barCodeAlpha = getRandomAlpha();

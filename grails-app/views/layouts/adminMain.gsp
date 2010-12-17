@@ -3,6 +3,7 @@
 <head><title>breigns - VMS</title>
 
   <link type="text/css" href="${resource(dir: 'css/ui-lightness', file: "jquery-ui-1.8.6.custom.css")}" rel=" Stylesheet"/>
+  <link type="text/css" href="${resource(dir: 'css', file: "main.css")}" rel=" Stylesheet"/>
   <script type="text/javascript" src="${resource(dir: 'js', file: "jquery-1.4.2.min.js")}"></script>
   <script type="text/javascript" src="${resource(dir: 'js', file: "jquery-ui-1.8.6.custom.min.js")}"></script>
   <script type="text/javascript" src="${resource(dir: 'js', file: "common.js")}"></script>
@@ -85,19 +86,22 @@
 
   }
 
-  #tabContent {
-    font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  }
 
-  #tabContent select {
-    width: 150px;
-  }
 
-  #message_box {
-    color: red;
-    height: 30px;
-    display: block;
+  .loading {
+    position: absolute;
+    display: none;
+    border: 1px solid #5c9ccc;
+    padding: 2px;
+    background-color: #5c9ccc;
+    color: #ffffff;
+    opacity: 0.90;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    width: 100px;
+    height: 50px;
     text-align: center;
+    z-index: 100000;
   }
 
   .mandotry {
@@ -106,55 +110,7 @@
     margin-left: 5px;
   }
 
-  #normal_left_nav {
-    float: left;
-    width: 200px;
-    height: 500px;
-    border-right: #ff4500 dotted thin;
-    display: block;
-  }
-
-  #normal_right_content {
-    float: left;
-    margin-left: 20px;
-  }
-
   #adminTab {
-    height: 600px;
-
-  }
-
-  #voucherTrackingTable {
-    text-align: left;
-    float: left;
-    width: 100%;
-  }
-
-  #voucherTrackingTable th {
-    color: gray;
-    width: 120px;
-    text-align: left;
-  }
-
-  #voucherTableLinks a {
-    color: blue;
-  }
-
-  #voucherTrackingTable thead tr {
-    position: relative;
-    display: block;
-  }
-
-  #voucherTrackingTable td {
-    width: 120px;
-    text-align: left;
-  }
-
-  #voucherTrackingTable tbody {
-    height: 400px;
-    display: block;
-    overflow: auto;
-    background-color: #f5f5f5;
   }
 
   #voucherToSell_msg {
@@ -167,105 +123,119 @@
   }
 
   .numeric {
-
   }
 
   .mandatoryText {
-
   }
 
-  #clientListTable th {
-    width: 200px
+  .staticHeader thead tr {
+    position: relative;
+    display: block;
   }
 
-  #clientListTable td {
-    width: 200px;
+  .staticHeader thead tr th {
     text-align: center;
   }
 
-  #editVoucherTable tr th {
-    text-align: left;
-    width: 150px;
+  .staticHeader td {
+    text-align: center;
   }
 
-  #editVoucherTable tr td {
-    width: 150px;
+  .staticHeader tbody {
+    display: block;
+    overflow: auto;
+    height: 400px;
   }
 
   #aggregatedVoucherStatus {
     float: left;
     width: 32%;
-    height: 300px;
+    height: 250px;
     margin-left: 1%;
     border: orange dotted thin;
   }
 
   #aggregatedByShop {
     float: left;
-    height: 300px;
+    height: 250px;
     margin-left: 4%;
     width: 58%;
     overflow: auto;
     border: orange dotted thin;
   }
 
-  #salesSnapshot {
+  #salesSnapshotTable {
     margin-left: 10px;
+    padding: 25px;
   }
 
-  #salesSnapshot tr td {
+  #salesSnapshotTable tbody tr td {
+    width: auto;
+    text-align: left;
+  }
+
+  #salesSnapshotTable tbody tr label {
+    width: 300;
+  }
+
+  #salesSnapshotTable tr td {
     padding: 5px;
   }
 
-  #salePerShop tbody {
-    height: 200px;
-    overflow-y: auto;
-    overflow-x: hidden;
+  #clientAddTable {
+    margin-left: 30%;
+    margin-top: 5%;
   }
 
-  #salePerShop tr th {
-    width: 200px;
-    color: #00008b;
-
+  #clientAddTable tr td {
+    text-align: left;
   }
 
-  #salePerShop tr td {
-    text-align: center;
+  #addUserTable {
+    margin-left: 30%;
+    margin-top: 5%;
   }
+
+  #addUserTable tr td {
+    text-align: left;
+  }
+
   </style>
 </head>
 <body>
-<div id="adminTab" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
-  <ul id="adminTabList" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-    <li>
-      <a href="#">Voucher</a>
-      <ul class="subnav">
-        <li><g:link controller="admin" action="voucherReportPage" class="subNavLinks">Voucher Report</g:link></li>
-        <li><g:link controller="admin" action="createNewVoucherPage" class="subNavLinks">Create Vouchers</g:link></li>
-        <li><g:link controller="admin" action="editVoucherPage" class="subNavLinks">Edit Vouchers</g:link></li>
-        <li><g:link controller="admin" action="searchToDeletePage" class="subNavLinks">Delete Vouchers</g:link></li>
-        <li><g:link controller="admin" action="barcodePage" class="subNavLinks">Barcode</g:link></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#">Client Management</a>
-      <ul class="subnav">
-        <li><g:link controller="client">Add a Client</g:link></li>
-        <li><g:link controller="admin" action="clientListPage">Client List</g:link></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#">User Management</a>
-      <ul class="subnav">
-        <li><g:link controller="admin" action="addNewUserPage">Add User</g:link></li>
-      </ul>
-    </li>
-    <li id="logout" style="float:right;width:100px"><g:link style="float:right;" controller="logout">Logout</g:link></li>
-  </ul>
+<div>
+  <div id="adminTab" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+    <ul id="adminTabList" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+      <li>
+        <a href="#">Voucher</a>
+        <ul class="subnav">
+          <li><g:link controller="admin" action="voucherReportPage" class="subNavLinks">Sales Report</g:link></li>
+          <li><g:link controller="admin" action="createNewVoucherPage" class="subNavLinks">Create Vouchers</g:link></li>
+          <li><g:link controller="admin" action="editVoucherPage" class="subNavLinks">Edit Vouchers</g:link></li>
+          <li><g:link controller="admin" action="searchToDeletePage" class="subNavLinks">Delete Vouchers</g:link></li>
+          <li><g:link controller="admin" action="barcodePage" class="subNavLinks">Barcode</g:link></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Client Management</a>
+        <ul class="subnav">
+          <li><g:link controller="client">Add a Client</g:link></li>
+          <li><g:link controller="admin" action="clientListPage">Client List</g:link></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">User Management</a>
+        <ul class="subnav">
+          <li><g:link controller="admin" action="addNewUserPage">Add User</g:link></li>
+        </ul>
+      </li>
+      <li id="logout" style="float:right;width:100px"><g:link style="float:right;" controller="logout">Logout</g:link></li>
+    </ul>
+  </div>
   <div id="tabContent">
+    <div id="reportLoading" class="loading"><img src="${resource(dir: 'images', file: 'loader.gif')}" alt=""/></div>
     <g:layoutBody/>
   </div>
 </div>
-
 </body>
 </html>

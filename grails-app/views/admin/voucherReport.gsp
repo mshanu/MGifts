@@ -4,21 +4,21 @@
   <meta name="layout" content="adminMain"/>
 </head>
 <body>
-<h4 style="border-bottom:orange dotted thin;text-align:center">Voucher Reports</h4>
+<h2 style="border-bottom:orange dotted thin;text-align:center;padding:5px;">Voucher Sales Report</h2>
 <div>
   <div id="aggregatedVoucherStatus">
-    <h4 style="text-align:center;margin-top:10px;">Sales Snapshot</h4>
-    <table id="salesSnapshot">
+    <h3 style="margin-top:10px;">Sales Snapshot</h3>
+    <table id="salesSnapshotTable">
       <tr>
-        <td style="width:300px"><label>Voucher Sale As Of Now</label></td>
+        <td><label>Voucher Sale As Of Now</label></td>
         <td>${reportModel?.vocuherStatusReport?.totalSoldValue}</td>
       </tr>
       <tr>
-        <td style="width:300px"><label># of Vouchers Sold As Of Now</label></td>
+        <td><label># of Vouchers Sold As Of Now</label></td>
         <td>${reportModel?.vocuherStatusReport?.sold}</td>
       </tr>
       <tr>
-        <td style="width:300px"><label>Vouchers Validated As Of Now</label></td>
+        <td><label>Vouchers Validated As Of Now</label></td>
         <td>${reportModel?.vocuherStatusReport?.totalValidatedValue}</td>
       </tr>
       <tr>
@@ -28,8 +28,8 @@
     </table>
   </div>
   <div id="aggregatedByShop">
-    <h4 style="text-align:center;margin-top:10px;margin-bottom:5px;">Sales Snapshot Per Shop</h4>
-    <table id="salePerShop">
+    <h3 style="margin-top:10px;">Sales Snapshot Per Shop</h3>
+    <table class="staticHeader">
       <thead>
       <tr>
         <th>Shop Name</th>
@@ -40,7 +40,7 @@
       </tr>
       </thead>
       <g:if test="${reportModel}">
-        <tbody>
+        <tbody style="height:300px;">
         <g:each in="${reportModel.voucherSaleByShop}">
           <tr>
             <td>${it.shop.name}</td>

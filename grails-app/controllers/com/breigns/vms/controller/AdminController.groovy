@@ -13,7 +13,7 @@ import com.breigns.vms.VoucherCreationRequestModel
 class AdminController {
   def adminService;
   def index = {
-    render view: 'dashboard'
+    voucherReportPage()
   }
 
   def createNewVoucherPage = {
@@ -60,7 +60,7 @@ class AdminController {
     def voucherList = adminService.getVouchersForSequence(clientId,
             sequenceStart, sequenceEnd)
     adminService.updateStatusForRangeOfSequence(clientId, sequenceStart, sequenceEnd, VoucherStatus.BARCODE_GENERATED)
-    response.setHeader("Content-Disposition", "attachment; barcode.zpl")
+    response.setHeader("Content-Disposition", "attachment; barcode.txt")
     render new BarCodeGenerator().generateZlpForBarcode(voucherList,file)
   }
 
@@ -70,6 +70,7 @@ class AdminController {
   }
 
   def editVoucherSearch = {
+    flash.clear()
     def clientId = Long.parseLong(params['clientId'])
     def shopId = Long.parseLong(params['shopId'])
     def invoiceNumber = Long.parseLong(params['invoiceNumber'])
@@ -86,8 +87,8 @@ class AdminController {
   def editVouchersByInvoice = {
     def voucherInvoiceId = Long.parseLong(params['voucherInvoiceId'])
     def shopId = Long.parseLong(params['newShopId'])
-    adminService.updateVoucherInvoice(voucherInvoiceId, shopId)
-    flash.message = "Voucher Invoice Updated Successfully"
+    def voucherInvoice = adminService.updateVoucherInvoice(voucherInvoiceId, shopId)
+    flash.message = "Voucher Invoice Updated Successfully: New Invoice Number: "+voucherInvoice.invoiceNumber
     render view: 'editVoucher', model: [clients: Client.listOrderByName(), shops: Shop.list()]
   }
 

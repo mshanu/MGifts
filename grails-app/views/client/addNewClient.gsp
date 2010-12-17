@@ -32,14 +32,14 @@
     return true;
   }
 </script>
-<div style="margin-top:10%; margin-left:35%;">
-  <span id="message_box">
+<div>
+  <div id="message_box" style="text-align:center">
     <g:if test="flash.message">
       ${flash.message}
     </g:if>
-  </span>
+  </div>
   <g:form action="insert" controller="client" onsubmit="return validateMandatoryFields()">
-    <table>
+    <table id="clientAddTable">
       <tr>
         <td><label>ClientName</label><span class="mandotry">*</span></td>
         <td><g:textField name="name" value="${params.name}" style="width:200px"/></td>

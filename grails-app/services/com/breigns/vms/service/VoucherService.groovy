@@ -28,7 +28,7 @@ class VoucherService {
                         status: [VoucherStatus.BARCODE_GENERATED, VoucherStatus.VALIDATED]])
       }
     }
-    if (!voucherList.isEmpty()) {
+    if (voucherList) {
       voucher = voucherList.get(0)
       voucher.validatedAt = getLoggedInuser().shop 
       voucher.status = VoucherStatus.VALIDATED

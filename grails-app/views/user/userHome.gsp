@@ -3,6 +3,7 @@
 <head>
   <title>breigns - VMS</title>
   <link type="text/css" href="${resource(dir: 'css/ui-lightness', file: "jquery-ui-1.8.6.custom.css")}" rel=" Stylesheet"/>
+  <link type="text/css" href="${resource(dir: 'css', file: "main.css")}" rel=" Stylesheet"/>
   <script type="text/javascript" src="${resource(dir: 'js', file: "jquery-1.4.2.min.js")}"></script>
   <script type="text/javascript" src="${resource(dir: 'js', file: "jquery-ui-1.8.6.custom.min.js")}"></script>
 
@@ -49,17 +50,6 @@
     padding-bottom: 10px;
   }
 
-  #message_box {
-    color: red;
-    font-family: verdana, arial, sans-serif;
-    font-size: 16px;
-    font-weight: normal;
-    width: 400px;
-    height: 30px;
-    display: block;
-    text-align: center;
-  }
-
   .mandotry {
     color: red;
     float: right;
@@ -83,7 +73,7 @@
     </li>
     <li id="logout" style="float:right;width:100px"><g:link style="float:right;" elementId="logoutLink" controller="logout">Logout</g:link></li>
   </ul>
-  <div id="tabContent" style="height:500px;">
+  <div id="tabContent" style="height:520px;margin-top:10px;">
 
   </div>
 </div>
