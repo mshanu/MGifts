@@ -52,14 +52,13 @@ insert into shop(id,version,name) values(22,1,'MG Kasargod');
 insert into shop(id,version,name) values(23,1,'MG Coimbatore');
 insert into shop(id,version,name) values(24,1,'MG Salem');
 insert into shop(id,version,name) values(25,1,'MG Erode');
-insert into shop(id,version,name) values(26,1,'MG Banglore(JayaNagar)');
-insert into shop(id,version,name) values(27,1,'MG Banglore(Dickenson Road)');
+insert into shop(id,version,name) values(26,1,'MG Banglore');
+insert into shop(id,version,name) values(27,1,'MG Banglore');
 insert into shop(id,version,name) values(28,1,'MG Mysore');
 insert into shop(id,version,name) values(29,1,'MG Mangalore');
 insert into shop(id,version,name) values(30,1,'MG Hassan');
 insert into shop(id,version,name) values(31,1,'MG Hyderabad');
-
-
+insert into shop(id,version,name) values(32,1,'Breigns');
 
 insert into role(id,version,authority,description) values (1,1,'ROLE_ADMIN','Admin User');
 insert into role(id,version,authority,description) values (2,1,'ROLE_USER','Shop User');
