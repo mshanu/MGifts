@@ -29,7 +29,7 @@ create sequence hibernate_sequence;
 
 insert into shop(id,version,name) values(1,1,'MG Trivandrum');
 insert into shop(id,version,name) values(2,1,'MG Pathanamthitta');
-insert into shop(id,version,name) values(3,1,'MG Kollam';
+insert into shop(id,version,name) values(3,1,'MG Kollam');
 insert into shop(id,version,name) values(4,1,'MG Allappey');
 insert into shop(id,version,name) values(5,1,'MG Kottayam');
 insert into shop(id,version,name) values(6,1,'MG Thodupuzha');
