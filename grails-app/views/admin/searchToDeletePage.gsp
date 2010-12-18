@@ -32,23 +32,57 @@
     return true;
   }
 
+  function populateVoucherRequests() {
+    if ($("#clientId").val() != '-1') {
+      var url = $("#retrieveVoucherLink").attr("href");
+      $.getJSON(url, $('form').serialize(), function(data) {
+        $("#voucherRequestId").fillSelect(data)
+      });
+
+    } else {
+      $("#voucherRequestId").clearSelect()
+    }
+  }
+
+  $.fn.clearSelect = function() {
+    return this.each(function() {
+      if (this.tagName == 'SELECT')
+        this.options.length = 0;
+    });
+  }
+
+
+  $.fn.fillSelect = function(data) {
+    return this.clearSelect().each(function() {
+      if (this.tagName == 'SELECT') {
+        var dropdownList = this;
+        $.each(data, function(index, optionData) {
+          var option = new Option(optionData.key, optionData.value);
+
+          if ($.browser.msie) {
+            dropdownList.add(option);
+          }
+          else {
+            dropdownList.add(option, null);
+          }
+        });
+      }
+    });
+  }
 </script>
 
 <div id="voucherHistoryMainContent">
   <g:form action="searchVoucherToDelete" name="historyForm" onsubmit="return validateAndSubmit()">
     <div class="leftNav">
       <ul class="leftNavUL">
-        <li id="clientSelectLi">Select the client</li>
+        <li id="clientSelectList">Select the client</li>
         <li>
-          <g:select name="clientId" value="${params.clientId}" from="${clients}" optionKey="id" optionValue="name"/>
+          <g:select name="clientId" value="${params.clientId}" from="${clients}" optionKey="id"
+                  optionValue="name" noSelection="${['-1':'---Select Client---']}" onChange="populateVoucherRequests()"/>
+          <g:link action="retrieveVouchersAsJson" controller="admin" elementId="retrieveVoucherLink"/>
         </li>
-        <li>Invoiced AT</li>
         <li>
-          <g:select name="shopId" value="${params.shopId}" from="${shops}" optionKey="id" optionValue="name"/>
-        </li>
-        <li>Invoice Number</li>
-        <li>
-          <g:textField name="invoiceNumber" value="${params.invoiceNumber}"/>
+          <g:select name="voucherRequestId" from="${voucherRequest}"/>
         </li>
         <li>
           <g:submitButton name="sumit" value="Search Vouchers"/>

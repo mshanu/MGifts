@@ -8,9 +8,6 @@
   <script type="text/javascript" src="${resource(dir: 'js', file: "jquery-ui-1.8.6.custom.min.js")}"></script>
   <script type="text/javascript" src="${resource(dir: 'js', file: "common.js")}"></script>
 
-  <!-- Loads for Date-->
-  <link rel="stylesheet" media="screen" type="text/css" href="${resource(dir: 'css', file: "datepicker.css")}"/>
-  <script type="text/javascript" src="/${resource(dir: 'js', file: "datepicker.js")}"></script>
   <script>
     $(function() {
       //Set Up The Menu
@@ -85,8 +82,6 @@
     cursor: pointer;
 
   }
-
-
 
   .loading {
     position: absolute;
@@ -210,10 +205,9 @@
         <a href="#">Voucher</a>
         <ul class="subnav">
           <li><g:link controller="admin" action="voucherReportPage" class="subNavLinks">Sales Report</g:link></li>
-          <li><g:link controller="admin" action="createNewVoucherPage" class="subNavLinks">Create Vouchers</g:link></li>
-          <li><g:link controller="admin" action="editVoucherPage" class="subNavLinks">Edit Vouchers</g:link></li>
+          <li><g:link controller="admin" action="createNewVoucherRequestPage" class="subNavLinks">New Voucher Request</g:link></li>
+          <li><g:link controller="admin" action="voucherRequestsPage" class="subNavLinks">Voucher Requests</g:link></li>
           <li><g:link controller="admin" action="searchToDeletePage" class="subNavLinks">Delete Vouchers</g:link></li>
-          <li><g:link controller="admin" action="barcodePage" class="subNavLinks">Barcode</g:link></li>
         </ul>
       </li>
       <li>

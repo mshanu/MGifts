@@ -5,7 +5,7 @@ import java.util.List;
 
 public enum VoucherStatus {
 
-    CREATED("Created") ,BARCODE_GENERATED("Barcode Generated"),VALIDATED("Voucher Validated"),SOLD("SOLD");
+    CREATED("Created") ,BARCODE_GENERATED("Barcode Generated"),INVOICED("Invoiced"),VALIDATED("Voucher Validated"),SOLD("SOLD");
     String description;
     VoucherStatus(String description) {
         this.description = description;

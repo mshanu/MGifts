@@ -41,11 +41,7 @@
     if ($('#voucherDetailsTable tr').length < 2) {
       $("#message_box").html('No Voucher In The List To Create')
       return false;
-    }
-    if (!validateMandatoryFields(['validThru','remarks'])) {
-      $("#message_box").html('Valid Thru and Remarks Are Mandatory')
-      return false;
-    }
+    }    
     if (!validateDate('validThru')) {
       $("#message_box").html('Valid Thru , Not A Valid Date')
       return false;
@@ -56,13 +52,11 @@
 </script>
 
 <div id="createNewVoucher">
-  <g:form action="createNewVoucher" controller="admin" onsubmit="return validateCreateVoucherForm()">
+  <g:form action="createNewVoucherRequest" controller="admin" onsubmit="return validateCreateVoucherForm()">
     <div class="leftNav">
       <ul class="leftNavUL">
         <li><label>Client:</label></li>
         <li><g:select name="clientId" from="${clientList}" value="${params.clientId}" optionKey="id" optionValue="name"/></li>
-        <li><label>Invoiced At:</label></li>
-        <li><g:select name="invoicedAt" from="${shops}" value="${params.invoicedAt}" optionKey="id" optionValue="name"/></li>
       </ul>
     </div>
 
@@ -107,10 +101,8 @@
         <table>
           <tr>
             <td>Valid Thru(dd/mm/yyyy)</td>
-            <td><g:textField name="validThru"/></td>
-            <td>Remarks</td>
-            <td><g:textArea name="remarks"/></td>
-            <td><g:submitButton name="Create" value="Create Vouchers"/></td>
+            <td><g:textField name="validThru"/></td>            
+            <td><g:submitButton name="Create" value="Create Voucher Request"/></td>
           </tr>
         </table>
 

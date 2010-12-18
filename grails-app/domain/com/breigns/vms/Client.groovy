@@ -7,7 +7,6 @@ class Client {
   String city
   Date dateCreated
 
-  static hasMany = [vouchers:Voucher]
   static constraints = {
     address(nullable:true)
     city(nullable:true)

@@ -8,21 +8,18 @@ class Voucher {
   java.sql.Date dateCreated
   Date lastUpdated
   VoucherStatus status;
-  VoucherInvoice voucherInvoice
-  Shop soldAt;
   Shop validatedAt;
-  Date validThru
-  static belongsTo = [client: Client,purchase:Purchase]
-  static fetchMode = [client: 'eager']
+  Shop soldAt;
+  Date validThru;
+  static belongsTo = [voucherRequest:VoucherRequest]
   static constraints = {
     barcodeAlpha(maxSize: 10, minSize: 10)
     soldAt(nullable: true)
     validatedAt(nullable: true)
-    purchase(nullable: true)
   }
 
   def getGeneratedSequence() {
-    client.initials + sequenceNumber
+    voucherRequest.client.initials + sequenceNumber
   }
 
 }

@@ -1,24 +1,8 @@
 package com.breigns.vms.service
 
-import com.breigns.vms.Client
-import com.breigns.vms.Voucher
-import com.breigns.vms.ClientVoucherSequence
 import org.apache.commons.lang.RandomStringUtils
-import com.breigns.vms.AppUser
-import com.breigns.vms.VoucherStatus
-
-import com.breigns.vms.VoucherGroupModel
 import org.hibernate.SessionFactory
-import com.breigns.vms.Role
-import com.breigns.vms.Shop
-import com.breigns.vms.VoucherCreationRequestModel
-import com.breigns.vms.VoucherInvoiceSequence
-import com.breigns.vms.VoucherInvoice
-import com.breigns.vms.VoucherInvoiceModel
-import grails.orm.HibernateCriteriaBuilder
-import com.breigns.vms.VoucherStatusAggregatedReportModel
-import com.breigns.vms.AggregatedReportModel
-import com.breigns.vms.VoucherSaleByShop
+import com.breigns.vms.*
 
 class AdminService {
   def springSecurityService
@@ -31,13 +15,11 @@ class AdminService {
 
   def createVouchersForTheClient(VoucherCreationRequestModel voucherCreateRequest) {
     def client = Client.load(voucherCreateRequest.clientId)
-    def loggedInUser = AppUser.findByUsername(springSecurityService.getPrincipal().username)
-    def shop = Shop.load(voucherCreateRequest.shopId)
+    def loggedInUser = getLoggedInuser()
     def validThru = voucherCreateRequest.validThru
-    def remarks = voucherCreateRequest.remarks
-    def voucherInvoiceNumber = VoucherInvoiceSequence.nextSequence(shop)
-    def voucherInvoice = new VoucherInvoice(invoicedAt: shop, invoiceNumber: voucherInvoiceNumber,remarks:remarks).save()
+    def voucherRequest
     if (client) {
+      voucherRequest = new VoucherRequest(client: client, createdBy: loggedInUser)
       def voucherList = voucherCreateRequest.voucherList
       int j = 0;
       for (def voucher: voucherList) {
@@ -49,10 +31,11 @@ class AdminService {
           }
           def newVoucher = new Voucher(sequenceNumber: nextSequence,
                   barcodeAlpha: getRandomAlpha(), value: voucher.denomination, createdBy: loggedInUser,
-                  status: VoucherStatus.CREATED, voucherInvoice: voucherInvoice, client: client,validThru:validThru)
-          client.addToVouchers(newVoucher.save())
+                  status: VoucherStatus.CREATED, validThru: validThru, voucherRequest: voucherRequest)
+          voucherRequest.addToVouchers(newVoucher)
           j++;
           if (j % 50 == 0) {
+            voucherRequest.save()
             sessionFactory.getCurrentSession().flush();
             sessionFactory.getCurrentSession().clear();
             propertyInstanceMap.get().clear()
@@ -60,9 +43,13 @@ class AdminService {
         }
 
       }
-
+      voucherRequest.save()
     }
-    voucherInvoice.invoiceNumber
+    voucherRequest
+  }
+
+  private def getLoggedInuser() {
+    return AppUser.findByUsername(springSecurityService.getPrincipal().username)
   }
 
   def getVouchersFor(Long clientId, VoucherStatus voucherStatus) {
@@ -74,48 +61,37 @@ class AdminService {
     Voucher.executeUpdate("delete from Voucher where id in (:voucherIds)", [voucherIds: voucherIds])
   }
 
-  def getVouchersForSequence(clientId, sequenceStart, sequenceEnd) {
-    Voucher.findAllByClientAndSequenceNumberBetween(Client.load(clientId), sequenceStart,
-            sequenceEnd, [sort: 'sequenceNumber', order: 'asc'])
+
+  def getVoucherRequestsNotInvoiced(clientId) {
+    def client = Client.load(clientId)
+    VoucherRequest.findAllByClientAndIsInvoiced(client, false)
   }
 
-
-  def getVouchersCreatedGroupedByValue(clientId) {
-    def client = Client.get(clientId)
-    def criteria = Voucher.createCriteria()
-    def voucherGroupList = criteria.list {
-      projections {
-        min('sequenceNumber', 'sequenceNumberStart')
-        max('sequenceNumber', 'sequenceNumberEnd')
-        count('id', 'count')
-        groupProperty("value", "value")
-        groupProperty("createdBy", "createdBy")
-      }
-      and {
-        eq('client', client)
-        eq('status', VoucherStatus.CREATED)
-      }
-    }
-    voucherGroupList.collect {
-      new VoucherGroupModel(sequenceStart: it.getAt(0),
-              sequenceEnd: it.getAt(1),
-              count: it.getAt(2),
-              value: it.getAt(3),
-              status: VoucherStatus.CREATED,
-              client: client,
-              createdBy: it.getAt(4)
-      )
-    }
-  }
-
-  def updateStatusForRangeOfSequence(clientId, sequenceStart, sequenceEnd, voucherStatus) {
-    /*Voucher.findAllByClientAndSequenceNumberBetween(Client.load(clientId),sequenceStart,sequenceEnd).each{
+  def updateBarcodeGenerated(voucherRequestId) {
+    VoucherRequest.get(voucherRequestId).vouchers.each {
       it.status = VoucherStatus.BARCODE_GENERATED
-    }*/
-    Voucher.executeUpdate("update Voucher set status = :status where client = :client and sequenceNumber between :sequenceStart and :sequenceEnd",
-            [status: voucherStatus, client: Client.load(clientId), sequenceStart: sequenceStart, sequenceEnd: sequenceEnd])
-//    sessionFactory.getCurrentSession().flush();
+      it.save()
+    }
   }
+
+  def deleteVoucherRequest(voucherRequestId) {
+    VoucherRequest.load(voucherRequestId).delete()
+  }
+
+
+  def invoiceVoucherRequest(voucherRequestId, shopId, remarks) {
+    def invoicedAt = Shop.load(shopId)
+    def voucherRequest = VoucherRequest.load(voucherRequestId)
+    def voucherInvoiceSeq = VoucherInvoiceSequence.nextSequence(invoicedAt)
+    voucherRequest.isInvoiced = true
+    voucherRequest.vouchers.each {
+      it.status = VoucherStatus.INVOICED
+    }
+    voucherRequest.save()
+    return new VoucherInvoice(invoicedAt: invoicedAt,
+            voucherRequest: voucherRequest, remarks: remarks, invoiceNumber: voucherInvoiceSeq).save()
+  }
+
 
   def createNewUser(firstName, lastName, userName, password, userRole, shop) {
     def role = Role.findByAuthority(userRole)

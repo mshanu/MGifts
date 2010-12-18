@@ -4,26 +4,28 @@ import com.breigns.vms.Role
 import com.breigns.vms.AppUser
 import com.breigns.vms.Client
 import com.breigns.vms.utility.BarCodeGenerator
-import com.breigns.vms.VoucherStatus
+
 import com.breigns.vms.Shop
 import com.breigns.vms.VoucherSetModel
 
 import com.breigns.vms.VoucherCreationRequestModel
-import com.breigns.vms.utility.DateUtils
+import com.breigns.vms.utility.VMSDateUtils
+import com.breigns.vms.VoucherRequest
+import grails.converters.JSON
 
 class AdminController {
   def adminService;
-  def dateUtil = new DateUtils()
+  def dateUtil = new VMSDateUtils()
   def index = {
-    voucherReportPage()
+    createNewVoucherRequestPage()
   }
 
-  def createNewVoucherPage = {
+  def createNewVoucherRequestPage = {
     flash.clear()
-    render view: 'createNewVoucher', model: [clientList: Client.listOrderByName(), shops: Shop.list()]
+    render view: 'createNewVoucherRequest', model: [clientList: Client.listOrderByName()]
   }
 
-  def createNewVoucher = {
+  def createNewVoucherRequest = {
     def voucherSet = new ArrayList<VoucherSetModel>()
     if (params.voucherSet.numberOfVouchers.class == String.class) {
       voucherSet.add(new VoucherSetModel(numberOfVouchers: Integer.parseInt(params.voucherSet.numberOfVouchers),
@@ -34,46 +36,51 @@ class AdminController {
                 denomination: Integer.parseInt(params.voucherSet.denomination[index])))
       }
     }
-    def invoiceNumber = adminService.createVouchersForTheClient(new VoucherCreationRequestModel(shopId: Long.parseLong(params['invoicedAt']),
-            clientId: Long.parseLong(params['clientId']), voucherList: voucherSet,
-            validThru: dateUtil.getDateFromString(params['validThru']), remarks: params['remarks']))
+    def voucherRequest = adminService.createVouchersForTheClient(new VoucherCreationRequestModel(clientId: Long.parseLong(params['clientId']), voucherList: voucherSet,
+            validThru: dateUtil.getDateFromString(params['validThru'])))
     /*adminService.createVouchersForTheClient(params['clientId'], Integer.parseInt(params['numberOfVouchers']),
             Double.parseDouble(params['voucherValue']),invoicedAt,params['invoiceNumber'])*/
-    flash.message = 'Voucher(s) Created Successfully with the invoice number: ' + invoiceNumber
-    render view: 'createNewVoucher', model: [clientList: Client.list(), shops: Shop.list()]
+    flash.message = 'Voucher Request Created Successfully. Request # ' + voucherRequest.id
+    render view: 'createNewVoucherRequest', model: [clientList: Client.list()]
   }
 
-  def barcodePage = {
-    render view: 'barCodePage',
-            model: [clientList: Client.listOrderByName()]
+  def voucherRequestsPage = {
+    flash.clear()
+    render view: 'voucherRequests', model: [clients: Client.listOrderByName()]
   }
 
-  def getCreatedVouchers = {
+  def getVoucherRequests = {
     def clientId = Long.parseLong(params['clientId'])
-    def voucherGroupList = adminService.getVouchersCreatedGroupedByValue(clientId)
-    render view: 'barCodePage', model: [clientList: Client.listOrderByName(),
-            voucherGroupList: voucherGroupList, selectedClient: Client.get(clientId)]
+    def voucherRequestList = adminService.getVoucherRequestsNotInvoiced(clientId)
+    render view: 'voucherRequests', model: [clients: Client.listOrderByName(), shops: Shop.listOrderByName(),
+            voucherRequestList: voucherRequestList, selectedClient: Client.get(clientId)]
   }
 
-  def printBarCodeForClient = {
+  def generateBarcode = {
     def file = grailsApplication.getMainContext().getResource("/template/barcode.template").getFile()
-    def clientId = Long.parseLong(params['clientIdForBarcode'])
-    def sequenceStart = Integer.parseInt(params['sequenceStart'])
-    def sequenceEnd = Integer.parseInt(params['sequenceEnd'])
-    def voucherList = adminService.getVouchersForSequence(clientId,
-            sequenceStart, sequenceEnd)
-    adminService.updateStatusForRangeOfSequence(clientId, sequenceStart, sequenceEnd, VoucherStatus.BARCODE_GENERATED)
+    def voucherRequestId = Long.parseLong(params['voucherRequestId'])
+    adminService.updateBarcodeGenerated(voucherRequestId)
+    def voucherRequest = VoucherRequest.get(voucherRequestId)
     response.setContentType("application/octet-stream")
     response.setHeader("Content-Disposition", "attachment; filename=barcode.txt")
-    render new BarCodeGenerator().generateZlpForBarcode(voucherList, file)
+    render new BarCodeGenerator().generateZlpForBarcode(voucherRequest.vouchers, file)
   }
 
-  def editVoucherPage = {
-    flash.clear()
-    render view: 'editVoucher', model: [clients: Client.listOrderByName(), shops: Shop.list()]
+  def deleteVoucherRequest = {
+    def voucherRequestId = Long.parseLong(params['voucherRequestId'])
+    adminService.deleteVoucherRequest(voucherRequestId)
+    render "Voucher Request Deleted Successfully"
   }
 
-  def editVoucherSearch = {
+  def invoiceVoucherRequest = {
+    def voucherRequestId = Long.parseLong(params['voucherRequestId'])
+    def shopId = Long.parseLong(params['shopId'])
+    def remarks = params['remarks']
+    def voucherInvoice = adminService.invoiceVoucherRequest(voucherRequestId, shopId, remarks)
+    render "Voucher Request Invoiced At:" + voucherInvoice.invoicedAt.name + " Invoice Number:" + voucherInvoice.invoiceNumber
+  }
+
+  /*def editVoucherSearch = {
     flash.clear()
     def clientId = Long.parseLong(params['clientId'])
     def shopId = Long.parseLong(params['shopId'])
@@ -87,14 +94,14 @@ class AdminController {
     }
 
   }
-
-  def editVouchersByInvoice = {
+*/
+  /*def editVouchersByInvoice = {
     def voucherInvoiceId = Long.parseLong(params['voucherInvoiceId'])
     def shopId = Long.parseLong(params['newShopId'])
     def voucherInvoice = adminService.updateVoucherInvoice(voucherInvoiceId, shopId)
     flash.message = "Voucher Invoice Updated Successfully: New Invoice Number: " + voucherInvoice.invoiceNumber
     render view: 'editVoucher', model: [clients: Client.listOrderByName(), shops: Shop.list()]
-  }
+  }*/
 
   def addNewUserPage = {
     flash.clear()
@@ -116,16 +123,19 @@ class AdminController {
   }
 
   def searchToDeletePage = {
-    render view: 'searchToDeletePage', model: [shops: Shop.list(), clients: Client.list()]
+    render view: 'searchToDeletePage', model: [clients: Client.list()]
   }
 
+  def retrieveVouchersAsJson = {
+    def clientId = Long.parseLong(params['clientId'])
+    render VoucherRequest.findAllByClient(Client.load(clientId)).collect { [value: it.id, key: it.id + " - " + dateUtil.getDateAsString(it.dateCreated)] } as JSON
+  }
   def searchVoucherToDelete = {
     flash.clear()
     def clientId = Long.parseLong(params['clientId'])
     def shopId = Long.parseLong(params['shopId'])
     def voucherInvoiceNumber = Integer.parseInt(params['invoiceNumber'])
     render view: 'searchToDeletePage', model: [voucherList: adminService.getVouchersNotValidatedOrSold(clientId, shopId, voucherInvoiceNumber), shops: Shop.list(), clients: Client.list()]
-
   }
 
   def deleteVouchers = {
