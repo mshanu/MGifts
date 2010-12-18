@@ -33,8 +33,10 @@ class AdminService {
     def client = Client.load(voucherCreateRequest.clientId)
     def loggedInUser = AppUser.findByUsername(springSecurityService.getPrincipal().username)
     def shop = Shop.load(voucherCreateRequest.shopId)
+    def validThru = voucherCreateRequest.validThru
+    def remarks = voucherCreateRequest.remarks
     def voucherInvoiceNumber = VoucherInvoiceSequence.nextSequence(shop)
-    def voucherInvoice = new VoucherInvoice(invoicedAt: shop, invoiceNumber: voucherInvoiceNumber).save()
+    def voucherInvoice = new VoucherInvoice(invoicedAt: shop, invoiceNumber: voucherInvoiceNumber,remarks:remarks).save()
     if (client) {
       def voucherList = voucherCreateRequest.voucherList
       int j = 0;
@@ -47,7 +49,7 @@ class AdminService {
           }
           def newVoucher = new Voucher(sequenceNumber: nextSequence,
                   barcodeAlpha: getRandomAlpha(), value: voucher.denomination, createdBy: loggedInUser,
-                  status: VoucherStatus.CREATED, voucherInvoice: voucherInvoice, client: client)
+                  status: VoucherStatus.CREATED, voucherInvoice: voucherInvoice, client: client,validThru:validThru)
           client.addToVouchers(newVoucher.save())
           j++;
           if (j % 50 == 0) {

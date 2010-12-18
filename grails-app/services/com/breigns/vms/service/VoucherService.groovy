@@ -48,6 +48,7 @@ class VoucherService {
     invoice.validate()
     invoice.save()
     vouchers.each {
+      it.purchase = invoice
       it.soldAt = inuser.shop
       it.status = VoucherStatus.SOLD;
       it.save()

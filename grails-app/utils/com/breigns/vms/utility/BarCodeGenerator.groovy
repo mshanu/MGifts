@@ -34,9 +34,9 @@ class BarCodeGenerator {
     voucherList.eachWithIndex {value, index ->
       if ((index + 1) % 2 != 0) {
         def barcodeAlpha2 = voucherListSize > (index + 1) ? voucherList.getAt(index + 1).barcodeAlpha : ""
-        def sequenceNumber2 = voucherListSize > (index + 1) ? voucherList.getAt(index + 1).sequenceNumber : ""
+        def sequenceNumber2 = voucherListSize > (index + 1) ? voucherList.getAt(index + 1).generatedSequence : ""
         def binding = ["BARCODE1": value.barcodeAlpha, "SEQUENCE1": value.
-                sequenceNumber, "BARCODE2": barcodeAlpha2,
+                generatedSequence, "BARCODE2": barcodeAlpha2,
                 "SEQUENCE2": sequenceNumber2]
         writer.append(engine.createTemplate(templateFile).make(binding).toString())
       }

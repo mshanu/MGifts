@@ -9,9 +9,11 @@ import com.breigns.vms.Shop
 import com.breigns.vms.VoucherSetModel
 
 import com.breigns.vms.VoucherCreationRequestModel
+import com.breigns.vms.utility.DateUtils
 
 class AdminController {
   def adminService;
+  def dateUtil = new DateUtils()
   def index = {
     voucherReportPage()
   }
@@ -33,7 +35,8 @@ class AdminController {
       }
     }
     def invoiceNumber = adminService.createVouchersForTheClient(new VoucherCreationRequestModel(shopId: Long.parseLong(params['invoicedAt']),
-            clientId: Long.parseLong(params['clientId']), voucherList: voucherSet))
+            clientId: Long.parseLong(params['clientId']), voucherList: voucherSet,
+            validThru: dateUtil.getDateFromString(params['validThru']), remarks: params['remarks']))
     /*adminService.createVouchersForTheClient(params['clientId'], Integer.parseInt(params['numberOfVouchers']),
             Double.parseDouble(params['voucherValue']),invoicedAt,params['invoiceNumber'])*/
     flash.message = 'Voucher(s) Created Successfully with the invoice number: ' + invoiceNumber
@@ -60,8 +63,9 @@ class AdminController {
     def voucherList = adminService.getVouchersForSequence(clientId,
             sequenceStart, sequenceEnd)
     adminService.updateStatusForRangeOfSequence(clientId, sequenceStart, sequenceEnd, VoucherStatus.BARCODE_GENERATED)
-    response.setHeader("Content-Disposition", "attachment; barcode.txt")
-    render new BarCodeGenerator().generateZlpForBarcode(voucherList,file)
+    response.setContentType("application/octet-stream")
+    response.setHeader("Content-Disposition", "attachment; filename=barcode.txt")
+    render new BarCodeGenerator().generateZlpForBarcode(voucherList, file)
   }
 
   def editVoucherPage = {
@@ -88,7 +92,7 @@ class AdminController {
     def voucherInvoiceId = Long.parseLong(params['voucherInvoiceId'])
     def shopId = Long.parseLong(params['newShopId'])
     def voucherInvoice = adminService.updateVoucherInvoice(voucherInvoiceId, shopId)
-    flash.message = "Voucher Invoice Updated Successfully: New Invoice Number: "+voucherInvoice.invoiceNumber
+    flash.message = "Voucher Invoice Updated Successfully: New Invoice Number: " + voucherInvoice.invoiceNumber
     render view: 'editVoucher', model: [clients: Client.listOrderByName(), shops: Shop.list()]
   }
 

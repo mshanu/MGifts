@@ -21,7 +21,6 @@
     <ul class="leftNavUL">
       <li>
         <label>Bar Code:</label>
-
       </li>
       <li>
         <g:textField name="barcode"></g:textField>

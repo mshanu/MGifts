@@ -55,5 +55,6 @@
     </table>
   </div>
 </div>
+<div style="margin-bottom:0px; width:400px;height:200px;display:block;border:black dotted thin">Test</div>
 </body>
 </html>

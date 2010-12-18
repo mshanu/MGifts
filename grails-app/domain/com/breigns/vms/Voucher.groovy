@@ -11,12 +11,14 @@ class Voucher {
   VoucherInvoice voucherInvoice
   Shop soldAt;
   Shop validatedAt;
-  static belongsTo = [client: Client]
+  Date validThru
+  static belongsTo = [client: Client,purchase:Purchase]
   static fetchMode = [client: 'eager']
   static constraints = {
     barcodeAlpha(maxSize: 10, minSize: 10)
     soldAt(nullable: true)
     validatedAt(nullable: true)
+    purchase(nullable: true)
   }
 
   def getGeneratedSequence() {

@@ -42,6 +42,14 @@
       $("#message_box").html('No Voucher In The List To Create')
       return false;
     }
+    if (!validateMandatoryFields(['validThru','remarks'])) {
+      $("#message_box").html('Valid Thru and Remarks Are Mandatory')
+      return false;
+    }
+    if (!validateDate('validThru')) {
+      $("#message_box").html('Valid Thru , Not A Valid Date')
+      return false;
+    }
     $('#Create').attr('disabled', 'true')
     return true;
   }
@@ -66,13 +74,15 @@
         </g:if>
       </div>
       <div>
-        <ul id="voucherAddition">
-          <li style="display:inline;padding:5px"><label>Number Of Vouchers</label></li>
-          <li style="display:inline;padding:5px"><g:textField name="numberOfVouchers"/></li>
-          <li style="display:inline;padding:5px"><label>Voucher Denomination</label></li>
-          <li style="display:inline;padding:5px"><g:textField name="denomination"/></li>
-          <li style="display:inline;padding:5px"><input type="button" value="Add To List" onclick="addToVoucherList()"/></li>
-        </ul>
+        <table>
+          <tr>
+            <td>No Of Vouchers</td>
+            <td><g:textField name="numberOfVouchers"/></td>
+            <td>Voucher Value</td>
+            <td><g:textField name="denomination"/></td>
+            <td><input type="button" value="Add To List" onclick="addToVoucherList()"/></td>
+          </tr>
+        </table>
       </div>
       <div id="voucherList" style="height:300px;overflow-y:auto">
         <h3>Voucher Creation List</h3>
@@ -93,7 +103,18 @@
           </g:each>
         </table>
       </div>
-      <div style="margin-left:80px;margin-top:10px;"><g:submitButton name="Create" value="Create Vouchers"/></div>
+      <div>
+        <table>
+          <tr>
+            <td>Valid Thru(dd/mm/yyyy)</td>
+            <td><g:textField name="validThru"/></td>
+            <td>Remarks</td>
+            <td><g:textArea name="remarks"/></td>
+            <td><g:submitButton name="Create" value="Create Vouchers"/></td>
+          </tr>
+        </table>
+
+      </div>
 
     </div>
   </g:form>
