@@ -3,7 +3,6 @@ package com.breigns.vms
 class VoucherRequest {
   Client client
   Boolean isInvoiced = false
-  List vouchers
   AppUser createdBy
   Date dateCreated
   Date lastUpdated
@@ -13,14 +12,19 @@ class VoucherRequest {
   }
 
   def getSequenceRange() {
-    client.initials + vouchers.first().sequenceNumber + "-" + client.initials + vouchers.last().sequenceNumber
+
+    client.initials + getVouchersBySequence().first().sequenceNumber + "-" + client.initials + getVouchersBySequence().last().sequenceNumber
   }
 
-  def getSequenceStart(){
-    vouchers.first().sequenceNumber
+  def getSequenceStart() {
+    getSequenceRange().first().sequenceNumber
   }
 
-  def getSequenceEnd(){
-    vouchers.last().sequenceNumber
+  def getSequenceEnd() {
+    getSequenceRange().last().sequenceNumber
+  }
+
+  def getVouchersBySequence() {
+    Voucher.findAllByVoucherRequest(this, [sort: 'sequenceNumber'])
   }
 }

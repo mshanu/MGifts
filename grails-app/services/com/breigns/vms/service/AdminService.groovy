@@ -99,43 +99,6 @@ class AdminService {
     AppUser.createNewUser(firstName, lastName, userName, encodedPassword, userRole, shop)
   }
 
-  def getVouchersNotValidatedOrSold(clientId, shopId, voucherInvoiceNumber) {
-    def client = Client.load(clientId)
-    def shop = Shop.load(shopId)
-    Voucher.executeQuery("""from Voucher where client = :client and voucherInvoice.invoicedAt = :invoicedAt and
-voucherInvoice.invoiceNumber = :invoiceNumber and  status not in (:status)""",
-            [client: client, invoicedAt: shop, invoiceNumber: voucherInvoiceNumber, status: [VoucherStatus.VALIDATED, VoucherStatus.SOLD]])
-  }
-
-  def getVoucherInvoiceThatCanBeUpdated(clientId, invoicedAtId, invoiceNumber) {
-    def shop = Shop.load(invoicedAtId)
-    def voucherInvoice = VoucherInvoice.findByInvoicedAtAndInvoiceNumber(shop, invoiceNumber)
-    if (voucherInvoice) {
-      def criteria = Voucher.createCriteria()
-      def result = criteria.get {
-        projections {
-          min('sequenceNumber', 'sequenceNumberStart')
-          max('sequenceNumber', 'sequenceNumberEnd')
-          count('id', 'count')
-        }
-        and {
-          eq('voucherInvoice', voucherInvoice)
-          'in'('status', [VoucherStatus.CREATED, VoucherStatus.BARCODE_GENERATED])
-        }
-      }
-      new VoucherInvoiceModel(voucherInvoiceId: voucherInvoice.id, invoicedAt: shop, sequenceNumberStart: result.getAt(0),
-              sequenceNumberEnd: result.getAt(1), client: Client.load(clientId), invoiceNumber: invoiceNumber, dateCreated: voucherInvoice.dateCreated)
-    }
-  }
-
-  def updateVoucherInvoice(voucherInvoiceId, shopId) {
-    def voucherInvoice = VoucherInvoice.load(voucherInvoiceId)
-    def newShop = Shop.load(shopId)
-    voucherInvoice.invoicedAt = newShop
-    voucherInvoice.invoiceNumber = VoucherInvoiceSequence.nextSequence(newShop)
-    voucherInvoice.save()
-
-  }
 
   def createShop(shopName) {
     def shopCreated

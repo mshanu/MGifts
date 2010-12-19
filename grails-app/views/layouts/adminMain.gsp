@@ -38,6 +38,8 @@
   <style type="text/css">
   .subnav {
     display: none;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
   }
 
   ul.ui-tabs-nav li {
@@ -57,8 +59,8 @@
     top: 40px;
     background: #F6F6F6;
     float: right;
-    margin-left: 50px;
     list-style: none;
+    width: 180px;
   }
 
   ul.ui-tabs-nav li span {
@@ -69,12 +71,15 @@
   }
 
   ul.ui-tabs-nav li ul.subnav li {
-    margin: 0;
     padding: 0;
     border-top: 1px dashed orange; /*--Create bevel effect--*/
     clear: both;
-    width: 170px;
-    margin-left: -40px;
+    margin-left: -30px;
+    width: 100%;
+  }
+
+  ul.ui-tabs-nav li ul.subnav li a {
+    text-align: left;
   }
 
   .subNavLinks {

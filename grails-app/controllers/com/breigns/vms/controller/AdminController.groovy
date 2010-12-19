@@ -63,7 +63,7 @@ class AdminController {
     def voucherRequest = VoucherRequest.get(voucherRequestId)
     response.setContentType("application/octet-stream")
     response.setHeader("Content-Disposition", "attachment; filename=barcode.txt")
-    render new BarCodeGenerator().generateZlpForBarcode(voucherRequest.vouchers, file)
+    render new BarCodeGenerator().generateZlpForBarcode(voucherRequest.vouchersBySequence, file)
   }
 
   def deleteVoucherRequest = {
@@ -79,29 +79,6 @@ class AdminController {
     def voucherInvoice = adminService.invoiceVoucherRequest(voucherRequestId, shopId, remarks)
     render "Voucher Request Invoiced At:" + voucherInvoice.invoicedAt.name + " Invoice Number:" + voucherInvoice.invoiceNumber
   }
-
-  /*def editVoucherSearch = {
-    flash.clear()
-    def clientId = Long.parseLong(params['clientId'])
-    def shopId = Long.parseLong(params['shopId'])
-    def invoiceNumber = Long.parseLong(params['invoiceNumber'])
-    def voucherInvoice = adminService.getVoucherInvoiceThatCanBeUpdated(clientId, shopId, invoiceNumber)
-    if (!voucherInvoice) {
-      render view: 'editVoucher', model: [clients: Client.listOrderByName(), shops: Shop.list()]
-      flash.message = "No Invoice Voucher Found To Edit"
-    } else {
-      render view: 'editVoucher', model: [clients: Client.listOrderByName(), shops: Shop.list(), voucherInvoice: voucherInvoice]
-    }
-
-  }
-*/
-  /*def editVouchersByInvoice = {
-    def voucherInvoiceId = Long.parseLong(params['voucherInvoiceId'])
-    def shopId = Long.parseLong(params['newShopId'])
-    def voucherInvoice = adminService.updateVoucherInvoice(voucherInvoiceId, shopId)
-    flash.message = "Voucher Invoice Updated Successfully: New Invoice Number: " + voucherInvoice.invoiceNumber
-    render view: 'editVoucher', model: [clients: Client.listOrderByName(), shops: Shop.list()]
-  }*/
 
   def addNewUserPage = {
     flash.clear()
@@ -128,14 +105,12 @@ class AdminController {
 
   def retrieveVouchersAsJson = {
     def clientId = Long.parseLong(params['clientId'])
-    render VoucherRequest.findAllByClient(Client.load(clientId)).collect { [value: it.id, key: it.id + " - " + dateUtil.getDateAsString(it.dateCreated)] } as JSON
+    render VoucherRequest.findAllByClientAndIsInvoiced(Client.load(clientId), false).collect { [value: it.id, key: it.id + " - " + dateUtil.getDateAsString(it.dateCreated)] } as JSON
   }
   def searchVoucherToDelete = {
     flash.clear()
-    def clientId = Long.parseLong(params['clientId'])
-    def shopId = Long.parseLong(params['shopId'])
-    def voucherInvoiceNumber = Integer.parseInt(params['invoiceNumber'])
-    render view: 'searchToDeletePage', model: [voucherList: adminService.getVouchersNotValidatedOrSold(clientId, shopId, voucherInvoiceNumber), shops: Shop.list(), clients: Client.list()]
+    def voucherRequestId = Long.parseLong(params['voucherRequestId'])
+    render view: 'searchResultToDelete', model: [voucherList: VoucherRequest.get(voucherRequestId).vouchersBySequence, clients: Client.list()]
   }
 
   def deleteVouchers = {
@@ -149,8 +124,7 @@ class AdminController {
       }
     }
     adminService.deleteVouchers(voucherIdsToDelete)
-    flash.message = "Vouchers Deleted Successfully"
-    searchToDeletePage()
+    render "Vouchers Deleted Successfully"
   }
 
   def clientListPage = {
