@@ -12,12 +12,14 @@ import com.breigns.vms.VoucherCreationRequestModel
 import com.breigns.vms.utility.VMSDateUtils
 import com.breigns.vms.VoucherRequest
 import grails.converters.JSON
+import com.breigns.vms.VoucherRequestStatus
+import com.breigns.vms.VoucherStatus
 
 class AdminController {
   def adminService;
   def dateUtil = new VMSDateUtils()
   def index = {
-    createNewVoucherRequestPage()
+    voucherReportPage()
   }
 
   def createNewVoucherRequestPage = {
@@ -57,8 +59,8 @@ class AdminController {
   }
 
   def generateBarcode = {
-    def file = grailsApplication.getMainContext().getResource("/template/barcode.template").getFile()
     def voucherRequestId = Long.parseLong(params['voucherRequestId'])
+    def file = grailsApplication.getMainContext().getResource("/template/barcode.template").getFile()
     adminService.updateBarcodeGenerated(voucherRequestId)
     def voucherRequest = VoucherRequest.get(voucherRequestId)
     response.setContentType("application/octet-stream")
@@ -76,8 +78,13 @@ class AdminController {
     def voucherRequestId = Long.parseLong(params['voucherRequestId'])
     def shopId = Long.parseLong(params['shopId'])
     def remarks = params['remarks']
-    def voucherInvoice = adminService.invoiceVoucherRequest(voucherRequestId, shopId, remarks)
-    render "Voucher Request Invoiced At:" + voucherInvoice.invoicedAt.name + " Invoice Number:" + voucherInvoice.invoiceNumber
+    if (VoucherRequest.get(voucherRequestId).status == VoucherRequestStatus.BARCODE_GENERATED) {
+      def voucherInvoice = adminService.invoiceVoucherRequest(voucherRequestId, shopId, remarks)
+      render "Voucher Request Invoiced At:" + voucherInvoice.invoicedAt.name + " Invoice Number:" + voucherInvoice.invoiceNumber
+    }
+    else {
+      render "Voucher Request Can Be Invoiced Only After Barcode Generation";
+    }
   }
 
   def addNewUserPage = {
@@ -105,7 +112,7 @@ class AdminController {
 
   def retrieveVouchersAsJson = {
     def clientId = Long.parseLong(params['clientId'])
-    render VoucherRequest.findAllByClientAndIsInvoiced(Client.load(clientId), false).collect { [value: it.id, key: it.id + " - " + dateUtil.getDateAsString(it.dateCreated)] } as JSON
+    render VoucherRequest.findAllByClientAndStatusNot(Client.load(clientId), VoucherRequestStatus.INVOICED).collect { [value: it.id, key: it.id + " - " + dateUtil.getDateAsString(it.dateCreated)] } as JSON
   }
   def searchVoucherToDelete = {
     flash.clear()
@@ -133,6 +140,8 @@ class AdminController {
 
   def voucherReportPage = {
     def reportModel = adminService.getAggregatedReport()
-    render view: 'voucherReport', model: [reportModel: reportModel]
+    render view: 'voucherReport', model: [reportModel: reportModel,
+            clients: Client.listOrderByName(),
+            voucherStatus: VoucherStatus.values().collect {[key: it, description: it.description]}]
   }
 }

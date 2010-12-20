@@ -17,20 +17,20 @@ class VoucherService {
     List voucherList
     if (barcode) {
       voucherList = Voucher.executeQuery("from Voucher where barcodeAlpha = :barcode and status in (:status)",
-              [barcode: barcode, status: [VoucherStatus.BARCODE_GENERATED, VoucherStatus.VALIDATED]])
+              [barcode: barcode, status: [VoucherStatus.INVOICED, VoucherStatus.VALIDATED]])
     } else
     if (sequenceNumber) {
       def client = Client.findByInitials(clientInitials)
       if (client) {
         voucherList = Voucher.executeQuery("""from Voucher where
-              client = :client and sequenceNumber= :sequenceNumber and status in (:status)""",
+              voucherRequest.client = :client and sequenceNumber= :sequenceNumber and status in (:status)""",
                 [client: client, sequenceNumber: sequenceNumber.intValue(),
-                        status: [VoucherStatus.BARCODE_GENERATED, VoucherStatus.VALIDATED]])
+                        status: [VoucherStatus.INVOICED, VoucherStatus.VALIDATED]])
       }
     }
     if (voucherList) {
       voucher = voucherList.get(0)
-      voucher.validatedAt = getLoggedInuser().shop 
+      voucher.validatedAt = getLoggedInuser().shop
       voucher.status = VoucherStatus.VALIDATED
       voucher.save()
     }
@@ -44,12 +44,11 @@ class VoucherService {
             invoiceDate: invoiceModel.invoiceDate,
             vouchers: vouchers, totalAmount: invoiceModel.totalAmount,
             discount: invoiceModel.discount, netTotal: invoiceModel.netTotal,
-            createdBy: inuser, shoppedAt: inuser.shop, item: Item.load(invoiceModel.itemId))
+            createdBy: inuser, soldAt: inuser.shop, item: Item.load(invoiceModel.itemId))
     invoice.validate()
     invoice.save()
     vouchers.each {
       it.purchase = invoice
-      it.soldAt = inuser.shop
       it.status = VoucherStatus.SOLD;
       it.save()
     }

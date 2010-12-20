@@ -2,13 +2,18 @@ package com.breigns.vms
 
 class VoucherRequest {
   Client client
-  Boolean isInvoiced = false
+  VoucherRequestStatus status
   AppUser createdBy
   Date dateCreated
   Date lastUpdated
+  static hasOne = [voucherInvoice: VoucherInvoice]
   static hasMany = [vouchers: Voucher]
   static mapping = {
     vouchers cascade: "all,delete-orphan"
+  }
+
+  static constraints = {
+    voucherInvoice(nullable: true)
   }
 
   def getSequenceRange() {

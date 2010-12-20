@@ -149,17 +149,24 @@
 
   #aggregatedVoucherStatus {
     float: left;
-    width: 32%;
+    width: 30%;
     height: 250px;
-    margin-left: 1%;
+    margin-left: 2%;
     border: orange dotted thin;
+  }
+  #voucherReport{
+   border: orange dotted thin;
+    width: 30%;
+    margin-left:2%;
+    height:100px;
+    float:left;
   }
 
   #aggregatedByShop {
     float: left;
-    height: 250px;
-    margin-left: 4%;
-    width: 58%;
+    height: 250px;    
+    width: 60%;
+    margin-left:2%;
     overflow: auto;
     border: orange dotted thin;
   }

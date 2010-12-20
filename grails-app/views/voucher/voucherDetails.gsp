@@ -13,13 +13,13 @@
       <td style="text-align:left">Value</td>
       <td><input disabled="true" value="${voucher.value}"/></td>
       <td style="text-align:left">Company Name</td>
-      <td><input disabled="true" value="${voucher.client.name}"/></td>
+      <td><input disabled="true" value="${voucher.voucherRequest.client.name}"/></td>
     </tr>
     <tr>
       <td style="text-align:left">Valid Thru(dd/mm/yyyy)</td>
       <td><input disabled="true" value= <g:formatDate date="${voucher.validThru}" format="dd/MM/yyyy"/>></td>
       <td style="text-align:left">Remarks</td>
-      <td><textarea disabled="true">${voucher.voucherInvoice.remarks}</textarea></td>
+      <td><textarea disabled="true">${voucher.voucherRequest.voucherInvoice.remarks}</textarea></td>
     </tr>
   </table>
   <g:hiddenField name="voucherId" value="${voucher.id}"/>

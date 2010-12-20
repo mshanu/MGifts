@@ -9,13 +9,12 @@ class Voucher {
   Date lastUpdated
   VoucherStatus status;
   Shop validatedAt;
-  Shop soldAt;
   Date validThru;
-  static belongsTo = [voucherRequest:VoucherRequest]
+  static belongsTo = [voucherRequest: VoucherRequest, purchase: Purchase]
   static constraints = {
     barcodeAlpha(maxSize: 10, minSize: 10)
-    soldAt(nullable: true)
     validatedAt(nullable: true)
+    purchase(nullable: true)
   }
 
   def getGeneratedSequence() {

@@ -19,7 +19,7 @@ class AdminService {
     def validThru = voucherCreateRequest.validThru
     def voucherRequest
     if (client) {
-      voucherRequest = new VoucherRequest(client: client, createdBy: loggedInUser)
+      voucherRequest = new VoucherRequest(client: client, createdBy: loggedInUser, status: VoucherRequestStatus.CREATED)
       def voucherList = voucherCreateRequest.voucherList
       int j = 0;
       for (def voucher: voucherList) {
@@ -52,10 +52,6 @@ class AdminService {
     return AppUser.findByUsername(springSecurityService.getPrincipal().username)
   }
 
-  def getVouchersFor(Long clientId, VoucherStatus voucherStatus) {
-    def client = Client.load(clientId)
-    Voucher.findAllByClientAndStatus(client, voucherStatus, [sort: 'sequenceNumber', order: 'asc'])
-  }
 
   def deleteVouchers(voucherIds) {
     Voucher.executeUpdate("delete from Voucher where id in (:voucherIds)", [voucherIds: voucherIds])
@@ -64,14 +60,16 @@ class AdminService {
 
   def getVoucherRequestsNotInvoiced(clientId) {
     def client = Client.load(clientId)
-    VoucherRequest.findAllByClientAndIsInvoiced(client, false)
+    VoucherRequest.findAllByClientAndStatusNot(client, VoucherRequestStatus.INVOICED)
   }
 
   def updateBarcodeGenerated(voucherRequestId) {
-    VoucherRequest.get(voucherRequestId).vouchers.each {
+    def voucherRequest = VoucherRequest.get(voucherRequestId)
+    voucherRequest.vouchers.each {
       it.status = VoucherStatus.BARCODE_GENERATED
       it.save()
     }
+    voucherRequest.status = VoucherRequestStatus.BARCODE_GENERATED
   }
 
   def deleteVoucherRequest(voucherRequestId) {
@@ -83,10 +81,10 @@ class AdminService {
     def invoicedAt = Shop.load(shopId)
     def voucherRequest = VoucherRequest.load(voucherRequestId)
     def voucherInvoiceSeq = VoucherInvoiceSequence.nextSequence(invoicedAt)
-    voucherRequest.isInvoiced = true
     voucherRequest.vouchers.each {
       it.status = VoucherStatus.INVOICED
     }
+    voucherRequest.status = VoucherRequestStatus.INVOICED
     voucherRequest.save()
     return new VoucherInvoice(invoicedAt: invoicedAt,
             voucherRequest: voucherRequest, remarks: remarks, invoiceNumber: voucherInvoiceSeq).save()
@@ -121,7 +119,7 @@ class AdminService {
     def soldMap = [:]
     def validatedMap = [:]
     soldSet.each {
-      soldMap.put(it.getAt(2).id, it)
+      soldMap.put(it.getAt(2), it)
     }
     validatedSet.each {
       validatedMap.put(it.getAt(2).id, it)
@@ -130,7 +128,7 @@ class AdminService {
       def validatedValue;
       def validatedCount;
 
-      def shop = it.getAt(2);
+      def shop = Shop.load(it.getAt(2));
       if (validatedMap.containsKey(shop.id)) {
         validatedValue = validatedMap.get(shop.id).getAt(0)
         validatedCount = validatedMap.get(shop.id).getAt(1)
@@ -150,20 +148,7 @@ class AdminService {
   }
 
   private def getListOfShopsAndSoldValues() {
-    def criteria = Voucher.createCriteria();
-    def resultSet = criteria.list {
-      projections {
-        sum('value', 'value')
-        count('id', 'count')
-        groupProperty('soldAt')
-      }
-      and {
-        eq('status', VoucherStatus.SOLD)
-        isNotNull('soldAt')
-      }
-      order('soldAt')
-    }
-    return resultSet
+    return Voucher.executeQuery("select sum(v.value),count(*),v.purchase.soldAt.id from Voucher v group by v.purchase.soldAt")
   }
 
   private def getListOfShopsAndValidValues() {

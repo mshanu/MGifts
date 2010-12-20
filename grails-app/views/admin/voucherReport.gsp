@@ -5,7 +5,7 @@
 </head>
 <body>
 <h2 style="border-bottom:orange dotted thin;text-align:center;padding:5px;">Voucher Sales Report</h2>
-<div>
+<div style="width:100%;height:270px;display:block">
   <div id="aggregatedVoucherStatus">
     <h3 style="margin-top:10px;">Sales Snapshot</h3>
     <table id="salesSnapshotTable">
@@ -56,9 +56,29 @@
   </div>
 </div>
 <div>
-  <g:jasperReport jasper="voucher" format="XLS" name="Voucher Report">
-
-  </g:jasperReport>
+  <div id="voucherReport">
+    <g:form action="voucherReport" controller="report">
+      <table>
+        <tr>
+          <td style="text-align:left">Client:</td>
+          <td><g:select from="${clients}" name="clientId" optionKey="id" optionValue="name"/></td>
+        </tr>
+        <tr>
+          <td style="text-align:left">Voucher Status:</td>
+          <td>
+            <g:select from="${voucherStatus}" name="status" optionKey="key" optionValue="description"/>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td style="text-align:left">
+            <g:submitButton name="report" value="Generate Report"/>
+          </td>
+        </tr>
+      </table>
+    </g:form>
+  </div>
+  <div style="float:left">Right</div>
 </div>
 </body>
 </html>

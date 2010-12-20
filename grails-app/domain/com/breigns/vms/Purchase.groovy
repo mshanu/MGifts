@@ -4,17 +4,11 @@ class Purchase {
   Long invoiceNumber
   Date invoiceDate
   AppUser createdBy
-  Shop shoppedAt
+  Shop soldAt
   Date dateCreated
   Item item;
   Double totalAmount
   Double discount
   Double netTotal
-  static hasMany = [vouchers:Voucher]
-  static constraints = {
-    totalAmount(nullable:true)
-    totalAmount(discount:true)
-    totalAmount(netTotoal:true)
-  }
-
+  static hasMany = [vouchers: Voucher]
 }
