@@ -50,6 +50,7 @@ grails.spring.bean.packages = []
 environments {
   production {
     grails.serverURL = "http://www.changeme.com"
+    jasper.dir.reports = 'WEB-INF/reports'
   }
   development {
     grails.serverURL = "http://localhost:8080/${appName}"
@@ -58,6 +59,7 @@ environments {
   }
   test {
     grails.serverURL = "http://localhost:8080/${appName}"
+    jasper.dir.reports = '/WEB-INF/reports'
   }
 
 }
@@ -90,6 +92,7 @@ log4j = {
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.breigns.vms.AppUser'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.breigns.vms.AppUserRole'
 grails.plugins.springsecurity.authority.className = 'com.breigns.vms.Role'
+grails.plugins.securityConfig.errors.login.fail = 'User/Password is invalide'
 //grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/admin'
 
 grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap

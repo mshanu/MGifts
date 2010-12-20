@@ -3,13 +3,16 @@
 <head>
   <meta http-equiv="content-type"
           content="text/html; charset=ISO-8859-1"/>
-           
+          <LINK REL="SHORTCUT ICON" HREF="${resource(dir: 'images', file: 'favicon.ico')}">
+
   <title>breigns</title>
   <style type="text/css">
   body {
     color: black;
     font-family: Verdana, Arial, sans-serif;
-    background-color: #bdb76b;
+    background-color:#a9a9a9;
+    background-image:url(${resource(dir: 'images', file: 'login_background.gif')});
+    background-repeat:repeat-y;
   }
 
   #login {
@@ -18,12 +21,14 @@
     border: thick double OliveDrab;
     border-radius: 4px 4px 4px 4px;
     margin-top: 10%;
-    margin-left: 20%;
+    margin-left: 15%;
   }
 
   #login_picture {
     float: left;
-    width: 400px;
+    width: 200px;
+    margin-left:5%;
+    margin-top:8%;  
   }
 
   #login_form {
@@ -55,35 +60,36 @@
 
 <body>
 <div id="login">
-<div id="login_picture"> <img style="width: 351px; height: 231px;"
- alt="" src="${resource(dir: 'images', file: 'malabar_logo.jpg')}"> </div>
-<div id="login_form">
-  <form action='${postUrl}' method='POST' id='loginForm' autocomplete='off' onsubmit="return validateLoginForm()">
-    <table>
-      <tbody>
-      <tr>
-        <td>Username</td>
-        <td><input id="username" type="text" name="j_username"></td>
-      </tr>
-      <tr>
-        <td>Password</td>
-        <td><input type="password" name="j_password" id="password"></td>
-      </tr>
-      <tr>
-        <td><br>
-        </td>
-        <td align="left"><input value="Login" class="submit_button"
-                type="submit"></td>
-      </tr>
-      </tbody>
-    </table>
-  </form>
-  <div id="error_msg">
-    <g:if test='${flash.message}'>
-      ${flash.message}
-    </g:if>
+  <div id="login_picture">
+    <img src="${resource(dir: 'images', file: 'breigns.jpg')}" alt="breigns">
   </div>
-</div>
+  <div id="login_form">
+    <form action='${postUrl}' method='POST' id='loginForm' autocomplete='off' onsubmit="return validateLoginForm()">
+      <table>
+        <tbody>
+        <tr>
+          <td>Username</td>
+          <td><input id="username" type="text" name="j_username"></td>
+        </tr>
+        <tr>
+          <td>Password</td>
+          <td><input type="password" name="j_password" id="password"></td>
+        </tr>
+        <tr>
+          <td><br>
+          </td>
+          <td align="left"><input value="Login" class="submit_button"
+                  type="submit"></td>
+        </tr>
+        </tbody>
+      </table>
+    </form>
+    <div id="error_msg">
+      <g:if test='${flash.message}'>
+        ${flash.message}
+      </g:if>
+    </div>
+  </div>
 </div>
 </body>
 <script type='text/javascript'>

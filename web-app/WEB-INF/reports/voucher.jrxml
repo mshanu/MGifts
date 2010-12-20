@@ -8,6 +8,7 @@
 	<field name="barcodeAlpha" class="java.lang.String"/>
 	<field name="value" class="java.lang.Double"/>
 	<field name="dateCreated" class="java.util.Date"/>
+	<field name="status" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -38,10 +39,15 @@
 				<textElement/>
 				<text><![CDATA[Created Date]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="380" y="41" width="76" height="20"/>
+				<textElement/>
+				<text><![CDATA[Status]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="23" splitType="Stretch">
+		<band height="31" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="76" height="20"/>
 				<textElement/>
@@ -66,6 +72,11 @@
 				<reportElement x="304" y="0" width="76" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{dateCreated}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="76" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

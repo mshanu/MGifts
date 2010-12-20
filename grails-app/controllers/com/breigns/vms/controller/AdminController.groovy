@@ -89,20 +89,20 @@ class AdminController {
 
   def addNewUserPage = {
     flash.clear()
-    render view: 'addNewUser', model: [roles: Role.list(), shops: Shop.list()]
+    render view: 'addNewUser', model: [roles: Role.list(), shops: Shop.list(),users:AppUser.list()]
   }
 
   def insertUser = {
     if (AppUser.findByUsername(params['username'])) {
       flash.message = 'User with username already exists'
-      render view: 'addNewUser', params: params, model: [roles: Role.list()]
+      render view: 'addNewUser', params: params, model: [roles: Role.list(),shops: Shop.list(),users:AppUser.list()]
     }
     else {
       def shop = Shop.load(Long.parseLong(params['shop']))
       adminService.createNewUser(params['firstName'], params['lastName'], params['username'], params['password'], params['userRole'], shop)
       flash.message = 'User Created Successfully'
       params.clear()
-      render view: 'addNewUser', model: [roles: Role.list(), shops: Shop.list()]
+      render view: 'addNewUser', model: [roles: Role.list(), shops: Shop.list(),users:AppUser.list()]
     }
   }
 

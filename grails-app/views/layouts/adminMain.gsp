@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head><title>breigns - VMS</title>
-
+  <LINK REL="SHORTCUT ICON" HREF="${resource(dir: 'images', file: 'favicon.ico')}">
   <link type="text/css" href="${resource(dir: 'css/ui-lightness', file: "jquery-ui-1.8.6.custom.css")}" rel=" Stylesheet"/>
   <link type="text/css" href="${resource(dir: 'css', file: "main.css")}" rel=" Stylesheet"/>
   <script type="text/javascript" src="${resource(dir: 'js', file: "jquery-1.4.2.min.js")}"></script>
@@ -14,6 +14,12 @@
       $('#adminTabList').children().addClass('ui-state-default ui-corner-top ui-tabs-selected');
       $('ul.subnav li a').removeClass('ui-tabs-nav');
       $('ul.subnav li a').css('cursor', 'pointer');
+      $('ul.subnav li').hover(function() {
+        $(this).addClass('subNavLiHover')
+      }, function() {
+        $(this).removeClass('subNavLiHover')
+      });
+
       $('#logout a').css('cursor', 'pointer');
       $('ul.subnav').parent().append('<span></span>');
 
@@ -51,6 +57,12 @@
     height: 30px;
     background-image: url('${resource(dir: 'images', file: "arrow_rover.gif")}');
     cursor: pointer;
+  }
+
+  .subNavLiHover {
+  /*background-image: url('
+  ${ resource(dir: 'images', file: "menu_hover.jpg") } ');*/
+    background-color: #f0f8ff;
   }
 
   ul.ui-tabs-nav li ul.subnav {
@@ -207,13 +219,28 @@
     text-align: left;
   }
 
-  #addUserTable {
-    margin-left: 30%;
-    margin-top: 5%;
+  #addUser {
+    margin-left: 5px;
+    margin-top: 2%;
+    float: left;
+
   }
 
-  #addUserTable tr td {
+  #userList {
+    margin-left: 5px;
+    margin-top: 2%;
+    float: left;
+    width: 800px;
+
+  }
+
+  #userList table thead tr td {
+    width: 100px;
+  }
+
+  #userTable tr td {
     text-align: left;
+
   }
 
   </style>
