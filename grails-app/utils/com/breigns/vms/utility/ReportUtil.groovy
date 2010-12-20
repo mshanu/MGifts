@@ -10,9 +10,10 @@ import net.sf.jasperreports.engine.export.JRXlsExporterParameter
 import net.sf.jasperreports.engine.export.JRXlsExporter
 
 class ReportUtil {
-  static reportsDir = ApplicationHolder.application.getMainContext().getResource("/WEB-INF/reports").getFile().toString()
+
 
   static generateReport(jasperFileName, collection) {
+    def reportsDir = ApplicationHolder.application.getMainContext().getResource("/WEB-INF/reports").getFile().toString()
     JRDataSource ds = new JRBeanCollectionDataSource(collection)
     ByteArrayOutputStream byteArray = new ByteArrayOutputStream()
     String resource = reportsDir + "/" + jasperFileName
