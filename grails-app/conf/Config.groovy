@@ -53,7 +53,7 @@ environments {
   }
   development {
     grails.serverURL = "http://localhost:8080/${appName}"
-    jasper.dir.reports = 'web-app/WEB-INF/reports'
+    jasper.dir.reports = 'WEB-INF/reports'
 
   }
   test {

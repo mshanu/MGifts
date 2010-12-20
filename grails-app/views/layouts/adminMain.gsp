@@ -154,19 +154,28 @@
     margin-left: 2%;
     border: orange dotted thin;
   }
-  #voucherReport{
-   border: orange dotted thin;
+
+  #voucherReport {
+    border: orange dotted thin;
     width: 30%;
-    margin-left:2%;
-    height:100px;
-    float:left;
+    margin-left: 2%;
+    height: 150px;
+    float: left;
+  }
+
+  #invoiceReport {
+    border: orange dotted thin;
+    width: 30%;
+    margin-left: 2%;
+    height: 150px;
+    float: left;
   }
 
   #aggregatedByShop {
     float: left;
-    height: 250px;    
+    height: 250px;
     width: 60%;
-    margin-left:2%;
+    margin-left: 2%;
     overflow: auto;
     border: orange dotted thin;
   }

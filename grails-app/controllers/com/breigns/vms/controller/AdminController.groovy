@@ -142,6 +142,6 @@ class AdminController {
     def reportModel = adminService.getAggregatedReport()
     render view: 'voucherReport', model: [reportModel: reportModel,
             clients: Client.listOrderByName(),
-            voucherStatus: VoucherStatus.values().collect {[key: it, description: it.description]}]
+            voucherStatus: VoucherStatus.values().collect {[key: it, description: it.description]},shops:Shop.list()]
   }
 }

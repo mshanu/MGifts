@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" language="groovy" pageWidth="864" pageHeight="792" columnWidth="824" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="132"/>
+	<property name="ireport.y" value="0"/>
+	<field name="invoiceNumber" class="java.lang.Long"/>
+	<field name="invoiceDate" class="java.util.Date"/>
+	<field name="soldAt.name" class="java.lang.String"/>
+	<field name="vouchersForReport" class="java.lang.String"/>
+	<field name="totalVoucherValue" class="java.lang.Double"/>
+	<field name="totalAmount" class="java.lang.Double"/>
+	<field name="discount" class="java.lang.Double"/>
+	<field name="netTotal" class="java.lang.Double"/>
+	<field name="item.description" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="76" y="8" width="95" height="20"/>
+				<textElement/>
+				<text><![CDATA[Invoice Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="258" y="8" width="60" height="20"/>
+				<textElement/>
+				<text><![CDATA[Voucher Numbers]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="318" y="8" width="58" height="20"/>
+				<textElement/>
+				<text><![CDATA[Voucher Value]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="376" y="8" width="56" height="20"/>
+				<textElement/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="432" y="8" width="56" height="20"/>
+				<textElement/>
+				<text><![CDATA[Discount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="488" y="8" width="56" height="20"/>
+				<textElement/>
+				<text><![CDATA[Net Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="544" y="8" width="56" height="20"/>
+				<textElement/>
+				<text><![CDATA[Item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="171" y="8" width="87" height="20"/>
+				<textElement/>
+				<text><![CDATA[Invoiced Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="8" width="76" height="20"/>
+				<textElement/>
+				<text><![CDATA[Voucher Numbers]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="76" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{soldAt.name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="76" y="0" width="95" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{invoiceNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="171" y="0" width="87" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{invoiceDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="258" y="0" width="60" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{vouchersForReport}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="0" width="58" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{totalVoucherValue}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="0" width="56" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{totalAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="432" y="0" width="56" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{discount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="488" y="0" width="56" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{netTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="544" y="0" width="56" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{item.description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

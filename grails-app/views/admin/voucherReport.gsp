@@ -57,6 +57,7 @@
 </div>
 <div>
   <div id="voucherReport">
+    <h3 style="margin-top:10px;">Voucher Sales</h3>
     <g:form action="voucherReport" controller="report">
       <table>
         <tr>
@@ -78,7 +79,23 @@
       </table>
     </g:form>
   </div>
-  <div style="float:left">Right</div>
+  <div id="invoiceReport">
+    <h3 style="margin-top:10px;">Sales By Shop</h3>
+    <g:form action="invoiceReport" controller="report">
+      <table>
+        <tr>
+          <td style="text-align:left">Shop:</td>
+          <td><g:select from="${shops}" name="shopId" optionKey="id" optionValue="name"/></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td style="text-align:left">
+            <g:submitButton name="report" value="Generate Report"/>
+          </td>
+        </tr>
+      </table>
+    </g:form>
+  </div>
 </div>
 </body>
 </html>
