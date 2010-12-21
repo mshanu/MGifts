@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="voucher" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="voucher" language="groovy" pageWidth="739" pageHeight="842" columnWidth="699" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="243"/>
+	<property name="ireport.y" value="13"/>
 	<field name="voucherRequest.client.name" class="java.lang.String"/>
 	<field name="generatedSequence" class="java.lang.String"/>
 	<field name="barcodeAlpha" class="java.lang.String"/>
 	<field name="value" class="java.lang.Double"/>
 	<field name="dateCreated" class="java.util.Date"/>
 	<field name="status" class="java.lang.String"/>
+	<field name="validatedAt.name" class="java.lang.String"/>
+	<field name="purchase.soldAt.name" class="java.lang.String"/>
+	<field name="discountGivenForReport" class="java.lang.Double"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -44,6 +47,21 @@
 				<textElement/>
 				<text><![CDATA[Status]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="456" y="41" width="76" height="20"/>
+				<textElement/>
+				<text><![CDATA[validated at]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="532" y="41" width="76" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sold At]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="608" y="41" width="76" height="20"/>
+				<textElement/>
+				<text><![CDATA[Discount Given]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -77,6 +95,21 @@
 				<reportElement x="380" y="0" width="76" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="456" y="0" width="76" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{validatedAt.name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="532" y="0" width="76" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{purchase.soldAt.name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="608" y="0" width="76" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{discountGivenForReport}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

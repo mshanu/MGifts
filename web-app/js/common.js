@@ -33,6 +33,10 @@ function isNumeric(elementId) {
     return getValueOf(elementId).match(/^\d*$/)
 }
 
+function isDouble(elementId){    
+    return getValueOf(elementId).match(/^[-]?([1-9]{1}[0-9]{0,}(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|\.[0-9]{1,2})$/)
+}
+
 function bindRemoveClickHandlerForTableRow(tableId) {
     $("#" + tableId).find("input:button").unbind('click');
     $("#" + tableId).find("input:button").click(function() {

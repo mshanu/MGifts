@@ -77,7 +77,7 @@ class AdminService {
   }
 
 
-  def invoiceVoucherRequest(voucherRequestId, shopId, remarks) {
+  def invoiceVoucherRequest(voucherRequestId, shopId, discount, remarks) {
     def invoicedAt = Shop.load(shopId)
     def voucherRequest = VoucherRequest.load(voucherRequestId)
     def voucherInvoiceSeq = VoucherInvoiceSequence.nextSequence(invoicedAt)
@@ -87,7 +87,7 @@ class AdminService {
     voucherRequest.status = VoucherRequestStatus.INVOICED
     voucherRequest.save()
     return new VoucherInvoice(invoicedAt: invoicedAt,
-            voucherRequest: voucherRequest, remarks: remarks, invoiceNumber: voucherInvoiceSeq).save()
+            voucherRequest: voucherRequest, discount: discount, remarks: remarks, invoiceNumber: voucherInvoiceSeq).save()
   }
 
 

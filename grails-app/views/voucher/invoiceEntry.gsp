@@ -56,10 +56,12 @@ h3 {
     if (!validateVoucherSearchWith('clientInitials', 'voucherSequenceNumber', 'barcode')) {
       return false;
     }
+    $("#loadingDiv").css('display','block')
     $.post($("#validateAndAddVoucherLink").attr('href'),
     {sequenceNumber:getValueOf('voucherSequenceNumber'),
       barcode:getValueOf('barcode'),clientInitials:getValueOf('clientInitials')},
             function(data) {
+              $("#loadingDiv").css('display','none')
               if (data != 'FAILURE') {
 
                 if ($("#voucherId").length == 0 || !isVoucherAlreadyPresent('voucherId', data.id)) {

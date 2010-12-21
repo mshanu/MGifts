@@ -77,9 +77,10 @@ class AdminController {
   def invoiceVoucherRequest = {
     def voucherRequestId = Long.parseLong(params['voucherRequestId'])
     def shopId = Long.parseLong(params['shopId'])
+    def discount = Double.parseDouble(params['discount'])
     def remarks = params['remarks']
     if (VoucherRequest.get(voucherRequestId).status == VoucherRequestStatus.BARCODE_GENERATED) {
-      def voucherInvoice = adminService.invoiceVoucherRequest(voucherRequestId, shopId, remarks)
+      def voucherInvoice = adminService.invoiceVoucherRequest(voucherRequestId, shopId, discount, remarks)
       render "Voucher Request Invoiced At:" + voucherInvoice.invoicedAt.name + " Invoice Number:" + voucherInvoice.invoiceNumber
     }
     else {
@@ -89,20 +90,20 @@ class AdminController {
 
   def addNewUserPage = {
     flash.clear()
-    render view: 'addNewUser', model: [roles: Role.list(), shops: Shop.list(),users:AppUser.list()]
+    render view: 'addNewUser', model: [roles: Role.list(), shops: Shop.list(), users: AppUser.list()]
   }
 
   def insertUser = {
     if (AppUser.findByUsername(params['username'])) {
       flash.message = 'User with username already exists'
-      render view: 'addNewUser', params: params, model: [roles: Role.list(),shops: Shop.list(),users:AppUser.list()]
+      render view: 'addNewUser', params: params, model: [roles: Role.list(), shops: Shop.list(), users: AppUser.list()]
     }
     else {
       def shop = Shop.load(Long.parseLong(params['shop']))
       adminService.createNewUser(params['firstName'], params['lastName'], params['username'], params['password'], params['userRole'], shop)
       flash.message = 'User Created Successfully'
       params.clear()
-      render view: 'addNewUser', model: [roles: Role.list(), shops: Shop.list(),users:AppUser.list()]
+      render view: 'addNewUser', model: [roles: Role.list(), shops: Shop.list(), users: AppUser.list()]
     }
   }
 
@@ -142,6 +143,6 @@ class AdminController {
     def reportModel = adminService.getAggregatedReport()
     render view: 'voucherReport', model: [reportModel: reportModel,
             clients: Client.listOrderByName(),
-            voucherStatus: VoucherStatus.values().collect {[key: it, description: it.description]},shops:Shop.list()]
+            voucherStatus: VoucherStatus.values().collect {[key: it, description: it.description]}, shops: Shop.list()]
   }
 }

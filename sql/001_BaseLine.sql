@@ -7,7 +7,7 @@ create table purchase (id int8 not null, version int8 not null, created_by_id in
 create table role (id int8 not null, version int8 not null, authority varchar(255) not null unique, description varchar(255) not null, primary key (id));
 create table shop (id int8 not null, version int8 not null, name varchar(255) not null, primary key (id));
 create table voucher (id int8 not null, version int8 not null, barcode_alpha varchar(10) not null, created_by_id int8 not null, date_created date not null, last_updated timestamp not null, purchase_id int8, sequence_number int4 not null, status varchar(255) not null, valid_thru timestamp not null, validated_at_id int8, value float8 not null, voucher_request_id int8 not null, primary key (id));
-create table voucher_invoice (id int8 not null, version int8 not null, date_created timestamp not null, invoice_number int4 not null, invoiced_at_id int8 not null, remarks varchar(255), voucher_request_id int8 not null unique, primary key (id));
+create table voucher_invoice (id int8 not null, version int8 not null, date_created timestamp not null, discount float8, invoice_number int4 not null, invoiced_at_id int8 not null, remarks varchar(255), voucher_request_id int8 not null unique, primary key (id));
 create table voucher_invoice_sequence (id int8 not null, version int8 not null, last_squence_number int4 not null, shop_id int8 not null, primary key (id));
 create table voucher_request (id int8 not null, version int8 not null, client_id int8 not null, created_by_id int8 not null, date_created timestamp not null, last_updated timestamp not null, status varchar(255) not null, primary key (id));
 alter table app_user add constraint FK459C57295CDFF32F foreign key (shop_id) references shop;

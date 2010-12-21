@@ -18,6 +18,11 @@ class Purchase {
     StringUtils.join(vouchers*.generatedSequence, ',')
   }
 
+  def getClientsForReport() {
+    def clients = vouchers.collect {it.voucherRequest.client.name} as Set
+    StringUtils.join(clients, ',')
+  }
+
   def getTotalVoucherValue() {
     int sum = 0;
     vouchers.each {

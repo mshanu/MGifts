@@ -100,22 +100,6 @@
 
   }
 
-  .loading {
-    position: absolute;
-    display: none;
-    border: 1px solid #5c9ccc;
-    padding: 2px;
-    background-color: #5c9ccc;
-    color: #ffffff;
-    opacity: 0.90;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    width: 100px;
-    height: 50px;
-    text-align: center;
-    z-index: 100000;
-  }
-
   .mandotry {
     color: red;
     float: right;

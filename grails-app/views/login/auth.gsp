@@ -5,63 +5,72 @@
           content="text/html; charset=ISO-8859-1"/>
           <LINK REL="SHORTCUT ICON" HREF="${resource(dir: 'images', file: 'favicon.ico')}">
 
-  <title>breigns</title>
-  <style type="text/css">
-  body {
-    color: black;
-    font-family: Verdana, Arial, sans-serif;
-    background-color:#a9a9a9;
-    background-image:url(${resource(dir: 'images', file: 'login_background.gif')});
-    background-repeat:repeat-y;
-  }
+<title>breigns</title>
+<style type="text/css">
+body {
+  color: black;
+  font-family: Verdana, Arial, sans-serif;
+  background-color: #fffff0;
+  background-image: url(${resource(dir: 'images', file: 'login_background.gif')});
+  background-repeat: repeat-y;
+}
 
-  #login {
-    width: 800px;
-    height: 237px;
-    border: thick double OliveDrab;
-    border-radius: 4px 4px 4px 4px;
-    margin-top: 10%;
-    margin-left: 15%;
-  }
+#login {
+  width: 75%;
+  height: 300px;
+  border: thick double OliveDrab;
+  border-radius: 4px 4px 4px 4px;
+  margin-top: 10%;
+  margin-left: 10%;
+}
 
-  #login_picture {
-    float: left;
-    width: 200px;
-    margin-left:5%;
-    margin-top:8%;  
-  }
+#login_picture_breigns {
+  float: left;
+  width: 200px;
+  margin-left: 3%;
+  margin-top: 8%;
+}
 
-  #login_form {
-    margin-top: 70px;
-    margin-right: 40px;
-    position: relative;
-    float: right;
-  }
+#login_picture_malabar {
+  float: left;
+  margin-left: 10%;
+  margin-top: 6%;
+}
 
-  #login_form table {
-    border: 5px;
-  }
+#login_form {
+  margin-top: 70px;
+  margin-right: 40px;
+  position: relative;
+  float: right;
+}
 
-  #error_msg{
-    color:red;
-    font-size:12px;
-    font-weight:normal;
-    width:313px;    
-  }
+#login_form table {
+  border: 5px;
+}
 
-  .submit_button {
-    color: OliveDrab;
-    border: 1px solid OliveDrab;
-    font-weight: bold;
-  }
+#error_msg {
+  color: red;
+  font-size: 12px;
+  font-weight: normal;
+  width: 313px;
+}
 
-  </style>
+.submit_button {
+  color: OliveDrab;
+  border: 1px solid OliveDrab;
+  font-weight: bold;
+}
+
+</style>
 </head>
 
 <body>
 <div id="login">
-  <div id="login_picture">
-    <img src="${resource(dir: 'images', file: 'breigns.jpg')}" alt="breigns">
+  <div id="login_picture_breigns">
+    <img src="${resource(dir: 'images', file: 'breigns.jpg')}" width="250;" alt="breigns">
+  </div>
+  <div id="login_picture_malabar">
+    <img src="${resource(dir: 'images', file: 'malabar.jpg')}" style="width:160;height:160px;" alt="breigns">
   </div>
   <div id="login_form">
     <form action='${postUrl}' method='POST' id='loginForm' autocomplete='off' onsubmit="return validateLoginForm()">

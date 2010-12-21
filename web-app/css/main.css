@@ -64,3 +64,20 @@
 .leftNavUL li {
     padding: 5px;
 }
+
+.loading {
+    position: fixed;
+    display: none;
+    padding: 2px;
+    color: #ffffff;
+    opacity: 0.90;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    width: 200px;
+    height: 100px;
+    margin-top:-25%;
+    margin-left:40%;
+    text-align: center;
+    z-index: 100000;
+}
+

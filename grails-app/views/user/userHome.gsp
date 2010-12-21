@@ -71,8 +71,8 @@
     <li id="logout" style="float:right;width:100px"><g:link style="float:right;" elementId="logoutLink" controller="logout">Logout</g:link></li>
   </ul>
   <div id="tabContent" style="height:520px;margin-top:10px;">
-
   </div>
+  <div id="loadingDiv" class="loading"><img src="${resource(dir: 'images', file: 'loader.gif')}" alt=""/></div>
 </div>
 
 </body>

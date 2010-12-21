@@ -62,12 +62,12 @@
       <table>
         <tr>
           <td style="text-align:left">Client:</td>
-          <td><g:select from="${clients}" name="clientId" optionKey="id" optionValue="name"/></td>
+          <td><g:select from="${clients}" name="clientId" optionKey="id" optionValue="name" noSelection="['%':'Any']"/></td>
         </tr>
         <tr>
           <td style="text-align:left">Voucher Status:</td>
           <td>
-            <g:select from="${voucherStatus}" name="status" optionKey="key" optionValue="description"/>
+            <g:select from="${voucherStatus}" name="status" optionKey="key" optionValue="description" noSelection="['%':'Any']"/>
           </td>
         </tr>
         <tr>
@@ -85,7 +85,7 @@
       <table>
         <tr>
           <td style="text-align:left">Shop:</td>
-          <td><g:select from="${shops}" name="shopId" optionKey="id" optionValue="name"/></td>
+          <td><g:select from="${shops}" name="shopId" optionKey="id" optionValue="name" noSelection="['%':'Any']"/></td>
         </tr>
         <tr>
           <td></td>

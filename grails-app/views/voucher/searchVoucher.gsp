@@ -8,10 +8,18 @@
     }
     var searchButton = $("#searchButton")
     searchButton.attr('disabled', 'true')
+    $("#loadingDiv").css('display','block')
     $.post($("#link").attr("href"), {sequenceNumber:getValueOf('sequenceNumber'),barcode:getValueOf('barcode'),clientInitials:getValueOf('clientInitials')},
             function(data) {
               searchButton.removeAttr('disabled')
-              $("#searchResult").html(data)
+              $("#loadingDiv").css('display','none')
+              if(data == "FAILURE"){
+
+                $("#message_box").html("There Are No Vouchers Found")
+              } else{
+
+                $("#searchResult").html(data)
+              }
             })
   }
 

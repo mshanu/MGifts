@@ -31,8 +31,12 @@
     var url = $("#voucherInvoiceLink").attr("href");
     var voucherRequestId = $("#voucherRequestId").val()
     var shopId = $("#shopId").val()
+    var discount = $("#discount").val()
     var remarks = $("#remarks").val()
-    $.post(url, {'voucherRequestId':voucherRequestId,'shopId':shopId,'remarks':remarks}, function(data) {
+    if (discount != "" && !isDouble('discount')) {
+      $("#message_box").html("Discount field has invalid data")
+    }
+    $.post(url, {'voucherRequestId':voucherRequestId,'shopId':shopId,'remarks':remarks,discount:discount}, function(data) {
       $("#voucherRequests").html("")
       $("#message_box").html(data)
       $("#invoice").dialog('close')
@@ -73,6 +77,10 @@
               <tr>
                 <td>Invoice At:</td>
                 <td><g:select from="${shops}" value="${shopId}" name="shopId" optionKey="id" optionValue="name"/></td>
+              </tr>
+              <tr>
+                <td>Discount Given:</td>
+                <td><g:textField name="discount"/></td>
               </tr>
               <tr>
                 <td>Remarks:</td>

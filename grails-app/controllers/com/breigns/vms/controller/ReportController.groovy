@@ -7,22 +7,37 @@ import com.breigns.vms.Voucher
 import com.breigns.vms.VoucherStatus
 import com.breigns.vms.Shop
 import com.breigns.vms.Purchase
+import org.hibernate.FetchMode
 
 class ReportController {
 
   def voucherReport = {
-    def clientId = Long.parseLong(params['clientId'])
-    def status = VoucherStatus.valueOf(params['status'])
-    def client = Client.load(clientId)
-    def vouchers = Voucher.findAll("from Voucher where voucherRequest.client = :client and status = :status", [client: client, status: status],
-            [sort: 'sequenceNumber', order: 'asc'])
+    def clientId = params['clientId']
+    def status = params['status']
+    def criteria = Voucher.createCriteria()
+    def vouchers = Voucher.withCriteria {
+      if (clientId != "%") {
+        voucherRequest {
+          eq('client', Client.load(clientId))
+        }
+      }
+      if (status != "%") {
+        eq('status', VoucherStatus.valueOf(status))
+      }
+    }
     writeToResponse(ReportUtil.generateReport("voucher.jasper", vouchers), 'vouchers.xls')
   }
 
   def invoiceReport = {
-    def shopId = Long.parseLong(params['shopId'])
-    def shop = Shop.load(shopId)
-    def invoices = Purchase.findAllBySoldAt(shop, [sort: 'invoiceNumber', order: 'asc'])
+    def invoices;
+    if (params['shopId'] == "%") {
+      invoices = Purchase.findAll([sort: 'invoiceNumber', order: 'asc'])
+    } else {
+      def shopId = Long.parseLong(params['shopId'])
+      def shop = Shop.load(shopId)
+      invoices = Purchase.findAllBySoldAt(shop, [sort: 'invoiceNumber', order: 'asc'])
+    }
+
     writeToResponse ReportUtil.generateReport("invoice.jasper", invoices), 'invoices.xls'
   }
 

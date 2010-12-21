@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" language="groovy" pageWidth="864" pageHeight="792" columnWidth="824" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" language="groovy" pageWidth="864" pageHeight="792" columnWidth="824" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="132"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="invoiceNumber" class="java.lang.Long"/>
 	<field name="invoiceDate" class="java.util.Date"/>
@@ -12,6 +12,7 @@
 	<field name="discount" class="java.lang.Double"/>
 	<field name="netTotal" class="java.lang.Double"/>
 	<field name="item.description" class="java.lang.String"/>
+	<field name="clientsForReport" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -62,6 +63,11 @@
 				<textElement/>
 				<text><![CDATA[Voucher Numbers]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="600" y="8" width="56" height="20"/>
+				<textElement/>
+				<text><![CDATA[Clients]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -110,6 +116,11 @@
 				<reportElement x="544" y="0" width="56" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{item.description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="600" y="0" width="56" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{clientsForReport}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

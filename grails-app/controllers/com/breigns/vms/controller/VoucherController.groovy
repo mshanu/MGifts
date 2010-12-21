@@ -24,8 +24,8 @@ class VoucherController {
     if (voucher) {
       render view: 'voucherDetails', model: [voucher: voucher, voucherFound: true]
     } else {
-      flash.message = "System cannot find a voucher for your search"
-      render view: 'voucherDetails', model: [voucherFound: false]
+
+      render "FAILURE"
     }
   }
   def validateAndGetVoucher = {

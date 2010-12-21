@@ -21,4 +21,7 @@ class Voucher {
     voucherRequest.client.initials + sequenceNumber
   }
 
+  def getDiscountGivenForReport(){
+    voucherRequest.voucherInvoice.discount
+  }
 }
