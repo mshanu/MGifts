@@ -10,7 +10,8 @@ class AdminService {
   def propertyInstanceMap = org.codehaus.groovy.grails.plugins.DomainClassGrailsPlugin.PROPERTY_INSTANCE_MAP
 
   def addNewClient(clientName, initials, address, city) {
-    new Client(name: clientName, initials: initials, address: address, city: city).save()
+    def client = new Client(name: clientName, initials: initials, address: address, city: city).save()
+    new ClientVoucherSequence(client:client,lastVoucherSequenceNumber:20000).save();
   }
 
   def createVouchersForTheClient(VoucherCreationRequestModel voucherCreateRequest) {

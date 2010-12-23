@@ -60,8 +60,9 @@
   }
 
   .subNavLiHover {
-  /*background-image: url('
-  ${ resource(dir: 'images', file: "menu_hover.jpg") } ');*/
+    /*background-image: url('
+
+  ${  resource(dir: 'images', file: "menu_hover.jpg")  }  ');*/
     background-color: #f0f8ff;
   }
 

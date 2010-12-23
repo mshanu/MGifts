@@ -9,32 +9,26 @@
 <style type="text/css">
 body {
   color: black;
-  font-family: Verdana, Arial, sans-serif;
-  background-color: #fffff0;
-  background-image: url(${resource(dir: 'images', file: 'login_background.gif')});
-  background-repeat: repeat-y;
+  font-family:Verdana, Arial, sans-serif;
+  background-image: url(${resource(dir: 'images', file: 'login_background.png')});
+  background-repeat: repeat-x;
 }
 
 #login {
   width: 75%;
   height: 300px;
-  border: thick double OliveDrab;
+  border: thin double #696969;
   border-radius: 4px 4px 4px 4px;
-  margin-top: 10%;
-  margin-left: 10%;
+  margin-top: 2%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-#login_picture_breigns {
+.loginPicture {
   float: left;
-  width: 200px;
-  margin-left: 3%;
-  margin-top: 8%;
-}
-
-#login_picture_malabar {
-  float: left;
-  margin-left: 10%;
-  margin-top: 6%;
+  border: #778899 outset medium;
+  margin: 50px 30px 10px 10px;
+  border-radius: 4px 4px 4px 4px;
 }
 
 #login_form {
@@ -65,12 +59,13 @@ body {
 </head>
 
 <body>
+<h2 style="text-align:center;margin-bottom:0px;margin-top:100px;color:#00008b;">Welcome to Voucher Management System</h2>
 <div id="login">
-  <div id="login_picture_breigns">
-    <img src="${resource(dir: 'images', file: 'breigns.jpg')}" width="250;" alt="breigns">
+  <div class="loginPicture">
+    <img src="${resource(dir: 'images', file: 'breigns.jpg')}" style="width:280px;height:150px;" alt="breigns">
   </div>
-  <div id="login_picture_malabar">
-    <img src="${resource(dir: 'images', file: 'malabar.jpg')}" style="width:160;height:160px;" alt="breigns">
+  <div class="loginPicture">
+    <img src="${resource(dir: 'images', file: 'malabar.jpg')}" style="width:280;height:150px;" alt="breigns">
   </div>
   <div id="login_form">
     <form action='${postUrl}' method='POST' id='loginForm' autocomplete='off' onsubmit="return validateLoginForm()">

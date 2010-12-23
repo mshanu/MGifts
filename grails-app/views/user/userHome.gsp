@@ -21,6 +21,9 @@
   </script>
 
   <style type="text/css">
+   body{
+
+    }
   #validateVoucherLeft {
     float: left;
     width: 200px;

@@ -93,7 +93,6 @@ grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.breigns.vms.
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.breigns.vms.AppUserRole'
 grails.plugins.springsecurity.authority.className = 'com.breigns.vms.Role'
 grails.plugins.securityConfig.errors.login.fail = 'User/Password is invalide'
-//grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/admin'
 
 grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
 grails.plugins.springsecurity.interceptUrlMap = [
