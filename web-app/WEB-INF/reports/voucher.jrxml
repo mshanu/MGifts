@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="voucher" language="groovy" pageWidth="739" pageHeight="842" columnWidth="699" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
-	<property name="ireport.x" value="243"/>
+	<property name="ireport.x" value="259"/>
 	<property name="ireport.y" value="13"/>
 	<field name="voucherRequest.client.name" class="java.lang.String"/>
 	<field name="generatedSequence" class="java.lang.String"/>
@@ -66,48 +66,48 @@
 	</columnHeader>
 	<detail>
 		<band height="31" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="76" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="76" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{voucherRequest.client.name}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="76" y="0" width="76" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="76" y="0" width="76" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{generatedSequence}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="152" y="0" width="76" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="152" y="0" width="76" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{barcodeAlpha}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="228" y="0" width="76" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="228" y="0" width="76" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{value}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="304" y="0" width="76" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="304" y="0" width="76" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{dateCreated}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="380" y="0" width="76" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="380" y="0" width="76" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="456" y="0" width="76" height="20"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="456" y="0" width="76" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{validatedAt.name}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="532" y="0" width="76" height="20"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="532" y="0" width="76" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{purchase.soldAt.name}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="608" y="0" width="76" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="608" y="0" width="76" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{discountGivenForReport}]]></textFieldExpression>
 			</textField>

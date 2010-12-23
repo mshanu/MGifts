@@ -133,11 +133,11 @@ class AdminService {
         validatedValue = validatedMap.get(shop.id).getAt(0)
         validatedCount = validatedMap.get(shop.id).getAt(1)
         vaoucherSalesByGroup.add(new VoucherSaleByShop(totalSoldValue: it.getAt(0),
-                sold: it.getAt(1), shop: shop, totalValidatedValue: validatedValue, validated: validatedCount))
+                sold: it.getAt(1), shop: shop, totalInvoiceValue: Purchase.getSumTotalValue(shop), totalValidatedValue: validatedValue, validated: validatedCount))
         validatedMap.remove(shop.id)
       } else {
         vaoucherSalesByGroup.add(new VoucherSaleByShop(totalSoldValue: it.getAt(0),
-                sold: it.getAt(1), shop: shop))
+                sold: it.getAt(1), shop: shop, totalInvoiceValue: Purchase.getSumTotalValue(shop)))
       }
     }
     validatedMap.values().each {

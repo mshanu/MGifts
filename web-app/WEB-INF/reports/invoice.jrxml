@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" language="groovy" pageWidth="864" pageHeight="792" columnWidth="824" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="122"/>
 	<property name="ireport.y" value="0"/>
 	<field name="invoiceNumber" class="java.lang.Long"/>
 	<field name="invoiceDate" class="java.util.Date"/>
@@ -72,53 +72,53 @@
 	</columnHeader>
 	<detail>
 		<band height="125" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="76" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="76" height="20" isPrintInFirstWholeBand="true"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{soldAt.name}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="76" y="0" width="95" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="76" y="0" width="95" height="20" isPrintInFirstWholeBand="true"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$F{invoiceNumber}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="171" y="0" width="87" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="171" y="0" width="87" height="20" isPrintInFirstWholeBand="true"/>
 				<textElement/>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{invoiceDate}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="258" y="0" width="60" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="258" y="0" width="60" height="20" isPrintInFirstWholeBand="true"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{vouchersForReport}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="318" y="0" width="58" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="318" y="0" width="58" height="20" isPrintInFirstWholeBand="true"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{totalVoucherValue}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="376" y="0" width="56" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="376" y="0" width="56" height="20" isPrintInFirstWholeBand="true"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{totalAmount}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="432" y="0" width="56" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="432" y="0" width="56" height="20" isPrintInFirstWholeBand="true"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{discount}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="488" y="0" width="56" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="488" y="0" width="56" height="20" isPrintInFirstWholeBand="true"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{netTotal}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="544" y="0" width="56" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="544" y="0" width="56" height="20" isPrintInFirstWholeBand="true"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{item.description}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="600" y="0" width="56" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="600" y="0" width="56" height="20" isPrintInFirstWholeBand="true"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{clientsForReport}]]></textFieldExpression>
 			</textField>

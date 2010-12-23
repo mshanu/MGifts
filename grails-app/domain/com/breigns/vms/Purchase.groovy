@@ -15,7 +15,8 @@ class Purchase {
   static hasMany = [vouchers: Voucher]
 
   def getVouchersForReport() {
-    StringUtils.join(vouchers*.generatedSequence, ',')
+    println StringUtils.join(vouchers.collect {it.generatedSequence}, ',')
+    StringUtils.join(vouchers.collect {it.generatedSequence}, ',')
   }
 
   def getClientsForReport() {
@@ -29,5 +30,15 @@ class Purchase {
       sum += it.value
     }
     sum
+  }
+
+  static def getSumTotalValue(shop) {
+    def criteria = Purchase.createCriteria()
+    criteria.get {
+      projections {
+        sum('totalAmount')
+      }
+      eq('soldAt', shop)
+    }
   }
 }

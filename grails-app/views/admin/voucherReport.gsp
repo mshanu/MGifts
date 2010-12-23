@@ -37,6 +37,7 @@
         <th>Sold #</th>
         <th>Validated (Rs)</th>
         <th>Validated #</th>
+        <th>Sum of Invoice</th>
       </tr>
       </thead>
       <g:if test="${reportModel}">
@@ -48,6 +49,7 @@
             <td>${it.sold}</td>
             <td>${it.totalValidatedValue}</td>
             <td>${it.validated}</td>
+            <td>${it.totalInvoiceValue}</td>
           </tr>
         </g:each>
         </tbody>

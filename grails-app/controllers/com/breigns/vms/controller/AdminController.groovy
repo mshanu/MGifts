@@ -77,7 +77,7 @@ class AdminController {
   def invoiceVoucherRequest = {
     def voucherRequestId = Long.parseLong(params['voucherRequestId'])
     def shopId = Long.parseLong(params['shopId'])
-    def discount = Double.parseDouble(params['discount'])
+    def discount = params['discount'] ? Double.parseDouble(params['discount']) : 0
     def remarks = params['remarks']
     if (VoucherRequest.get(voucherRequestId).status == VoucherRequestStatus.BARCODE_GENERATED) {
       def voucherInvoice = adminService.invoiceVoucherRequest(voucherRequestId, shopId, discount, remarks)
