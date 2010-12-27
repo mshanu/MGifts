@@ -16,33 +16,57 @@ body {
 
 #login {
   width: 75%;
-  height: 300px;
-  border: thin double #696969;
+  height: 280px;
+  background-image: url('${resource(dir: 'images', file: 'login_form_background.png')}');
   border-radius: 4px 4px 4px 4px;
-  margin-top: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  border: #a9a9a9 outset medium;
+}
+
+#login_pic_div {
+  float: right;
+  padding:80px;
+  margin-left:100px;
+  position: static;
+}
+
+#login_pic_div img {
+  height: 100px;
+  width: 250px;
+  position: static;
+  border: #b8860b thin ridge;
+  opacity:0.7;
+  border-radius: 4px 4px 4px 4px;
+}
+
+#malabar_pic_div {
+  width: 300px;
+  margin-top: 5%;
+  padding: 2px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.loginPicture {
-  border: #778899 outset thin;
-  width: 30%;
-  height: 50%;
-  margin-top:50px;
-  padding:1px;
-  border-radius: 4px 4px 4px 4px;
+#malabar_pic_div h4 {
+  margin-left: 40px;
+  margin-bottom: 5px;
+  font-family: verdana;
+  color: #8b0000;
+  text-decoration: underline;
 }
 
-.loginPicture img {
-  width: 100%;
-  height: 100%;
-  position: static
+#malabar_pic_div img {
+  height: 140px;
+  width: 200px;
+  position: static;
+  border: #b8860b thin ridge;
 }
 
 #login_form {
-  float:left;
-  margin-left:30px;
-  margin-top:80px;
+  float: left;
+  margin-left: 30px;
+  margin-top: 80px;
 }
 
 #login_form table {
@@ -62,18 +86,22 @@ body {
   font-weight: bold;
 }
 
+#loginHeading {
+  text-align: center;
+  font-family: SERIF,HELVETICA;
+  font-weight:500;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  color: #a52a2a;
+  text-shadow: black 2px 0px 1px
+}
 </style>
 </head>
 
 <body>
-<h2 style="text-align:center;margin-bottom:0px;margin-top:100px;color:#00008b;">Welcome to Voucher Management System</h2>
+
+<h2 id="loginHeading">Welcome to Voucher Management System</h2>
 <div id="login">
-  <div class="loginPicture" style="float:left">
-    <img src="${resource(dir: 'images', file: 'breigns.jpg')}" alt="breigns">
-  </div>
-  <div class="loginPicture" style="float:right">
-    <img src="${resource(dir: 'images', file: 'malabar.jpg')}" alt="breigns">
-  </div>
   <div id="login_form">
     <form action='${postUrl}' method='POST' id='loginForm' autocomplete='off' onsubmit="return validateLoginForm()">
       <table>
@@ -101,6 +129,13 @@ body {
       </g:if>
     </div>
   </div>
+  <div id="login_pic_div">
+    <img src="${resource(dir: 'images', file: 'breigns.jpg')}" alt="breigns">
+  </div>
+</div>
+<div id="malabar_pic_div">
+  <h4>Powered By</h4>
+  <img src="${resource(dir: 'images', file: 'malabar.jpg')}" alt="breigns">
 </div>
 </body>
 <script type='text/javascript'>
