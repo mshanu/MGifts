@@ -60,6 +60,7 @@ body {
   height: 140px;
   width: 200px;
   position: static;
+  opacity:0.8;
   border: #b8860b thin ridge;
 }
 

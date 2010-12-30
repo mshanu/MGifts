@@ -135,14 +135,29 @@ class AdminController {
     render "Vouchers Deleted Successfully"
   }
 
-  def clientListPage = {
-    render view: 'clientList', model: [clientList: Client.list()]
-  }
-
   def voucherReportPage = {
     def reportModel = adminService.getAggregatedReport()
     render view: 'voucherReport', model: [reportModel: reportModel,
             clients: Client.listOrderByName(),
             voucherStatus: VoucherStatus.values().collect {[key: it, description: it.description]}, shops: Shop.list()]
+  }
+
+  def clientManagement = {
+    render view: 'clientManagement', model: [clientList: Client.list()]
+  }
+
+  def insertClient = {
+
+    def clientName = params['name']
+    def initials = params['initials'].toUpperCase()
+    if (Client.findByName(clientName) || Client.findByInitials(initials)) {
+      flash['message'] = 'Client With The Same Name/Initials Already Exists'
+
+    } else {
+      adminService.addNewClient(clientName, initials, params['address'], params['city'])
+      flash['message'] = 'New Client Added Successfully'
+      params.clear()
+    }
+    render view:'clientManagement',model: [clientList: Client.list()]
   }
 }

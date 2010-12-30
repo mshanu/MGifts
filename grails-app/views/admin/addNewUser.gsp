@@ -34,7 +34,7 @@
         ${flash.message}
       </g:if>
     </div>
-
+    <h3>User Management</h3>
     <div id="addUser">
 
       <table id="userTable">

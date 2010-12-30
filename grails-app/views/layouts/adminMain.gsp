@@ -196,7 +196,7 @@
   }
 
   #clientAddTable {
-    margin-left: 30%;
+    margin-left: 2%;
     margin-top: 5%;
   }
 
@@ -244,24 +244,22 @@
         </ul>
       </li>
       <li>
-        <a href="#">Client Management</a>
+        <a href="#">Client</a>
         <ul class="subnav">
-          <li><g:link controller="client">Add a Client</g:link></li>
-          <li><g:link controller="admin" action="clientListPage">Client List</g:link></li>
+          <li><g:link action="clientManagement" controller="admin" class="subNavLinks">Client Management</g:link></li>
         </ul>
       </li>
       <li>
         <a href="#">User Management</a>
         <ul class="subnav">
-          <li><g:link controller="admin" action="addNewUserPage">Add User</g:link></li>
+          <li><g:link controller="admin" action="addNewUserPage" class="subNavLinks">User Management</g:link></li>
         </ul>
       </li>
       <li id="logout" style="float:right;width:100px"><g:link style="float:right;" controller="logout">Logout</g:link></li>
     </ul>
   </div>
   <div id="tabContent">
-    <div id="reportLoading" class="loading"><img src="${resource(dir: 'images', file: 'loader.gif')}" alt=""/></div>
-    <g:layoutBody/>
+    <g:layoutBody/>               `
   </div>
 </div>
 </body>

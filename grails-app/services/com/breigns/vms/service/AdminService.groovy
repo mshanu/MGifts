@@ -11,41 +11,42 @@ class AdminService {
 
   def addNewClient(clientName, initials, address, city) {
     def client = new Client(name: clientName, initials: initials, address: address, city: city).save()
-    new ClientVoucherSequence(client:client,lastVoucherSequenceNumber:20000).save();
+    new ClientVoucherSequence(client: client, lastVoucherSequenceNumber: 20000).save();
   }
 
   def createVouchersForTheClient(VoucherCreationRequestModel voucherCreateRequest) {
+    def currentTime = System.currentTimeMillis()
     def client = Client.load(voucherCreateRequest.clientId)
     def loggedInUser = getLoggedInuser()
     def validThru = voucherCreateRequest.validThru
     def voucherRequest
     if (client) {
-      voucherRequest = new VoucherRequest(client: client, createdBy: loggedInUser, status: VoucherRequestStatus.CREATED)
+      voucherRequest = new VoucherRequest(client: client, createdBy: loggedInUser, status: VoucherRequestStatus.CREATED).save()
       def voucherList = voucherCreateRequest.voucherList
       int j = 0;
+      def nextSequence = ClientVoucherSequence.lastVouhcerSequenceForClient(client)
       for (def voucher: voucherList) {
         for (int i = 0; i < voucher.numberOfVouchers; i++) {
-          def nextSequence = ClientVoucherSequence.nextSequence(client)
           def barCodeAlpha = getRandomAlpha();
           while (Voucher.findByBarcodeAlpha(barCodeAlpha)) {
             barCodeAlpha = getRandomAlpha();
           }
+          nextSequence++;
           def newVoucher = new Voucher(sequenceNumber: nextSequence,
-                  barcodeAlpha: getRandomAlpha(), value: voucher.denomination, createdBy: loggedInUser,
+                  barcodeAlpha: barCodeAlpha, value: voucher.denomination, createdBy: loggedInUser,
                   status: VoucherStatus.CREATED, validThru: validThru, voucherRequest: voucherRequest)
-          voucherRequest.addToVouchers(newVoucher)
+          voucherRequest.addToVouchers(newVoucher.save())
           j++;
           if (j % 50 == 0) {
-            voucherRequest.save()
             sessionFactory.getCurrentSession().flush();
             sessionFactory.getCurrentSession().clear();
             propertyInstanceMap.get().clear()
           }
         }
-
       }
-      voucherRequest.save()
+      ClientVoucherSequence.updateLastSequence(client, nextSequence)      
     }
+    println "Time Taken " + ((System.currentTimeMillis() - currentTime) / 1000)
     voucherRequest
   }
 
