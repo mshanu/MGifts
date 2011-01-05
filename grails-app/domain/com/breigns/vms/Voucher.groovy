@@ -17,11 +17,15 @@ class Voucher {
     purchase(nullable: true)
   }
 
+  static mapping = {
+    id(generator: 'sequence', params: [sequence: "voucher_seq"])
+  }
+
   def getGeneratedSequence() {
     voucherRequest.client.initials + sequenceNumber
   }
 
-  def getDiscountGivenForReport(){
+  def getDiscountGivenForReport() {
     voucherRequest.voucherInvoice.discount
   }
 }

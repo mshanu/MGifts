@@ -148,11 +148,11 @@
                 <td style="width:10%">${it.voucherInvoice?.remarks}</td>
                 <td style="width:28%">
                   <span style="display:block;">
-                    <input type="button" value="Generate Bar Code" onclick="generateBarcode(${it.id})"/>
                     <g:if test="${it.status ==  VoucherRequestStatus.INVOICED}">
                       <input type="button" value="Update Remarks" onclick="showUpdateRemarks(${it.id})"/>
                     </g:if>
                     <g:if test="${it.status !=  VoucherRequestStatus.INVOICED}">
+                      <input type="button" value="Generate Bar Code" onclick="generateBarcode(${it.id})"/>
                       <input type="button" value="Invoice" onclick="showInvoice(${it.id})"/>
                       <input type="button" value="Delete" onclick="deleteVoucherRequest(${it.id})"/>
                     </g:if>

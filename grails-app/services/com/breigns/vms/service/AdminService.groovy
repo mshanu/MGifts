@@ -46,7 +46,6 @@ class AdminService {
       }
       ClientVoucherSequence.updateLastSequence(client, nextSequence)      
     }
-    println "Time Taken " + ((System.currentTimeMillis() - currentTime) / 1000)
     voucherRequest
   }
 

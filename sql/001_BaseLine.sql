@@ -26,4 +26,5 @@ alter table voucher_invoice add constraint FK3BA3EA9CF300A56A foreign key (invoi
 alter table voucher_invoice_sequence add constraint FK7FB9EE045CDFF32F foreign key (shop_id) references shop;
 alter table voucher_request add constraint FK81C99FE95834DCF foreign key (client_id) references client;
 alter table voucher_request add constraint FK81C99FEEAE57223 foreign key (created_by_id) references app_user;
+create sequence voucher_seq start 20000;
 create sequence hibernate_sequence start 100;
