@@ -60,10 +60,10 @@ class AdminService {
   }
 
 
-  def getVoucherRequestsNotInvoiced(clientId) {
+  /*def getVoucherRequestsNotInvoiced(clientId) {
     def client = Client.load(clientId)
     VoucherRequest.findAllByClientAndStatusNot(client, VoucherRequestStatus.INVOICED)
-  }
+  }*/
 
   def updateBarcodeGenerated(voucherRequestId) {
     def voucherRequest = VoucherRequest.get(voucherRequestId)
@@ -147,6 +147,10 @@ class AdminService {
               validated: it.getAt(1), shop: it.getAt(2)))
     }
     return new AggregatedReportModel(vocuherStatusReport: aggregatedModel, voucherSaleByShop: vaoucherSalesByGroup)
+  }
+
+  def updateVoucherRequestInvoiceRemarks(voucherRequestId,updatedRemarks){
+     VoucherRequest.get(voucherRequestId).voucherInvoice.remarks = updatedRemarks;
   }
 
   private def getListOfShopsAndSoldValues() {

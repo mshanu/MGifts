@@ -53,7 +53,7 @@ class AdminController {
 
   def getVoucherRequests = {
     def clientId = Long.parseLong(params['clientId'])
-    def voucherRequestList = adminService.getVoucherRequestsNotInvoiced(clientId)
+    def voucherRequestList = VoucherRequest.findAllByClient(Client.load(clientId))
     render view: 'voucherRequests', model: [clients: Client.listOrderByName(), shops: Shop.listOrderByName(),
             voucherRequestList: voucherRequestList, selectedClient: Client.get(clientId)]
   }
@@ -159,5 +159,12 @@ class AdminController {
       params.clear()
     }
     render view:'clientManagement',model: [clientList: Client.list()]
+  }
+
+  def updateVoucherRequestRemarks = {
+    def voucherRequestId = Long.parseLong(params['voucherRequestId'])
+    def updatedRemarks = params['updatedRemarks']
+    adminService.updateVoucherRequestInvoiceRemarks(voucherRequestId,updatedRemarks)
+    render 'Voucher Request Remarks Updated Successfully'
   }
 }

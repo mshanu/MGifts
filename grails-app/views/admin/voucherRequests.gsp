@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.breigns.vms.VoucherRequestStatus" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
   <meta name="layout" content="adminMain"/>
@@ -24,6 +24,8 @@
 
   function showInvoice(voucherRequestId) {
     $("#voucherRequestId").val(voucherRequestId)
+    $("#discount").val("")
+    $("#remarks").val("")
     $("#invoice").dialog();
   }
 
@@ -35,6 +37,7 @@
     var remarks = $("#remarks").val()
     if (discount != "" && !isDouble('discount')) {
       $("#message_box").html("Discount field has invalid data")
+      return false;
     }
     $.post(url, {'voucherRequestId':voucherRequestId,'shopId':shopId,'remarks':remarks,discount:discount}, function(data) {
       $("#voucherRequests").html("")
@@ -46,6 +49,19 @@
   function searchVoucherRequest() {
     $("form").attr('action', 'getVoucherRequests')
     $("form").submit()
+  }
+
+  function showUpdateRemarks(voucherRequestId) {
+    $("#updatedRemarks").val("")
+    $("#voucherRequestUpdate").dialog();
+    var url = $("#updateVoucherRequestRemarks").attr("href");
+    $("#updateRemarks").click(function() {
+      $.post(url, {'voucherRequestId':voucherRequestId,'updatedRemarks':$("#updatedRemarks").val()}, function(data) {
+        $("#voucherRequests").html("")
+        $("#message_box").html(data)
+        $("#voucherRequestUpdate").dialog('close')
+      })
+    })
   }
 </script>
 
@@ -93,27 +109,55 @@
             </table>
             <g:link action="invoiceVoucherRequest" controller="admin" elementId="voucherInvoiceLink"/>
           </div>
-          <table>
+          <div id="voucherRequestUpdate" style="display:none">
+            <table>
+              <tr>
+                <td>Remarks:</td>
+                <td><g:textArea name="updatedRemarks"/></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><input type="button" value="Update" id="updateRemarks">
+                </td>
+              </tr>
+            </table>
+            <g:link action="invoiceVoucherRequest" controller="admin" elementId="voucherInvoiceLink"/>
+          </div>
+          <table class="staticHeader" id="voucherRequestTable">
             <thead>
             <tr>
-              <th>Client</th>
-              <th>Request #</th>
-              <th>Created Date</th>
-              <th>SQ # Range</th>
-              <th>Created By</th>
+              <th style="width:10%">Client</th>
+              <th style="width:5%">Req #</th>
+              <th style="width:7%">Created Date</th>
+              <th style="width:20%">SQ # Range</th>
+              <th style="width:10%">Created By</th>
+              <th style="width:10%">Status</th>
+              <th style="width:10%">Remarks</th>
+              <th style="width:28%"></th>
             </tr>
             </thead>
             <tbody>
             <g:each in="${voucherRequestList}">
               <tr>
-                <td>${it.client.name}</td>
-                <td>${it.id}</td>
-                <td><g:formatDate date="${it.dateCreated}" format="dd/MM/yyyy"/></td>
-                <td>${it.sequenceRange}</td>
-                <td>${it.createdBy.firstName},${it.createdBy.lastName}</td>
-                <td><input type="button" value="Generate Bar Code" onclick="generateBarcode(${it.id})"/></td>
-                <td><input type="button" value="Invoice" onclick="showInvoice(${it.id})"/></td>
-                <td><input type="button" value="Delete" onclick="deleteVoucherRequest(${it.id})"/></td>
+                <td style="width:10%">${it.client.name}</td>
+                <td style="width:5%">${it.id}</td>
+                <td style="width:7%"><g:formatDate date="${it.dateCreated}" format="dd/MM/yyyy"/></td>
+                <td style="width:20%">${it.sequenceRange}</td>
+                <td style="width:10%">${it.createdBy.firstName},${it.createdBy.lastName}</td>
+                <td style="width:10%">${it.status}</td>
+                <td style="width:10%">${it.voucherInvoice?.remarks}</td>
+                <td style="width:28%">
+                  <span style="display:block;">
+                    <input type="button" value="Generate Bar Code" onclick="generateBarcode(${it.id})"/>
+                    <g:if test="${it.status ==  VoucherRequestStatus.INVOICED}">
+                      <input type="button" value="Update Remarks" onclick="showUpdateRemarks(${it.id})"/>
+                    </g:if>
+                    <g:if test="${it.status !=  VoucherRequestStatus.INVOICED}">
+                      <input type="button" value="Invoice" onclick="showInvoice(${it.id})"/>
+                      <input type="button" value="Delete" onclick="deleteVoucherRequest(${it.id})"/>
+                    </g:if>
+                  </span>
+                </td>
               </tr>
             </g:each>
             </tbody>
@@ -123,6 +167,7 @@
     </div>
     <input type="hidden" name="voucherRequestId" id="voucherRequestId">
     <g:link action="deleteVoucherRequest" controller="admin" elementId="deleteLink"/>
+    <g:link action="updateVoucherRequestRemarks" controller="admin" elementId="updateVoucherRequestRemarks"/>
   </g:form>
 </div>
 </body>

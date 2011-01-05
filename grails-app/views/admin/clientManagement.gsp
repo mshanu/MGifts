@@ -66,7 +66,7 @@
   </div>
 
   <div style="float:right">
-    <table id="clientListTable">
+    <table id="clientListTable" class="staticHeader">
       <tr>
         <th>Client Name</th>
         <th>Client Initials</th>

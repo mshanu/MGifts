@@ -9,16 +9,18 @@
 #tabContent table th {
     color: #00008b;
     width: 200px;
-    text-align: center
+    text-lign: center;
+    font-size: 0.8em;
 }
 
 #tabContent table td {
     width: 200px;
-    text-align: center
+    text-align: center;
+    font-size: 0.7em;
 }
 
 #tabContent select {
-    width: 200px;
+    width: 150px;
 }
 
 #tabContent h3 {
@@ -40,11 +42,11 @@
 
 .leftNav {
     float: left;
-    width: 20%;
+    width: 18%;
     height: 500px;
     border-right: orange dotted thin;
-    margin-top: 20px;
-    margin-left: 10px;
+    margin-top: 2%;
+    margin-left: 1%;
 }
 
 .rightContent {
@@ -52,7 +54,7 @@
     margin-left: 10px;;
     margin-right: auto;
     height: 500px;
-    width: 70%;
+    width: 80%;
 }
 
 .leftNavUL {
@@ -75,9 +77,203 @@
     -moz-border-radius: 5px;
     width: 200px;
     height: 100px;
-    margin-top:-25%;
-    margin-left:40%;
+    margin-top: -25%;
+    margin-left: 40%;
     text-align: center;
     z-index: 100000;
 }
 
+.subnav {
+    display: none;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+ul.ui-tabs-nav li {
+    width: 220px;
+}
+
+ul.ui-tabs-nav li span.subhover {
+    margin-top: 5px;
+    height: 30px;
+    background-image: url('${resource(dir: ' images ', file: "arrow_rover.gif")}' );
+    cursor: pointer;
+}
+
+.subNavLiHover {
+    /*background-image: url('
+
+  ${  resource(dir: 'images', file: "menu_hover.jpg")  }  ');*/
+    background-color: #f0f8ff;
+}
+
+ul.ui-tabs-nav li ul.subnav {
+    z-index: 2;
+    position: absolute;
+    top: 40px;
+    background: #F6F6F6;
+    float: right;
+    list-style: none;
+    width: 180px;
+}
+
+ul.ui-tabs-nav li span {
+    width: 20px;
+    height: 35px;
+    float: right;
+    background: url(${resource(dir: 'images' , file: "arrow.gif" )
+}
+
+)
+no-repeat bottom
+
+;
+}
+
+ul.ui-tabs-nav li ul.subnav li {
+    padding: 0;
+    border-top: 1px dashed orange; /*--Create bevel effect--*/
+    clear: both;
+    margin-left: -30px;
+    width: 100%;
+}
+
+ul.ui-tabs-nav li ul.subnav li a {
+    text-align: left;
+}
+
+.subNavLinks {
+    float: right;
+    cursor: pointer;
+
+}
+
+.mandotry {
+    color: red;
+    float: right;
+    margin-left: 5px;
+}
+
+#adminTab {
+}
+
+#voucherToSell_msg {
+    color: red;
+    width: 313px;
+    height: 30px;
+    display: block;
+    text-align: center;
+
+}
+
+.numeric {
+}
+
+.mandatoryText {
+}
+
+.staticHeader thead tr {
+    position: relative;
+    display: block;
+}
+
+.staticHeader thead tr th {
+    text-align: center;
+}
+
+.staticHeader td {
+    text-align: center;
+}
+
+.staticHeader tbody {
+    display: block;
+    overflow: auto;
+    height: 400px;
+}
+
+#aggregatedVoucherStatus {
+    float: left;
+    width: 30%;
+    height: 250px;
+    margin-left: 2%;
+    border: orange dotted thin;
+}
+
+#voucherReport {
+    border: orange dotted thin;
+    width: 30%;
+    margin-left: 2%;
+    height: 150px;
+    float: left;
+}
+
+#invoiceReport {
+    border: orange dotted thin;
+    width: 30%;
+    margin-left: 2%;
+    height: 150px;
+    float: left;
+}
+
+#aggregatedByShop {
+    float: left;
+    height: 250px;
+    width: 60%;
+    margin-left: 2%;
+    overflow: auto;
+    border: orange dotted thin;
+}
+
+#salesSnapshotTable {
+    margin-left: 10px;
+    padding: 25px;
+}
+
+#salesSnapshotTable tbody tr td {
+    width: auto;
+    text-align: left;
+}
+
+#salesSnapshotTable tbody tr label {
+    width: 300;
+}
+
+#salesSnapshotTable tr td {
+    padding: 5px;
+}
+
+#clientAddTable {
+    margin-left: 2%;
+    margin-top: 5%;
+}
+
+#clientAddTable tr td {
+    text-align: left;
+}
+
+#addUser {
+    margin-left: 5px;
+    margin-top: 2%;
+    float: left;
+
+}
+
+#userList {
+    margin-left: 5px;
+    margin-top: 2%;
+    float: left;
+    width: 800px;
+
+}
+
+#userList table thead tr td {
+    width: 100px;
+}
+
+#userTable tr td {
+    text-align: left;
+
+}
+#voucherRequestTable{
+    width:100%;
+}

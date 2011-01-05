@@ -259,7 +259,7 @@
     </ul>
   </div>
   <div id="tabContent">
-    <g:layoutBody/>               `
+    <g:layoutBody/>
   </div>
 </div>
 </body>
