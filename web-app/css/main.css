@@ -255,6 +255,7 @@ ul.ui-tabs-nav li ul.subnav li a {
     margin-left: 5px;
     margin-top: 2%;
     float: left;
+    width:25%;
 
 }
 
@@ -262,7 +263,7 @@ ul.ui-tabs-nav li ul.subnav li a {
     margin-left: 5px;
     margin-top: 2%;
     float: left;
-    width: 800px;
+    width: 65%;
 
 }
 

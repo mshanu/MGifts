@@ -26,8 +26,7 @@ body {
 
 #login_pic_div {
   float: right;
-  padding:80px;
-  margin-left:100px;
+  padding:10%;
   position: static;
 }
 

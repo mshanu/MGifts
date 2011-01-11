@@ -211,14 +211,6 @@
 
   }
 
-  #userList {
-    margin-left: 5px;
-    margin-top: 2%;
-    float: left;
-    width: 800px;
-
-  }
-
   #userList table thead tr td {
     width: 100px;
   }

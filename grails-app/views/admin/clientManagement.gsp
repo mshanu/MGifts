@@ -39,7 +39,7 @@
     </g:if>
   </div>
   <h3>Client Management</h3>
-  <div style="float:left">
+  <div style="float:left;width:30%">
     <g:form action="insertClient" controller="admin" onsubmit="return validateMandatoryFields()">
       <table id="clientAddTable">
         <tr>
@@ -65,7 +65,7 @@
     </g:form>
   </div>
 
-  <div style="float:right">
+  <div style="float:right;width:70%">
     <table id="clientListTable" class="staticHeader">
       <tr>
         <th>Client Name</th>

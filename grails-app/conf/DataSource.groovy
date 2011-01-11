@@ -30,9 +30,9 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:postgresql://localhost:5432/GIFTDB"
-            username = "app_user"
-            password = "password"
+            url = "jdbc:postgresql://localhost:5432/vmsdb"
+            username = "breigns"
+            password = 'breigns$123'
         }
     }
 }
