@@ -179,7 +179,7 @@
 
   #salesSnapshotTable {
     margin-left: 10px;
-    padding: 25px;
+    padding: 10px;
   }
 
   #salesSnapshotTable tbody tr td {

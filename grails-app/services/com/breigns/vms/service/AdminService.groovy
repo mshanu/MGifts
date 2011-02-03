@@ -108,11 +108,16 @@ class AdminService {
 
   def getAggregatedReport() {
     def sold = getAggregated(VoucherStatus.SOLD)
+    def validatedToday = Voucher.executeQuery("select sum(value),count(*) from Voucher where status = :status and lastUpdated = current_date()",[status:VoucherStatus.VALIDATED]).getAt(0)
+    def soldToday = Voucher.executeQuery("select sum(value),count(*) from Voucher where status = :status and lastUpdated = current_date()",[status:VoucherStatus.SOLD]).getAt(0)
     def validated = getAggregated(VoucherStatus.VALIDATED)
     def aggregatedModel = new VoucherStatusAggregatedReportModel(totalSoldValue: sold.getAt(0),
             sold: sold.getAt(1), totalValidatedValue: validated.getAt(0),
-            validated: validated.getAt(1))
+            validated: validated.getAt(1),
+            totalValueValidatedToday:validatedToday.getAt(0),validatedToday:validatedToday.getAt(1),
+            totalValueSoldToday:soldToday.getAt(0)?:0,soldToday:soldToday.getAt(1))
 
+    
     def vaoucherSalesByGroup = []
     List soldSet = getListOfShopsAndSoldValues()
     List validatedSet = getListOfShopsAndValidValues()
