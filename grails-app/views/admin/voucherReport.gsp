@@ -27,19 +27,19 @@
       </tr>
       <tr>
         <td><label>Voucher sold today</label></td>
-        <td>${reportModel?.vocuherStatusReport?.totalSoldValue}</td>
+        <td>${reportModel?.vocuherStatusReport?.totalValueSoldToday}</td>
       </tr>
       <tr>
         <td><label># of Vouchers Sold today</label></td>
-        <td>${reportModel?.vocuherStatusReport?.sold}</td>
+        <td>${reportModel?.vocuherStatusReport?.soldToday}</td>
       </tr>
       <tr>
         <td><label>Vouchers Validated today</label></td>
-        <td>${reportModel?.vocuherStatusReport?.totalValidatedValue}</td>
+        <td>${reportModel?.vocuherStatusReport?.totalValueValidatedToday}</td>
       </tr>
       <tr>
         <td><label># of Vouchers Validated today</label></td>
-        <td>${reportModel?.vocuherStatusReport?.validated}</td>
+        <td>${reportModel?.vocuherStatusReport?.validatedToday}</td>
       </tr>
 
     </table>
