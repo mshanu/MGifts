@@ -32,7 +32,7 @@ class VoucherController {
     def sequenceNumber = params['sequenceNumber'] ? Long.parseLong(params['sequenceNumber']) : null
     def voucher = voucherService.getVoucherToValidateAndUpdateStatus(params['clientInitials'], sequenceNumber, params['barcode'])
     if (voucher) {
-      def converter = voucher as JSON
+      def converter = voucher.getVoucherModel() as JSON
       converter.render(response)
     } else {
       render 'FAILURE'

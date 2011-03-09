@@ -14,7 +14,7 @@ environments {
     development {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:postgresql://localhost:5432/GIFTDB"
+            url = "jdbc:postgresql://localhost:5432/vmsdb"
             username = "app_user"
             password = "password"
         }
@@ -22,7 +22,7 @@ environments {
     test {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:postgresql://localhost:5432/GIFTDB"
+            url = "jdbc:postgresql://localhost:5432/vmsdb"
             username = "app_user"
             password = "password"
         }

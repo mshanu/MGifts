@@ -28,4 +28,9 @@ class Voucher {
   def getDiscountGivenForReport() {
     voucherRequest.voucherInvoice.discount
   }
+
+  def getVoucherModel(){
+    return new VoucherModel(sequenceNumber:sequenceNumber,barcodeAlpha:barcodeAlpha,value:value,
+            validThru:validThru,client:voucherRequest.client)
+  }
 }

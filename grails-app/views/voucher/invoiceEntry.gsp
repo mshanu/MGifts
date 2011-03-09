@@ -65,7 +65,7 @@ h3 {
               if (data != 'FAILURE') {
 
                 if ($("#voucherId").length == 0 || !isVoucherAlreadyPresent('voucherId', data.id)) {
-                  $('#voucherTable tr:last').after('<tr><td><input type="hidden" id="voucherId" name="voucherId" value="' + data.id + '"/>' + data.sequenceNumber + '</td><td>' + data.barcodeAlpha + '</td><td>' + data.voucherRequest.client.name + '</td><td>' + data.value + '</td><td><input type="button" value="X"></td></tr>')
+                  $('#voucherTable tr:last').after('<tr><td><input type="hidden" id="voucherId" name="voucherId" value="' + data.id + '"/>' + data.sequenceNumber + '</td><td>' + data.barcodeAlpha + '</td><td>' + data.client.name + '</td><td>' + data.value + '</td><td><input type="button" value="X"></td></tr>')
                   bindRemoveClickHandlerForTableRow('voucherTable')
                   $.each(["barcode","clientInitials","voucherSequenceNumber"], function(index, value) {
                     $('#' + value).val("")
