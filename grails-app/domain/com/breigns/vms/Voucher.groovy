@@ -30,7 +30,7 @@ class Voucher {
   }
 
   def getVoucherModel(){
-    return new VoucherModel(sequenceNumber:sequenceNumber,barcodeAlpha:barcodeAlpha,value:value,
+    return new VoucherModel(id:id,sequenceNumber:sequenceNumber,barcodeAlpha:barcodeAlpha,value:value,
             validThru:validThru,client:voucherRequest.client)
   }
 }

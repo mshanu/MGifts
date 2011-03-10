@@ -1,6 +1,7 @@
 package com.breigns.vms
 
 class VoucherModel {
+  Long id
   Integer sequenceNumber
   String barcodeAlpha
   Double value
