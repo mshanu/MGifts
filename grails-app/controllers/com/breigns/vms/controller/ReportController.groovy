@@ -31,7 +31,7 @@ class ReportController {
   def invoiceReport = {
     def invoices;
     if (params['shopId'] == "%") {
-      invoices = Purchase.findAll([sort: 'invoiceNumber', order: 'asc'])
+      invoices = Purchase.findAll([sort: 'id', order: 'asc'])
     } else {
       def shopId = Long.parseLong(params['shopId'])
       def shop = Shop.load(shopId)
