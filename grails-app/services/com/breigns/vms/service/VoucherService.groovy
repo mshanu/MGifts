@@ -52,6 +52,7 @@ class VoucherService {
       it.status = VoucherStatus.SOLD;
       it.save()
     }
+   invoice
   }
 
   def getLoggedInuser() {

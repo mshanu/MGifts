@@ -110,13 +110,15 @@ h3 {
       return false
 
     }
-    $.post($("#submitInvoiceLink").attr('href'), $('form').serialize(), function() {
-      $("#message_box").html("Invoice Submitted Successfully")
+    $.post($("#submitInvoiceLink").attr('href'), $('form').serialize(), function(purchaseId) {
+      $("#message_box").html("Invoice Submitted Successfully <a href='javascript:printInvoice("+purchaseId+")'>Print<a/>");
       $("input:text").val("")
-      $("#voucherTable").find('tr:gt(0)').remove()
-
+      $("#voucherTable").find('tr:gt(0)').remove();
     });
-
+  }
+  function printInvoice(invoiceNumber){
+	var url = $("#printInvoiceLink").attr("href") + "?invoiceId="+invoiceNumber
+	window.open($("#printInvoiceLink").attr('href'),'Print Link',"menubar=1,resizable=1,width=350,height=250");
   }
 </script>
 <form style="margin:0px;padding:0px;">
@@ -178,6 +180,7 @@ h3 {
   </div>
   <g:link controller="voucher" action="validateAndGetVoucher" elementId="validateAndAddVoucherLink"></g:link>
   <g:link controller="voucher" action="submitInvoice" elementId="submitInvoiceLink"></g:link>
+  <g:link controller="voucher" action="printInvoice" elementId="printInvoiceLink"></g:link>
 </form>
 </body>
 </html>

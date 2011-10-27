@@ -4,6 +4,7 @@ import com.breigns.vms.Item
 import com.breigns.vms.PurchaseModel
 import grails.converters.JSON
 import java.text.SimpleDateFormat
+import com.breigns.vms.Purchase
 
 class VoucherController {
   def adminService;
@@ -46,8 +47,13 @@ class VoucherController {
             totalAmount: Double.parseDouble(params['totalAmount']), discount: Double.parseDouble(params['discount']),
             netTotal: Double.parseDouble(params['netTotal']), itemId: Long.parseLong(params['item']),
             voucherIds: voucherIds.class == String.class ? [voucherIds] : voucherIds.collect {Long.parseLong(it)})
-    voucherService.submitInvoice(purchaseModel)
-    render 'SUCCESS'
+    def invoice = voucherService.submitInvoice(purchaseModel)
+    render invoice.id
   }
+  
+  def printInvoice = {
+    def invoiceId = params['invoiceId']
+    render view:"printInvoice", model:[invoice:Purchase.get(invoiceId)] 	
+  }	
 }
 
