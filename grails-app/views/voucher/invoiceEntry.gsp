@@ -118,7 +118,7 @@ h3 {
   }
   function printInvoice(invoiceNumber){
 	var url = $("#printInvoiceLink").attr("href") + "?invoiceId="+invoiceNumber
-	window.open($("#printInvoiceLink").attr('href'),'Print Link',"menubar=1,resizable=1,width=350,height=250");
+	window.open(url,'Print Link',"menubar=1,resizable=1,width=750,height=450");
   }
 </script>
 <form style="margin:0px;padding:0px;">

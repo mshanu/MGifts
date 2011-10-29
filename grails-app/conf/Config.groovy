@@ -46,23 +46,6 @@ grails.logging.jul.usebridge = true
 // packages to include in Spring bean scanning
 grails.spring.bean.packages = []
 
-// set per-environment serverURL stem for creating absolute links
-environments {
-  production {
-    grails.serverURL = "http://www.changeme.com"
-    jasper.dir.reports = 'WEB-INF/reports'
-  }
-  development {
-    grails.serverURL = "http://localhost:8080/${appName}"
-    jasper.dir.reports = 'WEB-INF/reports'
-
-  }
-  test {
-    grails.serverURL = "http://localhost:8080/${appName}"
-    jasper.dir.reports = '/WEB-INF/reports'
-  }
-
-}
 
 // log4j configuration
 log4j = {
@@ -104,3 +87,12 @@ grails.plugins.springsecurity.interceptUrlMap = [
         '/**': ['IS_AUTHENTICATED_FULLY']
 ]
 grails.converters.json.default.deep = true
+environments {
+      development {
+	jasper.dir.reports = 'WEB-INF/reports'
+	}
+      production {
+	// relative to web-app
+	jasper.dir.reports = 'WEB-INF/reports'
+	}
+    }
