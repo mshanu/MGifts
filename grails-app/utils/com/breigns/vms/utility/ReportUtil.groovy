@@ -5,6 +5,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
 import net.sf.jasperreports.engine.JRDataSource
 import net.sf.jasperreports.engine.JasperExportManager
 import net.sf.jasperreports.engine.JasperFillManager
+import net.sf.jasperreports.engine.JasperCompileManager
 import net.sf.jasperreports.engine.JasperPrint
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter
 import net.sf.jasperreports.engine.export.JRXlsExporter
@@ -17,7 +18,8 @@ class ReportUtil {
     JRDataSource ds = new JRBeanCollectionDataSource(collection)
     ByteArrayOutputStream byteArray = new ByteArrayOutputStream()
     String resource = reportsDir + "/" + jasperFileName
-    JasperPrint jasperPrint = JasperFillManager.fillReport(resource, [:], ds)
+    def jasperReport = JasperCompileManager.compileReport(resource);
+    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, [:], ds)
     JRXlsExporter exporterXLS = new JRXlsExporter();
     exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
     exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, byteArray);

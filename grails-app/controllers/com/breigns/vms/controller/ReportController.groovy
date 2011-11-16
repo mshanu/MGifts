@@ -25,7 +25,7 @@ class ReportController {
         eq('status', VoucherStatus.valueOf(status))
       }
     }
-    writeToResponse(ReportUtil.generateReport("voucher.jasper", vouchers), 'vouchers.xls')
+    writeToResponse(ReportUtil.generateReport("voucher.jrxml", vouchers), 'vouchers.xls')
   }
 
   def invoiceReport = {
@@ -38,7 +38,7 @@ class ReportController {
       invoices = Purchase.findAllBySoldAt(shop, [sort: 'invoiceNumber', order: 'asc'])
     }
 
-    writeToResponse ReportUtil.generateReport("invoice.jasper", invoices), 'invoices.xls'
+    writeToResponse ReportUtil.generateReport("invoice.jrxml", invoices), 'invoices.xls'
   }
 
   private void writeToResponse(ByteArrayOutputStream byteStream, String name) {

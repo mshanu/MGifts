@@ -15,7 +15,6 @@ class Purchase {
   static hasMany = [vouchers: Voucher]
 
   def getVouchersForReport() {
-    println StringUtils.join(vouchers.collect {it.generatedSequence}, ',')
     StringUtils.join(vouchers.collect {it.generatedSequence}, ',')
   }
 
