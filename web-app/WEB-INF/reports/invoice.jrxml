@@ -60,7 +60,7 @@
 				<text><![CDATA[Invoiced Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="51" y="8" width="76" height="20"/>
+				<reportElement x="52" y="8" width="76" height="20"/>
 				<textElement/>
 				<text><![CDATA[Voucher Numbers]]></text>
 			</staticText>
@@ -69,12 +69,17 @@
 				<textElement/>
 				<text><![CDATA[Clients]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="1" y="8" width="51" height="20"/>
+				<textElement/>
+				<text><![CDATA[SI No	]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="125" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="51" y="0" width="76" height="20" isPrintInFirstWholeBand="true"/>
+				<reportElement stretchType="RelativeToBandHeight" x="52" y="0" width="76" height="20" isPrintInFirstWholeBand="true"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{soldAt.name}]]></textFieldExpression>
 			</textField>
@@ -123,13 +128,8 @@
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{clientsForReport}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="0" y="-20" width="51" height="20"/>
-				<textElement/>
-				<text><![CDATA[SI No	]]></text>
-			</staticText>
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="51" height="20" isPrintInFirstWholeBand="true"/>
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="0" width="51" height="20" isPrintInFirstWholeBand="true"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
