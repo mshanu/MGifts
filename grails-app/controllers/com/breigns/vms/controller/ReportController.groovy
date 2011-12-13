@@ -35,7 +35,7 @@ class ReportController {
     } else {
       def shopId = Long.parseLong(params['shopId'])
       def shop = Shop.load(shopId)
-      invoices = Purchase.findAllBySoldAt(shop, [sort: 'invoiceNumber', order: 'asc'])
+      invoices = Purchase.findAllBySoldAt(shop, [sort: 'id', order: 'asc'])
     }
 
     writeToResponse ReportUtil.generateReport("invoice.jrxml", invoices), 'invoices.xls'

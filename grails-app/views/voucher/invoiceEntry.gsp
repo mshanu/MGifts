@@ -114,6 +114,7 @@ h3 {
       $("#message_box").html("Invoice Submitted Successfully <a href='javascript:printInvoice("+purchaseId+")'>Print<a/>");
       $("input:text").val("")
       $("#voucherTable").find('tr:gt(0)').remove();
+      printInvoice(purchaseId);	
     });
   }
   function printInvoice(invoiceNumber){
